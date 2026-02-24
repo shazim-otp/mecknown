@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Orbitron',sans-serif;
+}
+
+body{
+  background: radial-gradient(circle at 20% 30%, #0f2027, #000000 70%);
+  color:white;
+  overflow-x:hidden;
+}
+
+/* Animated Grid Background */
+body::before{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  background: radial-gradient(circle, rgba(0,255,255,0.05) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation: moveParticles 60s linear infinite;
+  z-index:-1;
+}
+
+@keyframes moveParticles{
+  from{ transform:translate(0,0);}
+  to{ transform:translate(-200px,-200px);}
+}
+
+/* Navbar */
+nav{
+  width:100%;
+  padding:20px 50px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.05);
+  border-bottom:1px solid rgba(0,255,255,0.3);
+}
+
+nav h1{
+  color:#00ffff;
+}
+
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:25px;
+}
+
+nav ul li a{
+  text-decoration:none;
+  color:white;
+  transition:0.3s;
+}
+
+nav ul li a:hover{
+  color:#00ffff;
+}
+
+/* Section */
+.section{
+  padding:100px 10%;
+  text-align:center;
+}
+
+.section h2{
+  font-size:36px;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,#00ffff,#a020f0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.card-container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:30px;
+  margin-top:40px;
+}
+
+.card{
+  width:280px;
+  padding:30px;
+  border-radius:20px;
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(0,255,255,0.3);
+  transition:0.4s;
+}
+
+.card:hover{
+  transform: translateY(-15px);
+  box-shadow:0 0 30px rgba(0,255,255,0.4);
+}
+
+/* Forms */
+form{
+  max-width:500px;
+  margin:40px auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+input, textarea{
+  padding:12px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(0,255,255,0.3);
+  color:white;
+  border-radius:8px;
+}
+
+button{
+  padding:12px;
+  border:none;
+  background:#00ffff;
+  color:black;
+  cursor:pointer;
+  border-radius:25px;
+  transition:0.3s;
+}
+
+button:hover{
+  box-shadow:0 0 20px #00ffff;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  margin-top:80px;
+  border-top:1px solid rgba(0,255,255,0.3);
+}

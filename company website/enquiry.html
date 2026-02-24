@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mecknown - Enquiry</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <h1>Mecknown</h1>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="enquiry.html">Enquiry</a></li>
+  </ul>
+</nav>
+
+<section class="section">
+  <h2>Service Enquiry</h2>
+
+  <form>
+    <form id="enquiryForm">
+  <input type="text" name="company" placeholder="Company Name">
+  <input type="text" name="service" placeholder="Required Service">
+  <input type="tel" name="phone" placeholder="Phone Number">
+  <textarea name="details" rows="5" placeholder="Project Details"></textarea>
+  <button type="submit">Submit Enquiry</button>
+</form>
+
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
+
+document.getElementById("enquiryForm").addEventListener("submit", e => {
+  e.preventDefault();
+  
+  const formData = new FormData(e.target);
+  formData.append("sheet", "Enquiry");
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => {
+    alert("Enquiry submitted successfully!");
+    e.target.reset();
+  })
+  .catch(err => alert("Error submitting form"));
+});
+</script>
+</section>
+
+<footer>
+© 2026 Mecknown.
+</footer>
+
+</body>
+</html>
