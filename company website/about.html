@@ -1,29 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown - About</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mecknown - About</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="about">
 
 <nav>
   <h1>Mecknown</h1>
   <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a data-page="home" href="index.html">Home</a></li>
+    <li><a data-page="about" href="about.html">About</a></li>
+    <li><a data-page="services" href="services.html">Services</a></li>
+    <li><a data-page="contact" href="contact.html">Contact</a></li>
+    <li><a data-page="enquiry" href="enquiry.html">Enquiry</a></li>
   </ul>
 </nav>
 
-<section class="section">
+<section class="section reveal">
   <h2>About Mecknown</h2>
-  <p>Mecknown is a future-focused technology company building advanced robotics, intelligent automation systems, and immersive digital platforms.</p>
+  <p>We are a future-focused technology company creating advanced robotics, intelligent automation systems, and immersive digital platforms for bold organizations.</p>
+
+  <div class="card-container">
+    <div class="card reveal">
+      <h3>Our Mission</h3>
+      <p>Transform complex operations into autonomous systems that save time and unlock growth.</p>
+    </div>
+    <div class="card reveal">
+      <h3>Our Vision</h3>
+      <p>To become the trusted innovation partner for businesses building the next generation of industry.</p>
+    </div>
+  </div>
 </section>
 
 <footer>
-© 2026 Mecknown.
+  © <span data-year></span> Mecknown.
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
