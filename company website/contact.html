@@ -1,56 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown - Contact</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mecknown - Contact</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="contact">
 
 <nav>
   <h1>Mecknown</h1>
   <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a data-page="home" href="index.html">Home</a></li>
+    <li><a data-page="about" href="about.html">About</a></li>
+    <li><a data-page="services" href="services.html">Services</a></li>
+    <li><a data-page="contact" href="contact.html">Contact</a></li>
+    <li><a data-page="enquiry" href="enquiry.html">Enquiry</a></li>
   </ul>
 </nav>
 
-<section class="section">
+<section class="section reveal">
   <h2>Contact Us</h2>
 
   <form id="contactForm">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-  <button type="submit">Send Message</button>
-</form>
-
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
-
-document.getElementById("contactForm").addEventListener("submit", e => {
-  e.preventDefault();
-  
-  const formData = new FormData(e.target);
-  formData.append("sheet", "Contact");
-
-  fetch(scriptURL, {
-    method: "POST",
-    body: formData
-  })
-  .then(res => {
-    alert("Message sent successfully!");
-    e.target.reset();
-  })
-  .catch(err => alert("Error submitting form"));
-});
-</script>
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+    <p class="status" aria-live="polite"></p>
+  </form>
 </section>
 
 <footer>
-© 2026 Mecknown.
+  © <span data-year></span> Mecknown.
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
