@@ -5,112 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="loader"><div class="hologram">MECKNOWN</div></div>
-
-<nav>
-<h1>Mecknown</h1>
-<div class="menu-toggle" id="menu-toggle">
-<span></span><span></span><span></span>
+<!-- LOADER -->
+<div id="loader">
+  <div class="hologram">MECKNOWN</div>
 </div>
-<ul id="nav-links">
-<li><a href="index.html">Home</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="services.html">Services</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
+
+<!-- NAVBAR -->
+<nav>
+  <h1>Mecknown</h1>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="admin.html">Admin</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
+<!-- HERO SECTION -->
 <section class="section hero">
-<h2>Engineering The Future</h2>
-<p>
-We build next-generation robotics, intelligent AI systems,
-and immersive digital experiences.
-</p>
-<a href="services.html">
-<button>Explore Services</button>
-</a>
+  <h2>Engineering Intelligent Futures</h2>
+  <p>
+    Mecknown builds advanced robotics systems, AI-driven platforms,
+    and next-generation digital solutions for a smarter tomorrow.
+  </p>
+  <a href="services.html">
+    <button>Explore Our Services</button>
+  </a>
 </section>
 
 <!-- WHY US -->
 <section class="section">
-<h2>Why Mecknown?</h2>
-<div class="card-container">
-<div class="card">
-<h3>Advanced Innovation</h3>
-<p>We design technology ahead of its time.</p>
-</div>
-<div class="card">
-<h3>Precision Engineering</h3>
-<p>Every system is built with accuracy and reliability.</p>
-</div>
-<div class="card">
-<h3>Future-Driven Vision</h3>
-<p>We don’t follow trends. We create them.</p>
-</div>
-</div>
+  <h2>Why Choose Mecknown</h2>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Corporate Precision</h3>
+      <p>Structured engineering workflows built for scalable innovation.</p>
+    </div>
+
+    <div class="card">
+      <h3>Futuristic Technology</h3>
+      <p>We design solutions that anticipate tomorrow’s challenges.</p>
+    </div>
+
+    <div class="card">
+      <h3>Robotics Lab Mindset</h3>
+      <p>Experiment. Build. Improve. Deploy. Repeat.</p>
+    </div>
+  </div>
 </section>
 
-<!-- STATS -->
+<!-- STATS SECTION -->
 <section class="section">
-<h2>Our Impact</h2>
-<div class="card-container">
-<div class="card">
-<h3><span class="counter" data-target="50">0</span>+</h3>
-<p>Projects Built</p>
-</div>
-<div class="card">
-<h3><span class="counter" data-target="20">0</span>+</h3>
-<p>Technologies Mastered</p>
-</div>
-<div class="card">
-<h3><span class="counter" data-target="100">0</span>%</h3>
-<p>Commitment</p>
-</div>
-</div>
+  <h2>Our Impact</h2>
+
+  <div class="card-container">
+    <div class="card">
+      <h3><span class="counter" data-target="50">0</span>+</h3>
+      <p>Projects Developed</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="counter" data-target="25">0</span>+</h3>
+      <p>Technologies Mastered</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="counter" data-target="100">0</span>%</h3>
+      <p>Commitment</p>
+    </div>
+  </div>
 </section>
 
-<footer>© 2026 Mecknown</footer>
+<!-- PROJECTS FROM ADMIN -->
+<section class="section">
+  <h2>Our Projects</h2>
+  <div class="card-container" id="homeProjects"></div>
+</section>
+
+<footer>
+© 2026 Mecknown. All Rights Reserved.
+</footer>
 
 <script>
 
-/* Loader */
-window.onload=function(){
-document.getElementById("loader").style.display="none";
+/* ===== LOADER ===== */
+window.onload = function(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.display = "none";
+  }
 };
 
-/* Mobile Menu */
-const toggle=document.getElementById("menu-toggle");
-const navLinks=document.getElementById("nav-links");
+/* ===== MOBILE MENU ===== */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
 
 if(toggle){
-toggle.addEventListener("click",function(){
-navLinks.classList.toggle("active");
-toggle.classList.toggle("active");
-});
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
 }
 
-/* Animated Counter */
-const counters=document.querySelectorAll(".counter");
+/* ===== ANIMATED COUNTERS ===== */
+const counters = document.querySelectorAll(".counter");
 
-counters.forEach(counter=>{
-counter.innerText='0';
-const update=()=>{
-const target=+counter.getAttribute("data-target");
-const current=+counter.innerText;
-const increment=target/100;
+counters.forEach(counter => {
+  counter.innerText = '0';
 
-if(current<target){
-counter.innerText=Math.ceil(current+increment);
-setTimeout(update,20);
-}else{
-counter.innerText=target;
-}
-};
-update();
+  const updateCounter = () => {
+    const target = +counter.getAttribute("data-target");
+    const current = +counter.innerText;
+    const increment = target / 100;
+
+    if(current < target){
+      counter.innerText = Math.ceil(current + increment);
+      setTimeout(updateCounter, 20);
+    } else {
+      counter.innerText = target;
+    }
+  };
+
+  updateCounter();
 });
+
+/* ===== LOAD PROJECTS FROM DASHBOARD ===== */
+const homeContainer = document.getElementById("homeProjects");
+
+if(homeContainer){
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+  if(projects.length === 0){
+    homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
+  }
+
+  projects.forEach(proj => {
+    homeContainer.innerHTML += `
+      <div class="card">
+        <h3>${proj.title}</h3>
+        <p>${proj.description}</p>
+      </div>
+    `;
+  });
+}
 
 </script>
 
