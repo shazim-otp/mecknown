@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login - Mecknown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="section">
+<h2>Admin Login</h2>
+
+<form id="loginForm">
+<input type="password" id="adminPass" placeholder="Enter Admin Password" required>
+<button type="submit">Login</button>
+</form>
+
+</section>
+
+<script>
+
+const ADMIN_PASSWORD = "mecknown2026"; // change this
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+e.preventDefault();
+
+const entered = document.getElementById("adminPass").value;
+
+if(entered === ADMIN_PASSWORD){
+localStorage.setItem("adminLoggedIn", "true");
+window.location.href = "dashboard.html";
+}else{
+alert("Incorrect password");
+}
+});
+
+</script>
+
+</body>
+</html>
