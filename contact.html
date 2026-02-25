@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mecknown - Contact</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="hologram">
+    <span>MECKNOWN</span>
+  </div>
+</div>
+
+<nav>
+  <h1>Mecknown</h1>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="section">
+  <h2>Contact Us</h2>
+
+  <form id="contactForm">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>
+© 2026 Mecknown.
+</footer>
+
+<script>
+
+/* Safe Loader */
+window.onload = function(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.display = "none";
+  }
+};
+
+/* Mobile Menu */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if(toggle && navLinks){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+}
+
+/* Google Sheets Integration */
+const contactForm = document.getElementById("contactForm");
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
+
+if(contactForm){
+  contactForm.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const formData = new FormData(contactForm);
+    formData.append("sheet", "Contact");
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      alert("Message sent successfully!");
+      contactForm.reset();
+    })
+    .catch(error => {
+      alert("Submission failed. Check script deployment.");
+      console.error(error);
+    });
+  });
+}
+
+</script>
+
+</body>
+</html>
