@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard - Mecknown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+<h2>Project Dashboard</h2>
+
+<form id="projectForm">
+<input type="text" id="title" placeholder="Project Title" required>
+<textarea id="description" placeholder="Project Description" required></textarea>
+<button type="submit">Add Project</button>
+</form>
+
+<div id="projects"></div>
+
+</div>
+
+<script>
+
+/* Protect Page */
+if(localStorage.getItem("adminLoggedIn") !== "true"){
+window.location.href = "admin.html";
+}
+
+/* Load Projects */
+function loadProjects(){
+const projects = JSON.parse(localStorage.getItem("projects")) || [];
+const container = document.getElementById("projects");
+container.innerHTML = "";
+
+projects.forEach((proj,index)=>{
+container.innerHTML += `
+<div class="project-card">
+<h3>${proj.title}</h3>
+<p>${proj.description}</p>
+<button onclick="deleteProject(${index})">Delete</button>
+</div>
+`;
+});
+}
+
+function deleteProject(index){
+let projects = JSON.parse(localStorage.getItem("projects")) || [];
+projects.splice(index,1);
+localStorage.setItem("projects", JSON.stringify(projects));
+loadProjects();
+}
+
+document.getElementById("projectForm").addEventListener("submit", function(e){
+e.preventDefault();
+
+const title = document.getElementById("title").value;
+const description = document.getElementById("description").value;
+
+let projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+projects.push({title, description});
+
+localStorage.setItem("projects", JSON.stringify(projects));
+
+this.reset();
+loadProjects();
+});
+
+loadProjects();
+
+</script>
+
+</body>
+</html>
