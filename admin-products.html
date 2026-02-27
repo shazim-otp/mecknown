@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin - Add Product</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="section">
+<h2>Add Product</h2>
+
+<form id="productForm">
+<input type="text" id="name" placeholder="Product Name" required>
+<input type="number" id="price" placeholder="Price" required>
+<textarea id="description" placeholder="Description" required></textarea>
+<input type="text" id="image" placeholder="Image URL (GitHub image link)" required>
+<button type="submit">Generate Product JSON</button>
+</form>
+
+<h3>Copy This Into products.json</h3>
+<pre id="output"></pre>
+
+</section>
+
+<script>
+
+document.getElementById("productForm").addEventListener("submit",function(e){
+e.preventDefault();
+
+const product={
+name:document.getElementById("name").value,
+price:document.getElementById("price").value,
+description:document.getElementById("description").value,
+image:document.getElementById("image").value
+};
+
+document.getElementById("output").innerText=
+JSON.stringify(product,null,2);
+
+});
+
+</script>
+
+</body>
+</html>
