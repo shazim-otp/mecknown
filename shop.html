@@ -17,22 +17,19 @@
 <h2>Mecknown Shop</h2>
 
 <div id="loginSection">
-  <input type="tel" id="phone" placeholder="+91XXXXXXXXXX">
-  <div id="recaptcha-container"></div>
-  <button onclick="sendOTP()">Send OTP</button>
-</div>
-
-<div id="otpSection" style="display:none;">
-  <input type="text" id="otp" placeholder="Enter OTP">
-  <button onclick="verifyOTP()">Verify OTP</button>
+  <button onclick="googleLogin()">Sign in with Google</button>
 </div>
 
 <div id="shopSection" style="display:none;">
+  <p id="userInfo"></p>
+
   <h3>Robotics Kit</h3>
   <p>₹2999</p>
 
   <input type="number" id="quantity" placeholder="Quantity">
   <button onclick="placeOrder()">Place Order</button>
+  <br><br>
+  <button onclick="logout()">Logout</button>
 </div>
 
 </section>
@@ -49,40 +46,30 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-/* Setup reCAPTCHA */
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-
-/* Send OTP */
-function sendOTP(){
-  const phoneNumber = document.getElementById("phone").value;
-
-  auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
-    .then(function(confirmationResult){
-      window.confirmationResult = confirmationResult;
-      document.getElementById("otpSection").style.display="block";
-    })
-    .catch(function(error){
-      alert(error.message);
-    });
+/* Google Login */
+function googleLogin(){
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider);
 }
 
-/* Verify OTP */
-function verifyOTP(){
-  const code = document.getElementById("otp").value;
+/* Detect Login */
+auth.onAuthStateChanged(user => {
+  if(user){
+    document.getElementById("loginSection").style.display="none";
+    document.getElementById("shopSection").style.display="block";
+    document.getElementById("userInfo").innerText =
+      "Logged in as: " + user.email;
+  }
+});
 
-  window.confirmationResult.confirm(code)
-    .then(function(result){
-      alert("Login successful!");
-      document.getElementById("loginSection").style.display="none";
-      document.getElementById("otpSection").style.display="none";
-      document.getElementById("shopSection").style.display="block";
-    })
-    .catch(function(error){
-      alert("Invalid OTP");
-    });
+/* Logout */
+function logout(){
+  auth.signOut();
+  document.getElementById("shopSection").style.display="none";
+  document.getElementById("loginSection").style.display="block";
 }
 
-/* Place Order */
+/* Place Order → Google Sheets */
 function placeOrder(){
 
   const quantity = document.getElementById("quantity").value;
@@ -94,7 +81,7 @@ function placeOrder(){
   }
 
   const formData = new FormData();
-  formData.append("phone", user.phoneNumber);
+  formData.append("email", user.email);
   formData.append("product", "Robotics Kit");
   formData.append("quantity", quantity);
 
