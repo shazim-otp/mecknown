@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mecknown Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<section class="section">
+
+<h2>Mecknown Shop</h2>
+
+<div id="loginSection">
+  <input type="tel" id="phone" placeholder="+91XXXXXXXXXX">
+  <div id="recaptcha-container"></div>
+  <button onclick="sendOTP()">Send OTP</button>
+</div>
+
+<div id="otpSection" style="display:none;">
+  <input type="text" id="otp" placeholder="Enter OTP">
+  <button onclick="verifyOTP()">Verify OTP</button>
+</div>
+
+<div id="shopSection" style="display:none;">
+  <h3>Robotics Kit</h3>
+  <p>₹2999</p>
+
+  <input type="number" id="quantity" placeholder="Quantity">
+  <button onclick="placeOrder()">Place Order</button>
+</div>
+
+</section>
+
+<script>
+
+/* 🔥 PASTE YOUR FIREBASE CONFIG HERE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
+  authDomain: "mecknownshop.firebaseapp.com",
+  projectId: "mecknownshop"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/* Setup reCAPTCHA */
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+/* Send OTP */
+function sendOTP(){
+  const phoneNumber = document.getElementById("phone").value;
+
+  auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
+    .then(function(confirmationResult){
+      window.confirmationResult = confirmationResult;
+      document.getElementById("otpSection").style.display="block";
+    })
+    .catch(function(error){
+      alert(error.message);
+    });
+}
+
+/* Verify OTP */
+function verifyOTP(){
+  const code = document.getElementById("otp").value;
+
+  window.confirmationResult.confirm(code)
+    .then(function(result){
+      alert("Login successful!");
+      document.getElementById("loginSection").style.display="none";
+      document.getElementById("otpSection").style.display="none";
+      document.getElementById("shopSection").style.display="block";
+    })
+    .catch(function(error){
+      alert("Invalid OTP");
+    });
+}
+
+/* Place Order */
+function placeOrder(){
+
+  const quantity = document.getElementById("quantity").value;
+  const user = auth.currentUser;
+
+  if(!user){
+    alert("Please login first");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("phone", user.phoneNumber);
+  formData.append("product", "Robotics Kit");
+  formData.append("quantity", quantity);
+
+  fetch("https://script.google.com/macros/s/AKfycbxBF5aO2yATBlOWeWatWSWM_wlSk0i13DEBbRCtcUO5vYpwM6oH89BbwSrVzl1VVfR2kQ/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(() => alert("Order placed successfully!"))
+  .catch(() => alert("Order failed"));
+
+}
+
+</script>
+
+</body>
+</html>
