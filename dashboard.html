@@ -13,6 +13,15 @@
 <form id="projectForm">
 <input type="text" id="title" placeholder="Project Title" required>
 <textarea id="description" placeholder="Project Description" required></textarea>
+
+<input type="url" id="link" placeholder="Project Link (GitHub / Demo)">
+
+<label>Upload Image</label>
+<input type="file" id="image" accept="image/*">
+
+<label>Upload Video</label>
+<input type="file" id="video" accept="video/*">
+
 <button type="submit">Add Project</button>
 </form>
 
@@ -27,8 +36,16 @@ if(localStorage.getItem("adminLoggedIn") !== "true"){
 window.location.href = "admin.html";
 }
 
-/* Load Projects */
-function loadProjects(){
+function convertToBase64(file){
+return new Promise((resolve,reject)=>{
+const reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onload = () => resolve(reader.result);
+reader.onerror = error => reject(error);
+});
+}
+
+async function loadProjects(){
 const projects = JSON.parse(localStorage.getItem("projects")) || [];
 const container = document.getElementById("projects");
 container.innerHTML = "";
@@ -38,6 +55,15 @@ container.innerHTML += `
 <div class="project-card">
 <h3>${proj.title}</h3>
 <p>${proj.description}</p>
+
+${proj.image ? `<img src="${proj.image}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
+
+${proj.video ? `<video controls style="width:100%;margin-top:10px;border-radius:10px;">
+<source src="${proj.video}">
+</video>` : ""}
+
+${proj.link ? `<p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>` : ""}
+
 <button onclick="deleteProject(${index})">Delete</button>
 </div>
 `;
@@ -51,15 +77,35 @@ localStorage.setItem("projects", JSON.stringify(projects));
 loadProjects();
 }
 
-document.getElementById("projectForm").addEventListener("submit", function(e){
+document.getElementById("projectForm").addEventListener("submit", async function(e){
 e.preventDefault();
 
 const title = document.getElementById("title").value;
 const description = document.getElementById("description").value;
+const link = document.getElementById("link").value;
+const imageFile = document.getElementById("image").files[0];
+const videoFile = document.getElementById("video").files[0];
+
+let imageBase64 = "";
+let videoBase64 = "";
+
+if(imageFile){
+imageBase64 = await convertToBase64(imageFile);
+}
+
+if(videoFile){
+videoBase64 = await convertToBase64(videoFile);
+}
 
 let projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-projects.push({title, description});
+projects.push({
+title,
+description,
+link,
+image:imageBase64,
+video:videoBase64
+});
 
 localStorage.setItem("projects", JSON.stringify(projects));
 
