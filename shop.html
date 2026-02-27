@@ -3,40 +3,32 @@
 <head>
 <title>Mecknown Shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-
-<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <section class="section">
-
-<h2>Mecknown Shop</h2>
+<h2>Mecknown Store</h2>
 
 <div id="loginSection">
-  <button onclick="googleLogin()">Sign in with Google</button>
+<button onclick="googleLogin()">Sign in with Google</button>
 </div>
 
 <div id="shopSection" style="display:none;">
-  <p id="userInfo"></p>
-
-  <h3>Robotics Kit</h3>
-  <p>₹2999</p>
-
-  <input type="number" id="quantity" placeholder="Quantity">
-  <button onclick="placeOrder()">Place Order</button>
-  <br><br>
-  <button onclick="logout()">Logout</button>
+<p id="userInfo"></p>
+<div class="shop-grid" id="productContainer"></div>
+<button onclick="logout()">Logout</button>
 </div>
 
 </section>
 
 <script>
 
-/* 🔥 PASTE YOUR FIREBASE CONFIG HERE */
+/* Firebase Config */
 const firebaseConfig = {
   apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
   authDomain: "mecknownshop.firebaseapp.com",
@@ -46,51 +38,65 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-/* Google Login */
 function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
 }
 
-/* Detect Login */
 auth.onAuthStateChanged(user => {
   if(user){
     document.getElementById("loginSection").style.display="none";
     document.getElementById("shopSection").style.display="block";
-    document.getElementById("userInfo").innerText =
-      "Logged in as: " + user.email;
+    document.getElementById("userInfo").innerText="Logged in as: "+user.email;
+    loadProducts();
   }
 });
 
-/* Logout */
 function logout(){
   auth.signOut();
-  document.getElementById("shopSection").style.display="none";
-  document.getElementById("loginSection").style.display="block";
+  location.reload();
 }
 
-/* Place Order → Google Sheets */
-function placeOrder(){
+/* Load Products */
+function loadProducts(){
+  fetch("products.json")
+  .then(res=>res.json())
+  .then(data=>{
+    const container=document.getElementById("productContainer");
+    container.innerHTML="";
 
-  const quantity = document.getElementById("quantity").value;
-  const user = auth.currentUser;
+    data.forEach(product=>{
+      container.innerHTML+=`
+        <div class="product-card">
+          <img src="${product.image}">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <div class="price">₹${product.price}</div>
+          <button class="buy-btn" onclick="placeOrder('${product.name}', '${product.price}')">
+            Buy Now
+          </button>
+        </div>
+      `;
+    });
+  });
+}
 
-  if(!user){
-    alert("Please login first");
-    return;
-  }
+/* Send Order */
+function placeOrder(name, price){
 
-  const formData = new FormData();
+  const user=auth.currentUser;
+
+  const formData=new FormData();
   formData.append("email", user.email);
-  formData.append("product", "Robotics Kit");
-  formData.append("quantity", quantity);
+  formData.append("product", name);
+  formData.append("price", price);
 
-  fetch("https://script.google.com/macros/s/AKfycbxBF5aO2yATBlOWeWatWSWM_wlSk0i13DEBbRCtcUO5vYpwM6oH89BbwSrVzl1VVfR2kQ/exec", {
-    method: "POST",
-    body: formData
+  fetch("https://script.google.com/macros/s/AKfycbxBF5aO2yATBlOWeWatWSWM_wlSk0i13DEBbRCtcUO5vYpwM6oH89BbwSrVzl1VVfR2kQ/execL",{
+    method:"POST",
+    body:formData
   })
-  .then(() => alert("Order placed successfully!"))
-  .catch(() => alert("Order failed"));
+  .then(()=>alert("Order placed!"))
+  .catch(()=>alert("Order failed"));
 
 }
 
