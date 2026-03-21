@@ -46,5 +46,48 @@ document.getElementById("productForm").addEventListener("submit",function(e){
 });
 </script>
 
+  <main class="page auth-page">
+    <section class="hero-shell">
+      <div class="admin-grid">
+        <div class="auth-copy section-shell">
+          <span class="eyebrow">Catalog tools</span>
+          <h1>Generate polished <span class="gradient-text">shop product JSON</span>.</h1>
+          <p>Quickly draft product entries that match the upgraded storefront and copy them into <code>products.json</code>.</p>
+        </div>
+        <div class="auth-card">
+          <div class="section-heading">
+            <span class="eyebrow">Product drafting</span>
+            <h2>Add a product entry</h2>
+          </div>
+          <form id="productForm">
+            <input type="text" id="name" placeholder="Product name" required>
+            <input type="number" id="price" placeholder="Price" required>
+            <textarea id="description" placeholder="Description" required></textarea>
+            <input type="text" id="image" placeholder="Image URL or local asset path" required>
+            <button type="submit">Generate JSON block</button>
+          </form>
+          <div class="status-banner">
+            <h3>Output</h3>
+            <pre id="output">Your generated JSON will appear here.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('productForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const product = {
+        name: document.getElementById('name').value,
+        price: document.getElementById('price').value,
+        description: document.getElementById('description').value,
+        image: document.getElementById('image').value
+      };
+
+      document.getElementById('output').textContent = JSON.stringify(product, null, 2);
+    });
+  </script>
 </body>
 </html>

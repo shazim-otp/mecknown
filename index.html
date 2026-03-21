@@ -131,5 +131,184 @@ if(homeContainer){
 }
 </script>
 
+  <div id="loader"><div class="hologram">MECKNOWN</div></div>
+
+  <header class="nav-shell">
+    <nav>
+      <a class="brand" href="index.html" aria-label="Mecknown home">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <strong>MECKNOWN</strong>
+          <span>Holographic intelligence studio</span>
+        </div>
+      </a>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul id="nav-links">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero-shell">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">AI interface rebuild</span>
+          <h1>We build <span class="gradient-text">holographic user experiences</span> for robotics, commerce, and AI products.</h1>
+          <p>
+            Mecknown now ships with a complete visual reboot: cinematic neon depth, glassmorphism panels,
+            and AI-generated-style holographic imagery that makes every page feel like a futuristic command center.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="services.html">Launch the new experience</a>
+            <a class="btn btn-secondary" href="contact.html">Request a custom UI build</a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="stat-card">
+              <div class="metric-value"><span class="counter" data-target="24">0</span>/7</div>
+              <div class="metric-label">immersive UI monitoring</div>
+            </div>
+            <div class="stat-card">
+              <div class="metric-value"><span class="counter" data-target="18">0</span>+</div>
+              <div class="metric-label">adaptive surface systems</div>
+            </div>
+            <div class="stat-card">
+              <div class="metric-value"><span class="counter" data-target="96">0</span>%</div>
+              <div class="metric-label">visual consistency score</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-stack">
+          <div class="visual-card">
+            <img src="assets/holo-orb.svg" alt="AI-generated holographic control orb illustration">
+            <div class="visual-caption">
+              <div>
+                <strong>Quantum Core</strong>
+                <p class="small-label">AI-generated holographic concept art embedded directly into the UI.</p>
+              </div>
+              <span class="status-chip">Live visual system</span>
+            </div>
+          </div>
+          <div class="signal-grid">
+            <div class="inline-card">
+              <span class="kicker">Interface</span>
+              <h3>Unified design language</h3>
+              <p>Every public page now uses one polished visual system with consistent spacing, surfaces, and CTA patterns.</p>
+            </div>
+            <div class="inline-card">
+              <span class="kicker">Imagery</span>
+              <h3>Built-in holographic art</h3>
+              <p>Custom SVG art gives the site a futuristic AI-generated feel without relying on external image hosting.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-shell glass-panel">
+        <div class="section-heading">
+          <span class="eyebrow">Why this rebuild stands out</span>
+          <h2>Designed like a mission control dashboard.</h2>
+          <p>The refreshed interface moves beyond a standard corporate layout and into an immersive, premium holographic product aesthetic.</p>
+        </div>
+
+        <div class="card-container">
+          <article class="card">
+            <h3>Depth-first surfaces</h3>
+            <p>Glass panels, ambient glow layers, and responsive gradients create a premium sci-fi visual hierarchy.</p>
+          </article>
+          <article class="card">
+            <h3>AI concept visuals</h3>
+            <p>Locally generated holographic SVG scenes act like brand artwork across landing, service, and product areas.</p>
+          </article>
+          <article class="card">
+            <h3>Scalable static architecture</h3>
+            <p>The experience remains simple to host while feeling like a rich interactive application.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="split-grid">
+        <div class="glass-panel section-shell">
+          <div class="section-heading">
+            <span class="eyebrow">Operational footprint</span>
+            <h2>From product storytelling to client conversion.</h2>
+            <p>We restructured the homepage around decision-making: credibility, visuals, services, and direct conversion pathways.</p>
+          </div>
+          <ul class="list">
+            <li>Hero section now communicates the new holographic UI direction immediately.</li>
+            <li>Reusable components keep branding consistent across the public site and admin surfaces.</li>
+            <li>Featured project areas still support dynamic localStorage project content from the dashboard.</li>
+          </ul>
+        </div>
+
+        <div class="visual-card">
+          <img src="assets/holo-grid.svg" alt="AI-generated holographic analytics grid illustration">
+          <div class="visual-caption">
+            <div>
+              <strong>Signal Grid</strong>
+              <p class="small-label">A second AI-generated visual layer used for storytelling and feature support.</p>
+            </div>
+            <span class="overlay-chip">adaptive layout</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-shell glass-panel">
+        <div class="section-heading center">
+          <span class="eyebrow">Live portfolio feed</span>
+          <h2>Recent project uploads</h2>
+          <p>Projects added through the dashboard appear here automatically with media previews and launch links.</p>
+        </div>
+        <div class="projects-grid" id="homeProjects"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <strong>© 2026 Mecknown</strong>
+    <small>Immersive interfaces, robotics visuals, and AI-native product storytelling built for the next generation of digital experiences.</small>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    const homeContainer = document.getElementById('homeProjects');
+    const projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+    if (homeContainer) {
+      if (!projects.length) {
+        homeContainer.innerHTML = '<div class="empty-state">No live projects uploaded yet. Use the dashboard to publish holographic case studies here.</div>';
+      } else {
+        projects.forEach((proj) => {
+          homeContainer.innerHTML += `
+            <article class="project-card">
+              <h3>${proj.title}</h3>
+              <p>${proj.description}</p>
+              ${proj.image ? `<img src="${proj.image}" alt="${proj.title} preview">` : ''}
+              ${proj.video ? `<video controls><source src="${proj.video}"></video>` : ''}
+              ${proj.link ? `<a class="btn btn-secondary" href="${proj.link}" target="_blank" rel="noreferrer">View project</a>` : ''}
+            </article>
+          `;
+        });
+      }
+    }
+  </script>
 </body>
 </html>
