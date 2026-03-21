@@ -15,6 +15,21 @@
     "name": "Build & Code Classroom Kit",
     "price": 8999,
     "description": "A classroom-ready robotics kit for workshops, guided lessons, and beginner coding activities.",
+    "name": "Quantum Command UI Kit",
+    "price": 14999,
+    "description": "A futuristic interface starter pack with holographic sections, pricing modules, and product storytelling layouts.",
+    "image": "assets/holo-orb.svg"
+  },
+  {
+    "name": "Neon Commerce Surface",
+    "price": 11999,
+    "description": "A premium storefront concept for AI products, service packages, and high-ticket digital launches.",
+    "image": "assets/holo-grid.svg"
+  },
+  {
+    "name": "Synthetic Portal Showcase",
+    "price": 16999,
+    "description": "An immersive hero experience with AI-generated-style holographic artwork, dramatic callouts, and responsive panels.",
     "image": "assets/holo-portal.svg"
   }
 ]
