@@ -2,7 +2,9 @@
 <html>
 <head>
 <title>Mecknown Shop</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
 
@@ -11,7 +13,14 @@
 </head>
 
 <body>
-  <nav>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="hologram">MECKNOWN</div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
   <h1>Mecknown</h1>
 
   <div class="menu-toggle" id="menu-toggle">
@@ -29,24 +38,47 @@
   </ul>
 </nav>
 
+<!-- SHOP -->
 <section class="section">
-<h2>Mecknown Store</h2>
+  <h2>Mecknown Store</h2>
 
-<div id="loginSection">
-<button onclick="googleLogin()">Sign in with Google</button>
-</div>
+  <div id="loginSection">
+    <button onclick="googleLogin()">Sign in with Google</button>
+  </div>
 
-<div id="shopSection" style="display:none;">
-<p id="userInfo"></p>
-<div class="shop-grid" id="productContainer"></div>
-<button onclick="logout()">Logout</button>
-</div>
-
+  <div id="shopSection" style="display:none;">
+    <p id="userInfo"></p>
+    <div class="shop-grid" id="productContainer"></div>
+    <button onclick="logout()">Logout</button>
+  </div>
 </section>
+
+<footer>
+© 2026 Mecknown.
+</footer>
 
 <script>
 
-/* Firebase Config */
+/* LOADER */
+window.onload = function(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.display = "none";
+  }
+};
+
+/* MOBILE MENU */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if(toggle && navLinks){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+}
+
+/* FIREBASE */
 const firebaseConfig = {
   apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
   authDomain: "mecknownshop.firebaseapp.com",
@@ -56,35 +88,38 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+/* LOGIN */
 function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
 }
 
+/* AUTH STATE */
 auth.onAuthStateChanged(user => {
   if(user){
     document.getElementById("loginSection").style.display="none";
     document.getElementById("shopSection").style.display="block";
-    document.getElementById("userInfo").innerText="Logged in as: "+user.email;
+    document.getElementById("userInfo").innerText = "Logged in as: " + user.email;
     loadProducts();
   }
 });
 
+/* LOGOUT */
 function logout(){
   auth.signOut();
   location.reload();
 }
 
-/* Load Products */
+/* LOAD PRODUCTS */
 function loadProducts(){
   fetch("products.json")
-  .then(res=>res.json())
-  .then(data=>{
-    const container=document.getElementById("productContainer");
-    container.innerHTML="";
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("productContainer");
+    container.innerHTML = "";
 
-    data.forEach(product=>{
-      container.innerHTML+=`
+    data.forEach(product => {
+      container.innerHTML += `
         <div class="product-card">
           <img src="${product.image}">
           <h3>${product.name}</h3>
@@ -99,23 +134,21 @@ function loadProducts(){
   });
 }
 
-/* Send Order */
+/* ORDER */
 function placeOrder(name, price){
+  const user = auth.currentUser;
 
-  const user=auth.currentUser;
-
-  const formData=new FormData();
+  const formData = new FormData();
   formData.append("email", user.email);
   formData.append("product", name);
   formData.append("price", price);
 
-  fetch("https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec",{
-    method:"POST",
-    body:formData
+  fetch("https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec", {
+    method: "POST",
+    body: formData
   })
-  .then(()=>alert("Order placed!"))
-  .catch(()=>alert("Order failed"));
-
+  .then(() => alert("Order placed!"))
+  .catch(() => alert("Order failed"));
 }
 
 </script>
