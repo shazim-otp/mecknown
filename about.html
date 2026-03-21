@@ -1,67 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown - About</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <title>Mecknown | About</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how Mecknown combines AI visuals, futuristic branding, and product design.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
 </head>
 <body>
+  <div id="loader"><div class="hologram">MECKNOWN</div></div>
 
-<div id="loader"><div class="hologram">MECKNOWN</div></div>
+  <header class="nav-shell">
+    <nav>
+      <a class="brand" href="index.html">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <strong>MECKNOWN</strong>
+          <span>Holographic intelligence studio</span>
+        </div>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a class="active" href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<nav>
-  <h1>Mecknown</h1>
+  <main class="page">
+    <section class="hero-shell">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">About the studio</span>
+          <h1>Mecknown translates <span class="gradient-text">future-tech ambition</span> into digital reality.</h1>
+          <p>We sit at the intersection of UI design, AI storytelling, and product presentation—helping technical brands look as advanced as the systems they build.</p>
+          <div class="hero-actions">
+            <a class="btn" href="contact.html">Work with Mecknown</a>
+            <a class="btn btn-secondary" href="services.html">Explore services</a>
+          </div>
+        </div>
+        <div class="visual-card">
+          <img src="assets/holo-grid.svg" alt="Holographic lab interface illustration">
+          <div class="visual-caption">
+            <div>
+              <strong>Lab aesthetic</strong>
+              <p class="small-label">A visual language inspired by command centers, robotics labs, and AI control rooms.</p>
+            </div>
+            <span class="overlay-chip">brand narrative</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+    <section class="section">
+      <div class="section-shell glass-panel">
+        <div class="section-heading center">
+          <span class="eyebrow">Studio principles</span>
+          <h2>Built for teams that want to look unmistakably futuristic.</h2>
+        </div>
+        <div class="value-grid">
+          <article class="stat-card">
+            <div class="metric-value">01</div>
+            <div class="metric-label">Clarity before complexity</div>
+          </article>
+          <article class="stat-card">
+            <div class="metric-value">02</div>
+            <div class="metric-label">Premium visuals with practical code</div>
+          </article>
+          <article class="stat-card">
+            <div class="metric-value">03</div>
+            <div class="metric-label">AI-native storytelling for modern products</div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-  <ul id="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+    <section class="section">
+      <div class="split-grid">
+        <div class="glass-panel section-shell">
+          <div class="section-heading">
+            <span class="eyebrow">What changed</span>
+            <h2>The interface now feels like a flagship launch.</h2>
+          </div>
+          <ul class="list">
+            <li>Every page now shares a single cinematic visual system.</li>
+            <li>AI-generated-style holographic imagery gives the brand its own visual identity.</li>
+            <li>Admin and dashboard pages match the public site for a more complete product feel.</li>
+          </ul>
+        </div>
+        <div class="glass-panel section-shell">
+          <div class="section-heading">
+            <span class="eyebrow">Who we help</span>
+            <h2>Founders, labs, and future-focused teams.</h2>
+          </div>
+          <p>Whether you're launching a robotics startup, an AI-enabled service, or a premium digital storefront, Mecknown helps your interface communicate technical confidence and creative ambition at once.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<section class="section">
-<h2>About Mecknown</h2>
-<p>
-Mecknown is a future-focused innovation company building intelligent robotics,
-AI systems, and immersive digital platforms.
-We believe in engineering tomorrow’s technology with precision, creativity,
-and bold futuristic design.
-</p>
-</section>
+  <footer class="footer">
+    <strong>© 2026 Mecknown</strong>
+    <small>We build digital presence layers that feel high-end, immersive, and engineered for the future.</small>
+  </footer>
 
-<footer>© 2026 Mecknown</footer>
-
-<script>
-
-/* LOADER SAFE */
-window.onload = function(){
-  const loader = document.getElementById("loader");
-  if(loader){
-    loader.style.display = "none";
-  }
-};
-
-/* MOBILE MENU */
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-if(toggle && navLinks){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-    toggle.classList.toggle("active");
-  });
-}
-
-</script>
-
+  <script src="app.js"></script>
 </body>
 </html>
