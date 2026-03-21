@@ -1,57 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown - Services</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <title>Mecknown - Services</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
 </head>
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="hologram">MECKNOWN</div>
-</div>
+<div id="loader"><div class="hologram">MECKNOWN</div></div>
 
-<!-- NAVBAR (FIXED) -->
 <nav>
   <h1>Mecknown</h1>
-
   <div class="menu-toggle" id="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </div>
-
   <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
+    <li><a class="active" href="services.html">Services</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
-<!-- SERVICES -->
 <section class="section">
-  <h2>Our Services</h2>
+  <div class="content-layout">
+    <div>
+      <h2>Our Services</h2>
+      <p>We kept your original service offering and improved the presentation with a softer holographic style.</p>
 
-  <div class="card-container">
-    <div class="card">
-      <h3>Robotics Engineering</h3>
-      <p>Smart robotic systems with AI-powered automation.</p>
+      <div class="card-container">
+        <div class="card">
+          <h3>Robotics Engineering</h3>
+          <p>Smart robotic systems with AI-powered automation.</p>
+        </div>
+
+        <div class="card">
+          <h3>AI Development</h3>
+          <p>Custom machine learning and intelligent software solutions.</p>
+        </div>
+
+        <div class="card">
+          <h3>Web & App Development</h3>
+          <p>Modern holographic websites and scalable applications.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>AI Development</h3>
-      <p>Custom machine learning and intelligent software solutions.</p>
-    </div>
-
-    <div class="card">
-      <h3>Web & App Development</h3>
-      <p>Modern holographic websites and scalable applications.</p>
+    <div class="figure-panel">
+      <img src="assets/holo-portal.svg" alt="Holographic services figure">
+      <p class="figure-note">This figure gives the services page a futuristic touch while keeping the layout simple.</p>
     </div>
   </div>
 </section>
@@ -60,28 +60,6 @@
 © 2026 Mecknown.
 </footer>
 
-<script>
-
-/* LOADER */
-window.onload = function(){
-  const loader = document.getElementById("loader");
-  if(loader){
-    loader.style.display = "none";
-  }
-};
-
-/* MOBILE MENU */
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-if(toggle && navLinks){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-    toggle.classList.toggle("active");
-  });
-}
-
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
