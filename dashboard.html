@@ -2,12 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Dashboard - Mecknown</title>
   <title>Mecknown | Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico">
 </head>
 <body>
+
+<div class="dashboard">
+  <h2>Project Dashboard</h2>
+  <p>Same project management flow, now with a cleaner holographic dashboard style.</p>
+
+  <div class="dashboard-layout" style="margin-top:24px;align-items:start;">
+    <div class="form-panel">
+      <form id="projectForm">
+        <input type="text" id="title" placeholder="Project Title" required>
+        <textarea id="description" placeholder="Project Description" required></textarea>
+        <input type="url" id="link" placeholder="Project Link (GitHub / Demo)">
+        <label>Upload Image</label>
+        <input type="file" id="image" accept="image/*">
+        <label>Upload Video</label>
+        <input type="file" id="video" accept="video/*">
+        <button type="submit">Add Project</button>
+      </form>
+    </div>
+
+    <div>
+      <div class="dashboard-grid" id="projects"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+if(localStorage.getItem("adminLoggedIn") !== "true"){
+  window.location.href = "admin.html";
+}
+
+function convertToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+async function loadProjects(){
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
+  const container = document.getElementById("projects");
+  container.innerHTML = "";
+
+  if(projects.length === 0){
+    container.innerHTML = "<div class='card'><p>No projects uploaded yet.</p></div>";
+  }
+
+  projects.forEach((proj,index)=>{
+    container.innerHTML += `
+      <div class="project-card">
+        <h3>${proj.title}</h3>
+        <p>${proj.description}</p>
+        ${proj.image ? `<img src="${proj.image}" alt="${proj.title}">` : ""}
+        ${proj.video ? `<video controls style="margin-top:12px;border-radius:16px;"><source src="${proj.video}"></video>` : ""}
+        ${proj.link ? `<p style="margin-top:12px;"><a href="${proj.link}" target="_blank" style="color:#7ce8f3;">View Project</a></p>` : ""}
+        <button style="margin-top:14px;" onclick="deleteProject(${index})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+function deleteProject(index){
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
+  projects.splice(index,1);
+  localStorage.setItem("projects", JSON.stringify(projects));
+  loadProjects();
+}
+
+document.getElementById("projectForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const link = document.getElementById("link").value;
+  const imageFile = document.getElementById("image").files[0];
+  const videoFile = document.getElementById("video").files[0];
+
+  let imageBase64 = "";
+  let videoBase64 = "";
+
+  if(imageFile){
+    imageBase64 = await convertToBase64(imageFile);
+  }
+
+  if(videoFile){
+    videoBase64 = await convertToBase64(videoFile);
+  }
+
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+  projects.push({
+    title,
+    description,
+    link,
+    image:imageBase64,
+    video:videoBase64
+  });
+
+  localStorage.setItem("projects", JSON.stringify(projects));
+
+  this.reset();
+  loadProjects();
+});
+
+loadProjects();
+</script>
+
   <main class="page">
     <section class="hero-shell">
       <div class="dashboard-grid">

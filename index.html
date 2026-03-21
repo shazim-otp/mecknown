@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Mecknown - Engineering Intelligent Futures</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mecknown | Holographic Intelligence Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Mecknown designs holographic digital products, robotics interfaces, and AI-powered systems for futuristic brands.">
@@ -9,6 +11,129 @@
   <link rel="icon" href="favicon.ico">
 </head>
 <body>
+
+<div id="loader">
+  <div class="hologram">MECKNOWN</div>
+</div>
+
+<nav>
+  <h1>Mecknown</h1>
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <ul id="nav-links">
+    <li><a class="active" href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="section hero">
+  <div class="hero-layout">
+    <div class="hero-copy">
+      <h2>Engineering Intelligent Futures</h2>
+      <p>
+        Mecknown builds advanced robotics systems, AI-driven platforms,
+        and next-generation digital solutions for a smarter tomorrow.
+      </p>
+      <div class="hero-actions">
+        <a class="button-link" href="services.html">Explore Our Services</a>
+        <a class="button-link secondary" href="shop.html">Visit Shop</a>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-card">
+          <h3><span class="counter" data-target="50">0</span>+</h3>
+          <p>Projects Developed</p>
+        </div>
+        <div class="metric-card">
+          <h3><span class="counter" data-target="25">0</span>+</h3>
+          <p>Technologies Mastered</p>
+        </div>
+        <div class="metric-card">
+          <h3><span class="counter" data-target="100">0</span>%</h3>
+          <p>Commitment</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="figure-panel">
+      <img src="assets/holo-orb.svg" alt="Holographic interface figure">
+      <p class="figure-note">A softer holographic visual gives the homepage more depth without the heavy neon effect.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Why Choose Mecknown</h2>
+  <p>We keep the interface clean and futuristic while letting the content stay easy to understand.</p>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Corporate Precision</h3>
+      <p>Structured engineering workflows built for scalable innovation.</p>
+    </div>
+
+    <div class="card">
+      <h3>Futuristic Technology</h3>
+      <p>Solutions engineered for tomorrow’s challenges.</p>
+    </div>
+
+    <div class="card">
+      <h3>Robotics Lab Mindset</h3>
+      <p>Experiment. Build. Improve. Deploy. Repeat.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="content-layout">
+    <div>
+      <h2>Our Projects</h2>
+      <p>Projects uploaded through the dashboard still appear here with media and links.</p>
+      <div class="card-container" id="homeProjects"></div>
+    </div>
+
+    <div class="figure-panel">
+      <img src="assets/holo-grid.svg" alt="Holographic grid figure">
+      <p class="figure-note">Subtle holographic figures are used as support visuals instead of dominating the interface.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+© 2026 Mecknown. All Rights Reserved.
+</footer>
+
+<script src="app.js"></script>
+<script>
+const homeContainer = document.getElementById("homeProjects");
+
+if(homeContainer){
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+  if(projects.length === 0){
+    homeContainer.innerHTML = "<div class='card'><p>No projects uploaded yet.</p></div>";
+  }
+
+  projects.forEach(proj => {
+    homeContainer.innerHTML += `
+      <div class="project-card">
+        <h3>${proj.title}</h3>
+        <p>${proj.description}</p>
+        ${proj.image ? `<img src="${proj.image}" alt="${proj.title}">` : ""}
+        ${proj.video ? `<video controls style="margin-top:12px;border-radius:16px;"><source src="${proj.video}"></video>` : ""}
+        ${proj.link ? `<p style="margin-top:12px;"><a href="${proj.link}" target="_blank" style="color:#7ce8f3;">View Project</a></p>` : ""}
+      </div>
+    `;
+  });
+}
+</script>
+
   <div id="loader"><div class="hologram">MECKNOWN</div></div>
 
   <header class="nav-shell">

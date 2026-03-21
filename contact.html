@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Mecknown - Contact</title>
   <title>Mecknown | Contact</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Contact Mecknown to build a holographic website, admin experience, or AI-ready interface.">
@@ -9,6 +10,90 @@
   <link rel="icon" href="favicon.ico">
 </head>
 <body>
+
+<div id="loader">
+  <div class="hologram">
+    <span>MECKNOWN</span>
+  </div>
+</div>
+
+<nav>
+  <h1>Mecknown</h1>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a class="active" href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="section">
+  <div class="contact-layout">
+    <div>
+      <h2>Contact Us</h2>
+      <p>Reach out to Mecknown for project enquiries, collaboration, or product support.</p>
+
+      <div class="figure-panel" style="margin-top:24px;">
+        <img src="assets/holo-orb.svg" alt="Holographic contact figure">
+        <p class="figure-note">A soft holographic figure improves the page without adding too much visual noise.</p>
+      </div>
+    </div>
+
+    <div class="form-panel">
+      <h3>Send a Message</h3>
+      <p>Use the same contact form and Google Sheets integration you already had.</p>
+
+      <form id="contactForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+© 2026 Mecknown.
+</footer>
+
+<script src="app.js"></script>
+<script>
+const contactForm = document.getElementById("contactForm");
+const scriptURL = "https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
+
+if(contactForm){
+  contactForm.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const formData = new FormData(contactForm);
+    formData.append("sheet", "Contact");
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(() => {
+      alert("Message sent successfully!");
+      contactForm.reset();
+    })
+    .catch(error => {
+      alert("Submission failed. Check script deployment.");
+      console.error(error);
+    });
+  });
+}
+</script>
+
   <div id="loader"><div class="hologram">MECKNOWN</div></div>
 
   <header class="nav-shell">
