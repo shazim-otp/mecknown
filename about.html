@@ -41,19 +41,26 @@ and bold futuristic design.
 <footer>© 2026 Mecknown</footer>
 
 <script>
-window.onload=function(){
-document.getElementById("loader").style.display="none";
+
+/* LOADER SAFE */
+window.onload = function(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.display = "none";
+  }
 };
 
-const toggle=document.getElementById("menu-toggle");
-const navLinks=document.getElementById("nav-links");
+/* MOBILE MENU */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
 
-if(toggle){
-toggle.addEventListener("click",function(){
-navLinks.classList.toggle("active");
-toggle.classList.toggle("active");
-});
+if(toggle && navLinks){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
 }
+
 </script>
 
 </body>
