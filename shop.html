@@ -1,157 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown Shop</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <meta charset="UTF-8">
+  <title>Mecknown | Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse Mecknown's futuristic storefront and AI-themed holographic products.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
-
 <body>
+  <div id="loader"><div class="hologram">MECKNOWN</div></div>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="hologram">MECKNOWN</div>
-</div>
-
-<!-- NAVBAR -->
-<nav>
-  <h1>Mecknown</h1>
-
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <ul id="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- SHOP -->
-<section class="section">
-  <h2>Mecknown Store</h2>
-
-  <div id="loginSection">
-    <button onclick="googleLogin()">Sign in with Google</button>
-  </div>
-
-  <div id="shopSection" style="display:none;">
-    <p id="userInfo"></p>
-    <div class="shop-grid" id="productContainer"></div>
-    <button onclick="logout()">Logout</button>
-  </div>
-</section>
-
-<footer>
-© 2026 Mecknown.
-</footer>
-
-<script>
-
-/* LOADER */
-window.onload = function(){
-  const loader = document.getElementById("loader");
-  if(loader){
-    loader.style.display = "none";
-  }
-};
-
-/* MOBILE MENU */
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-if(toggle && navLinks){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-    toggle.classList.toggle("active");
-  });
-}
-
-/* FIREBASE */
-const firebaseConfig = {
-  apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
-  authDomain: "mecknownshop.firebaseapp.com",
-  projectId: "mecknownshop"
-};
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-/* LOGIN */
-function googleLogin(){
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
-}
-
-/* AUTH STATE */
-auth.onAuthStateChanged(user => {
-  if(user){
-    document.getElementById("loginSection").style.display="none";
-    document.getElementById("shopSection").style.display="block";
-    document.getElementById("userInfo").innerText = "Logged in as: " + user.email;
-    loadProducts();
-  }
-});
-
-/* LOGOUT */
-function logout(){
-  auth.signOut();
-  location.reload();
-}
-
-/* LOAD PRODUCTS */
-function loadProducts(){
-  fetch("products.json")
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("productContainer");
-    container.innerHTML = "";
-
-    data.forEach(product => {
-      container.innerHTML += `
-        <div class="product-card">
-          <img src="${product.image}">
-          <h3>${product.name}</h3>
-          <p>${product.description}</p>
-          <div class="price">₹${product.price}</div>
-          <button class="buy-btn" onclick="placeOrder('${product.name}', '${product.price}')">
-            Buy Now
-          </button>
+  <header class="nav-shell">
+    <nav>
+      <a class="brand" href="index.html">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <strong>MECKNOWN</strong>
+          <span>Holographic intelligence studio</span>
         </div>
-      `;
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="shop.html">Shop</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero-shell">
+      <div class="shop-layout">
+        <div class="section-shell">
+          <span class="eyebrow">Commerce surface</span>
+          <h1>Premium storefront, <span class="gradient-text">sci-fi presentation.</span></h1>
+          <p>The shop now feels like a product bay inside a futuristic lab, complete with luminous cards and AI-style art panels.</p>
+          <div class="button-row">
+            <button onclick="googleLogin()">Sign in with Google</button>
+            <a class="btn btn-secondary" href="services.html">Need a custom store?</a>
+          </div>
+          <div class="status-banner" style="margin-top: 1.25rem;">
+            <h3>Access layer</h3>
+            <p id="userInfo">Sign in to unlock the purchase console and place orders.</p>
+          </div>
+        </div>
+
+        <div class="visual-card">
+          <img src="assets/holo-orb.svg" alt="Holographic product intelligence illustration">
+          <div class="visual-caption">
+            <div>
+              <strong>Commerce Intelligence Core</strong>
+              <p class="small-label">AI-generated-style artwork that turns the storefront into an immersive experience.</p>
+            </div>
+            <span class="status-chip">secure access</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-shell glass-panel">
+        <div class="section-heading center">
+          <span class="eyebrow">Product vault</span>
+          <h2>Curated holographic product concepts</h2>
+          <p>Browse Mecknown's starter products after signing in. Orders continue to use the existing Google Apps Script endpoint.</p>
+        </div>
+        <div id="loginSection" class="center">
+          <button onclick="googleLogin()">Authenticate to view products</button>
+        </div>
+        <div id="shopSection" class="shop-section-hidden">
+          <div class="shop-grid" id="productContainer"></div>
+          <div class="center" style="margin-top:1.2rem;">
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <strong>© 2026 Mecknown</strong>
+    <small>Commerce pages should feel as elevated as the products they present.</small>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: 'AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M',
+      authDomain: 'mecknownshop.firebaseapp.com',
+      projectId: 'mecknownshop'
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function googleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider);
+    }
+
+    auth.onAuthStateChanged((user) => {
+      const loginSection = document.getElementById('loginSection');
+      const shopSection = document.getElementById('shopSection');
+      const userInfo = document.getElementById('userInfo');
+
+      if (user) {
+        loginSection.classList.add('shop-section-hidden');
+        shopSection.classList.remove('shop-section-hidden');
+        userInfo.textContent = 'Signed in as ' + user.email + '. Product purchase console active.';
+        loadProducts();
+      }
     });
-  });
-}
 
-/* ORDER */
-function placeOrder(name, price){
-  const user = auth.currentUser;
+    function logout() {
+      auth.signOut();
+      location.reload();
+    }
 
-  const formData = new FormData();
-  formData.append("email", user.email);
-  formData.append("product", name);
-  formData.append("price", price);
+    function loadProducts() {
+      fetch('products.json')
+        .then((res) => res.json())
+        .then((data) => {
+          const container = document.getElementById('productContainer');
+          container.innerHTML = '';
 
-  fetch("https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(() => alert("Order placed!"))
-  .catch(() => alert("Order failed"));
-}
+          data.forEach((product) => {
+            container.innerHTML += `
+              <article class="product-card">
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <div class="price">₹${product.price}</div>
+                <button class="buy-btn" onclick="placeOrder('${product.name}', '${product.price}')">Buy now</button>
+              </article>
+            `;
+          });
+        });
+    }
 
-</script>
+    function placeOrder(name, price) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert('Please sign in first.');
+        return;
+      }
 
+      const formData = new FormData();
+      formData.append('email', user.email);
+      formData.append('product', name);
+      formData.append('price', price);
+
+      fetch('https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec', {
+        method: 'POST',
+        body: formData
+      })
+        .then(() => alert('Order placed!'))
+        .catch(() => alert('Order failed'));
+    }
+  </script>
 </body>
 </html>
