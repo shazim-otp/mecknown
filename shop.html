@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <title>Mecknown Shop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mecknown | Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse Mecknown's futuristic storefront and AI-themed holographic products.">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico">
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -150,28 +147,6 @@ function loadProducts(){
           <p>${product.description}</p>
           <div class="price">₹${product.price}</div>
           <button class="buy-btn" onclick="placeOrder('${product.name}', '${product.price}')">Buy Now</button>
-        <div class="visual-card">
-          <img src="assets/holo-orb.svg" alt="Holographic product intelligence illustration">
-          <div class="visual-caption">
-            <div>
-              <strong>Commerce Intelligence Core</strong>
-              <p class="small-label">AI-generated-style artwork that turns the storefront into an immersive experience.</p>
-            </div>
-            <span class="status-chip">secure access</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-shell glass-panel">
-        <div class="section-heading center">
-          <span class="eyebrow">Product vault</span>
-          <h2>Curated holographic product concepts</h2>
-          <p>Browse Mecknown's starter products after signing in. Orders continue to use the existing Google Apps Script endpoint.</p>
-        </div>
-        <div id="loginSection" class="center">
-          <button onclick="googleLogin()">Authenticate to view products</button>
         </div>
         <div id="shopSection" class="shop-section-hidden">
           <div class="shop-grid" id="productContainer"></div>
