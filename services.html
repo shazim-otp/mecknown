@@ -2,12 +2,20 @@
 <html>
 <head>
 <title>Mecknown - Services</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
 </head>
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+  <div class="hologram">MECKNOWN</div>
+</div>
+
+<!-- NAVBAR (FIXED) -->
 <nav>
   <h1>Mecknown</h1>
 
@@ -26,6 +34,7 @@
   </ul>
 </nav>
 
+<!-- SERVICES -->
 <section class="section">
   <h2>Our Services</h2>
 
@@ -50,6 +59,29 @@
 <footer>
 © 2026 Mecknown.
 </footer>
+
+<script>
+
+/* LOADER */
+window.onload = function(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.display = "none";
+  }
+};
+
+/* MOBILE MENU */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if(toggle && navLinks){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+}
+
+</script>
 
 </body>
 </html>
