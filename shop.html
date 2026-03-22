@@ -12,38 +12,51 @@
 
 <body>
 
-<nav>
+<!-- NAVBAR -->
+<nav class="navbar">
   <h1>Mecknown</h1>
+
+  <input type="text" id="searchBar" placeholder="Search products...">
+
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>
+
   <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="shop.html">Shop</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
-<section class="section">
-<h2>Mecknown Store</h2>
+<!-- HERO -->
+<section class="hero">
+  <h2>⚡ Mecknown Store</h2>
+  <p>Smart gadgets • Robotics • Tech builds</p>
+</section>
 
-<div id="loginSection">
-<button onclick="googleLogin()">Sign in with Google</button>
+<section class="section">
+
+<!-- LOGIN -->
+<div id="loginSection" class="login-box">
+  <button onclick="googleLogin()">Sign in with Google</button>
 </div>
 
+<!-- SHOP -->
 <div id="shopSection" style="display:none;">
-<p id="userInfo"></p>
-<div class="shop-grid" id="productContainer"></div>
-<button onclick="logout()">Logout</button>
+  <div class="shop-header">
+    <p id="userInfo"></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="shop-grid" id="productContainer"></div>
 </div>
 
 </section>
 
 <script>
-
-/* Firebase Config */
 const firebaseConfig = {
   apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
   authDomain: "mecknownshop.firebaseapp.com",
@@ -62,7 +75,7 @@ auth.onAuthStateChanged(user => {
   if(user){
     document.getElementById("loginSection").style.display="none";
     document.getElementById("shopSection").style.display="block";
-    document.getElementById("userInfo").innerText="Logged in as: "+user.email;
+    document.getElementById("userInfo").innerText="👤 "+user.email;
     loadProducts();
   }
 });
@@ -83,22 +96,30 @@ function loadProducts(){
     data.forEach(product=>{
       container.innerHTML+=`
         <div class="product-card">
+          <span class="badge">NEW</span>
+
           <img src="${product.image}">
+
           <h3>${product.name}</h3>
+
+          <div class="rating">⭐⭐⭐⭐☆</div>
+
           <p>${product.description}</p>
-          <div class="price">₹${product.price}</div>
-          <button class="buy-btn" onclick="placeOrder('${product.name}', '${product.price}')">
-            Buy Now
-          </button>
+
+          <div class="price-row">
+            <span class="price">₹${product.price}</span>
+            <button onclick="placeOrder('${product.name}','${product.price}')">
+              Buy
+            </button>
+          </div>
         </div>
       `;
     });
   });
 }
 
-/* Send Order */
+/* Order */
 function placeOrder(name, price){
-
   const user=auth.currentUser;
 
   const formData=new FormData();
@@ -112,22 +133,18 @@ function placeOrder(name, price){
   })
   .then(()=>alert("Order placed!"))
   .catch(()=>alert("Order failed"));
-
 }
 
-</script>
+/* Search */
+document.getElementById("searchBar").addEventListener("input", function(){
+  const value=this.value.toLowerCase();
+  const cards=document.querySelectorAll(".product-card");
 
-
-<script>
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-if(toggle && navLinks){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-    toggle.classList.toggle("active");
+  cards.forEach(card=>{
+    const text=card.innerText.toLowerCase();
+    card.style.display = text.includes(value) ? "block" : "none";
   });
-}
+});
 </script>
 
 </body>
