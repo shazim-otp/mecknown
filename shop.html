@@ -8,6 +8,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -48,6 +49,10 @@
 <div id="shopSection" style="display:none;">
   <div class="shop-header">
     <p id="userInfo"></p>
+
+    <!-- ADMIN BUTTON -->
+    <button onclick="addProduct()">+ Add Product</button>
+
     <button onclick="logout()">Logout</button>
   </div>
 
@@ -57,6 +62,8 @@
 </section>
 
 <script>
+
+/* 🔥 FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
   authDomain: "mecknownshop.firebaseapp.com",
@@ -64,13 +71,20 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* 🔐 ADMIN EMAIL */
+const ADMIN_EMAIL = "shazamotp@gmail.com"; // ← change this
+
+/* LOGIN */
 function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
 }
 
+/* AUTH STATE */
 auth.onAuthStateChanged(user => {
   if(user){
     document.getElementById("loginSection").style.display="none";
@@ -80,45 +94,75 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+/* LOGOUT */
 function logout(){
   auth.signOut();
   location.reload();
 }
 
-/* Load Products */
+/* 🔥 LOAD PRODUCTS (FIRESTORE LIVE) */
 function loadProducts(){
-  fetch("products.json")
-  .then(res=>res.json())
-  .then(data=>{
-    const container=document.getElementById("productContainer");
-    container.innerHTML="";
+  const container = document.getElementById("productContainer");
 
-    data.forEach(product=>{
-      container.innerHTML+=`
-        <div class="product-card">
-          <span class="badge">NEW</span>
+  db.collection("products")
+    .orderBy("createdAt","desc")
+    .onSnapshot(snapshot=>{
+      container.innerHTML="";
 
-          <img src="${product.image}">
+      snapshot.forEach(doc=>{
+        const product = doc.data();
 
-          <h3>${product.name}</h3>
+        container.innerHTML += `
+          <div class="product-card">
+            <span class="badge">NEW</span>
 
-          <div class="rating">⭐⭐⭐⭐☆</div>
+            <img src="${product.image}">
 
-          <p>${product.description}</p>
+            <h3>${product.name}</h3>
 
-          <div class="price-row">
-            <span class="price">₹${product.price}</span>
-            <button onclick="placeOrder('${product.name}','${product.price}')">
-              Buy
-            </button>
+            <div class="rating">⭐⭐⭐⭐☆</div>
+
+            <p>${product.description}</p>
+
+            <div class="price-row">
+              <span class="price">₹${product.price}</span>
+              <button onclick="placeOrder('${product.name}','${product.price}')">
+                Buy
+              </button>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      });
     });
-  });
 }
 
-/* Order */
+/* ➕ ADD PRODUCT (ADMIN ONLY) */
+function addProduct(){
+  const user = auth.currentUser;
+
+  if(!user || user.email !== ADMIN_EMAIL){
+    alert("Access denied");
+    return;
+  }
+
+  const name = prompt("Product name:");
+  const price = prompt("Price:");
+  const image = prompt("Image URL:");
+  const description = prompt("Description:");
+
+  if(!name || !price) return;
+
+  db.collection("products").add({
+    name,
+    price,
+    image,
+    description,
+    createdAt: new Date()
+  })
+  .then(()=>alert("✅ Product Added!"));
+}
+
+/* 🛒 ORDER */
 function placeOrder(name, price){
   const user=auth.currentUser;
 
@@ -135,7 +179,7 @@ function placeOrder(name, price){
   .catch(()=>alert("Order failed"));
 }
 
-/* Search */
+/* 🔍 SEARCH */
 document.getElementById("searchBar").addEventListener("input", function(){
   const value=this.value.toLowerCase();
   const cards=document.querySelectorAll(".product-card");
@@ -145,6 +189,18 @@ document.getElementById("searchBar").addEventListener("input", function(){
     card.style.display = text.includes(value) ? "block" : "none";
   });
 });
+
+/* MOBILE MENU */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if(toggle && navLinks){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+}
+
 </script>
 
 </body>
