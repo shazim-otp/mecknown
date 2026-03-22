@@ -1,222 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard - Mecknown</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+<title>Dashboard - Mecknown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
 </head>
 <body>
 
 <div class="dashboard">
-  <h2>Project Dashboard</h2>
-  <p>Same project management flow, now with a cleaner holographic dashboard style.</p>
+<h2>Project Dashboard</h2>
 
-  <div class="dashboard-layout" style="margin-top:24px;align-items:start;">
-    <div class="form-panel">
-      <form id="projectForm">
-        <input type="text" id="title" placeholder="Project Title" required>
-        <textarea id="description" placeholder="Project Description" required></textarea>
-        <input type="url" id="link" placeholder="Project Link (GitHub / Demo)">
-        <label>Upload Image</label>
-        <input type="file" id="image" accept="image/*">
-        <label>Upload Video</label>
-        <input type="file" id="video" accept="video/*">
-        <button type="submit">Add Project</button>
-      </form>
-    </div>
+<form id="projectForm">
+<input type="text" id="title" placeholder="Project Title" required>
+<textarea id="description" placeholder="Project Description" required></textarea>
 
-    <div>
-      <div class="dashboard-grid" id="projects"></div>
-    </div>
-  </div>
+<input type="url" id="link" placeholder="Project Link (GitHub / Demo)">
+
+<label>Upload Image</label>
+<input type="file" id="image" accept="image/*">
+
+<label>Upload Video</label>
+<input type="file" id="video" accept="video/*">
+
+<button type="submit">Add Project</button>
+</form>
+
+<div id="projects"></div>
+
 </div>
 
 <script>
+
+/* Protect Page */
 if(localStorage.getItem("adminLoggedIn") !== "true"){
-  window.location.href = "admin.html";
+window.location.href = "admin.html";
 }
 
 function convertToBase64(file){
-  return new Promise((resolve,reject)=>{
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
+return new Promise((resolve,reject)=>{
+const reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onload = () => resolve(reader.result);
+reader.onerror = error => reject(error);
+});
 }
 
 async function loadProjects(){
-  const projects = JSON.parse(localStorage.getItem("projects")) || [];
-  const container = document.getElementById("projects");
-  container.innerHTML = "";
+const projects = JSON.parse(localStorage.getItem("projects")) || [];
+const container = document.getElementById("projects");
+container.innerHTML = "";
 
-  if(projects.length === 0){
-    container.innerHTML = "<div class='card'><p>No projects uploaded yet.</p></div>";
-  }
+projects.forEach((proj,index)=>{
+container.innerHTML += `
+<div class="project-card">
+<h3>${proj.title}</h3>
+<p>${proj.description}</p>
 
-  projects.forEach((proj,index)=>{
-    container.innerHTML += `
-      <div class="project-card">
-        <h3>${proj.title}</h3>
-        <p>${proj.description}</p>
-        ${proj.image ? `<img src="${proj.image}" alt="${proj.title}">` : ""}
-        ${proj.video ? `<video controls style="margin-top:12px;border-radius:16px;"><source src="${proj.video}"></video>` : ""}
-        ${proj.link ? `<p style="margin-top:12px;"><a href="${proj.link}" target="_blank" style="color:#7ce8f3;">View Project</a></p>` : ""}
-        <button style="margin-top:14px;" onclick="deleteProject(${index})">Delete</button>
-      </div>
-    `;
-  });
+${proj.image ? `<img src="${proj.image}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
+
+${proj.video ? `<video controls style="width:100%;margin-top:10px;border-radius:10px;">
+<source src="${proj.video}">
+</video>` : ""}
+
+${proj.link ? `<p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>` : ""}
+
+<button onclick="deleteProject(${index})">Delete</button>
+</div>
+`;
+});
 }
 
 function deleteProject(index){
-  let projects = JSON.parse(localStorage.getItem("projects")) || [];
-  projects.splice(index,1);
-  localStorage.setItem("projects", JSON.stringify(projects));
-  loadProjects();
+let projects = JSON.parse(localStorage.getItem("projects")) || [];
+projects.splice(index,1);
+localStorage.setItem("projects", JSON.stringify(projects));
+loadProjects();
 }
 
 document.getElementById("projectForm").addEventListener("submit", async function(e){
-  e.preventDefault();
+e.preventDefault();
 
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const link = document.getElementById("link").value;
-  const imageFile = document.getElementById("image").files[0];
-  const videoFile = document.getElementById("video").files[0];
+const title = document.getElementById("title").value;
+const description = document.getElementById("description").value;
+const link = document.getElementById("link").value;
+const imageFile = document.getElementById("image").files[0];
+const videoFile = document.getElementById("video").files[0];
 
-  let imageBase64 = "";
-  let videoBase64 = "";
+let imageBase64 = "";
+let videoBase64 = "";
 
-  if(imageFile){
-    imageBase64 = await convertToBase64(imageFile);
-  }
+if(imageFile){
+imageBase64 = await convertToBase64(imageFile);
+}
 
-  if(videoFile){
-    videoBase64 = await convertToBase64(videoFile);
-  }
+if(videoFile){
+videoBase64 = await convertToBase64(videoFile);
+}
 
-  let projects = JSON.parse(localStorage.getItem("projects")) || [];
+let projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-  projects.push({
-    title,
-    description,
-    link,
-    image:imageBase64,
-    video:videoBase64
-  });
+projects.push({
+title,
+description,
+link,
+image:imageBase64,
+video:videoBase64
+});
 
-  localStorage.setItem("projects", JSON.stringify(projects));
+localStorage.setItem("projects", JSON.stringify(projects));
 
-  this.reset();
-  loadProjects();
+this.reset();
+loadProjects();
 });
 
 loadProjects();
+
 </script>
 
-  <main class="page">
-    <section class="hero-shell">
-      <div class="dashboard-grid">
-        <div class="dashboard-panel">
-          <div class="section-heading">
-            <span class="eyebrow">Publishing console</span>
-            <h1>Project dashboard for the <span class="gradient-text">holographic homepage.</span></h1>
-            <p>Create project cards with links, images, and videos. Uploaded entries are stored in localStorage and rendered on the homepage automatically.</p>
-          </div>
-          <form id="projectForm">
-            <input type="text" id="title" placeholder="Project title" required>
-            <textarea id="description" placeholder="Project description" required></textarea>
-            <input type="url" id="link" placeholder="Project link (GitHub / demo)">
-            <label for="image">Upload image</label>
-            <input type="file" id="image" accept="image/*">
-            <label for="video">Upload video</label>
-            <input type="file" id="video" accept="video/*">
-            <button type="submit">Add project</button>
-          </form>
-        </div>
-        <div class="dashboard-panel">
-          <div class="section-heading">
-            <span class="eyebrow">Live feed</span>
-            <h2>Published project cards</h2>
-            <p>Use delete controls to keep the homepage showcase current.</p>
-          </div>
-          <div class="projects-grid" id="projects"></div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    if (localStorage.getItem('adminLoggedIn') !== 'true') {
-      window.location.href = 'admin.html';
-    }
-
-    function convertToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-    }
-
-    async function loadProjects() {
-      const projects = JSON.parse(localStorage.getItem('projects')) || [];
-      const container = document.getElementById('projects');
-      container.innerHTML = '';
-
-      if (!projects.length) {
-        container.innerHTML = '<div class="empty-state">No projects added yet. Publish one to populate the homepage showcase.</div>';
-        return;
-      }
-
-      projects.forEach((proj, index) => {
-        container.innerHTML += `
-          <article class="project-card">
-            <h3>${proj.title}</h3>
-            <p>${proj.description}</p>
-            ${proj.image ? `<img src="${proj.image}" alt="${proj.title}">` : ''}
-            ${proj.video ? `<video controls><source src="${proj.video}"></video>` : ''}
-            ${proj.link ? `<a class="btn btn-secondary" href="${proj.link}" target="_blank" rel="noreferrer">View project</a>` : ''}
-            <button class="btn btn-secondary" onclick="deleteProject(${index})">Delete</button>
-          </article>
-        `;
-      });
-    }
-
-    function deleteProject(index) {
-      const projects = JSON.parse(localStorage.getItem('projects')) || [];
-      projects.splice(index, 1);
-      localStorage.setItem('projects', JSON.stringify(projects));
-      loadProjects();
-    }
-
-    document.getElementById('projectForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const title = document.getElementById('title').value;
-      const description = document.getElementById('description').value;
-      const link = document.getElementById('link').value;
-      const imageFile = document.getElementById('image').files[0];
-      const videoFile = document.getElementById('video').files[0];
-
-      let imageBase64 = '';
-      let videoBase64 = '';
-
-      if (imageFile) imageBase64 = await convertToBase64(imageFile);
-      if (videoFile) videoBase64 = await convertToBase64(videoFile);
-
-      const projects = JSON.parse(localStorage.getItem('projects')) || [];
-      projects.push({ title, description, link, image: imageBase64, video: videoBase64 });
-      localStorage.setItem('projects', JSON.stringify(projects));
-
-      this.reset();
-      loadProjects();
-    });
-
-    loadProjects();
-  </script>
 </body>
 </html>

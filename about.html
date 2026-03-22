@@ -1,72 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Mecknown - About</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+<title>Mecknown - About</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
 </head>
 <body>
-  <div id="loader"><div class="hologram">MECKNOWN</div></div>
 
-  <header class="nav-shell">
-    <nav>
-      <a class="brand" href="index.html">
-        <div class="brand-mark">M</div>
-        <div class="brand-text">
-          <strong>MECKNOWN</strong>
-          <span>Holographic intelligence studio</span>
-        </div>
-      </a>
-      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a class="active" href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+<div id="loader"><div class="hologram">MECKNOWN</div></div>
 
 <nav>
-  <h1>Mecknown</h1>
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span><span></span><span></span>
-  </div>
-  <ul id="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a class="active" href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
+<h1>Mecknown</h1>
+<div class="menu-toggle" id="menu-toggle">
+<span></span><span></span><span></span>
+</div>
+<ul id="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="services.html">Services</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
 </nav>
 
 <section class="section">
-  <div class="content-layout">
-    <div>
-      <h2>About Mecknown</h2>
-      <p>
-        Mecknown is a future-focused innovation company building intelligent robotics,
-        AI systems, and immersive digital platforms.
-        We believe in engineering tomorrow’s technology with precision, creativity,
-        and bold futuristic design.
-      </p>
-    </div>
-
-    <div class="figure-panel">
-      <img src="assets/holo-grid.svg" alt="Holographic about figure">
-      <p class="figure-note">A cleaner holographic figure helps the page feel futuristic without too much neon glow.</p>
-    </div>
-  </div>
+<h2>About Mecknown</h2>
+<p>
+Mecknown is a future-focused innovation company building intelligent robotics,
+AI systems, and immersive digital platforms.
+We believe in engineering tomorrow’s technology with precision, creativity,
+and bold futuristic design.
+</p>
 </section>
 
 <footer>© 2026 Mecknown</footer>
 
-<script src="app.js"></script>
+<script>
+window.onload=function(){
+document.getElementById("loader").style.display="none";
+};
+
+const toggle=document.getElementById("menu-toggle");
+const navLinks=document.getElementById("nav-links");
+
+if(toggle){
+toggle.addEventListener("click",function(){
+navLinks.classList.toggle("active");
+toggle.classList.toggle("active");
+});
+}
+</script>
+
 </body>
 </html>

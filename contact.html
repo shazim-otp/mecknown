@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Mecknown - Contact</title>
-  <title>Mecknown | Contact</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact Mecknown to build a holographic website, admin experience, or AI-ready interface.">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico">
 </head>
+
 <body>
 
+<!-- Loader -->
 <div id="loader">
   <div class="hologram">
     <span>MECKNOWN</span>
@@ -28,46 +27,51 @@
 
   <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
     <li><a href="about.html">About</a></li>
-    <li><a class="active" href="contact.html">Contact</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
 <section class="section">
-  <div class="contact-layout">
-    <div>
-      <h2>Contact Us</h2>
-      <p>Reach out to Mecknown for project enquiries, collaboration, or product support.</p>
+  <h2>Contact Us</h2>
 
-      <div class="figure-panel" style="margin-top:24px;">
-        <img src="assets/holo-orb.svg" alt="Holographic contact figure">
-        <p class="figure-note">A soft holographic figure improves the page without adding too much visual noise.</p>
-      </div>
-    </div>
-
-    <div class="form-panel">
-      <h3>Send a Message</h3>
-      <p>Use the same contact form and Google Sheets integration you already had.</p>
-
-      <form id="contactForm">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
-  </div>
+  <form id="contactForm">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+    <button type="submit">Send Message</button>
+  </form>
 </section>
 
 <footer>
 © 2026 Mecknown.
 </footer>
 
-<script src="app.js"></script>
 <script>
+
+/* Safe Loader */
+window.onload = function(){
+  const loader = document.getElementById("loader");
+  if(loader){
+    loader.style.display = "none";
+  }
+};
+
+/* Mobile Menu */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if(toggle && navLinks){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+}
+
+/* Google Sheets Integration */
 const contactForm = document.getElementById("contactForm");
+
 const scriptURL = "https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
 
 if(contactForm){
@@ -82,7 +86,7 @@ if(contactForm){
       body: formData
     })
     .then(response => response.text())
-    .then(() => {
+    .then(data => {
       alert("Message sent successfully!");
       contactForm.reset();
     })
@@ -92,99 +96,8 @@ if(contactForm){
     });
   });
 }
+
 </script>
 
-  <div id="loader"><div class="hologram">MECKNOWN</div></div>
-
-  <header class="nav-shell">
-    <nav>
-      <a class="brand" href="index.html">
-        <div class="brand-mark">M</div>
-        <div class="brand-text">
-          <strong>MECKNOWN</strong>
-          <span>Holographic intelligence studio</span>
-        </div>
-      </a>
-      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a class="active" href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="page">
-    <section class="hero-shell">
-      <div class="contact-grid">
-        <div class="section-shell">
-          <span class="eyebrow">Direct collaboration</span>
-          <h1>Ready for a <span class="gradient-text">full-spectrum UI rebuild?</span></h1>
-          <p>Tell us what you want to launch—brand refresh, futuristic storefront, or a cinematic AI product experience—and we’ll help turn it into a polished interface.</p>
-          <div class="contact-tiles">
-            <article class="contact-card">
-              <h3>Design direction</h3>
-              <p>Holographic art direction, page layout systems, and premium visual hierarchy.</p>
-            </article>
-            <article class="contact-card">
-              <h3>Product clarity</h3>
-              <p>Sharper service messaging, offer packaging, and launch-ready call-to-action flows.</p>
-            </article>
-            <article class="contact-card">
-              <h3>Fast iteration</h3>
-              <p>Static-site simplicity with a much more advanced final presentation layer.</p>
-            </article>
-          </div>
-        </div>
-
-        <div class="glass-panel section-shell">
-          <div class="section-heading">
-            <span class="eyebrow">Send a message</span>
-            <h2>Start your next build</h2>
-            <p>Use the form below to send details into the existing Google Sheets integration.</p>
-          </div>
-          <form id="contactForm">
-            <input type="text" name="name" placeholder="Your name" required>
-            <input type="email" name="email" placeholder="Your email" required>
-            <textarea name="message" placeholder="Tell us about the UI, pages, and holographic style you want." required></textarea>
-            <button type="submit">Transmit project brief</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <strong>© 2026 Mecknown</strong>
-    <small>Let’s design something that feels intelligent, immersive, and unmistakably premium.</small>
-  </footer>
-
-  <script src="app.js"></script>
-  <script>
-    const contactForm = document.getElementById('contactForm');
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec';
-
-    if (contactForm) {
-      contactForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(contactForm);
-        formData.append('sheet', 'Contact');
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-          .then(() => {
-            alert('Message sent successfully!');
-            contactForm.reset();
-          })
-          .catch((error) => {
-            alert('Submission failed. Check script deployment.');
-            console.error(error);
-          });
-      });
-    }
-  </script>
 </body>
 </html>

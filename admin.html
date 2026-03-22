@@ -1,80 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Login - Mecknown</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+<title>Admin Login - Mecknown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
 </head>
 <body>
 
 <section class="section">
-  <h2>Admin Login</h2>
-  <p>A cleaner admin screen with the same login flow.</p>
+<h2>Admin Login</h2>
 
-  <div class="form-panel" style="max-width:520px;margin:24px auto 0;">
-    <form id="loginForm">
-      <input type="password" id="adminPass" placeholder="Enter Admin Password" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
+<form id="loginForm">
+<input type="password" id="adminPass" placeholder="Enter Admin Password" required>
+<button type="submit">Login</button>
+</form>
+
 </section>
 
 <script>
-const ADMIN_PASSWORD = "mecknown2026";
+
+const ADMIN_PASSWORD = "mecknown2026"; // change this
 
 document.getElementById("loginForm").addEventListener("submit", function(e){
-  e.preventDefault();
+e.preventDefault();
 
-  const entered = document.getElementById("adminPass").value;
+const entered = document.getElementById("adminPass").value;
 
-  if(entered === ADMIN_PASSWORD){
-    localStorage.setItem("adminLoggedIn", "true");
-    window.location.href = "dashboard.html";
-  }else{
-    alert("Incorrect password");
-  }
+if(entered === ADMIN_PASSWORD){
+localStorage.setItem("adminLoggedIn", "true");
+window.location.href = "dashboard.html";
+}else{
+alert("Incorrect password");
+}
 });
+
 </script>
 
-  <main class="page auth-page">
-    <section class="hero-shell">
-      <div class="admin-grid">
-        <div class="auth-copy section-shell">
-          <span class="eyebrow">Operator access</span>
-          <h1>Enter the <span class="gradient-text">Mecknown control room.</span></h1>
-          <p>Admin surfaces now match the public-facing holographic style so internal tools feel like part of the same product universe.</p>
-        </div>
-        <div class="auth-card">
-          <div class="section-heading">
-            <span class="eyebrow">Secure login</span>
-            <h2>Admin authentication</h2>
-            <p>Use the configured password below to unlock dashboard publishing controls.</p>
-          </div>
-          <form id="loginForm">
-            <input type="password" id="adminPass" placeholder="Enter admin password" required>
-            <button type="submit">Access dashboard</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const ADMIN_PASSWORD = 'mecknown2026';
-
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const entered = document.getElementById('adminPass').value;
-
-      if (entered === ADMIN_PASSWORD) {
-        localStorage.setItem('adminLoggedIn', 'true');
-        window.location.href = 'dashboard.html';
-      } else {
-        alert('Incorrect password');
-      }
-    });
-  </script>
 </body>
 </html>
