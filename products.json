@@ -1,13 +1,13 @@
 [
   {
     "name": "Beginner Robotics Starter Kit",
-    "price": 4999,
+    "price": 1000+delivery,
     "description": "A simple starter kit for students learning basic robotics, motion, and wiring.",
-    "image": "assets/holo-orb.svg"
+    "image": "assets/shopping.jpg"
   },
   {
     "name": "Sensor & Motor Learning Kit",
-    "price": 6999,
+    "price": 3250,
     "description": "A practical robotics kit for learning sensors, motors, and basic control projects.",
     "image": "assets/holo-grid.svg"
   },
