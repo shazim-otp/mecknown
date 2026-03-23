@@ -340,27 +340,29 @@ footer{
   color:var(--muted);
 }
 
-/* ===== LOADER (ADD THIS AT END) ===== */
+/* ===== LOADER FINAL ===== */
 #loader{
   position:fixed;
-  inset:0;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100dvh;
   background:#000;
   display:flex;
   justify-content:center;
   align-items:center;
   z-index:9999;
-  transition:opacity 0.5s ease;
+  overflow:hidden;
+  transition:opacity 0.4s ease;
 }
 
-/* rotating logo */
 .loader-logo{
-  width:90px;
-  height:90px;
-  animation:spin 1.2s linear infinite;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.15));
+  width:clamp(70px, 20vw, 110px);
+  height:auto;
+  display:block;
+  animation:spin 1.4s linear infinite;
 }
 
-/* smooth rotation */
 @keyframes spin{
   from{ transform:rotate(0deg); }
   to{ transform:rotate(360deg); }
