@@ -14,6 +14,17 @@ body{
   overflow-x:hidden;
 }
 
+/* CURSOR GLOW */
+.cursor-glow{
+  position:fixed;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 60%);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:0;
+}
+
 /* NAV */
 .nav{
   display:flex;
@@ -22,6 +33,8 @@ body{
   background:rgba(15,15,15,0.6);
   backdrop-filter:blur(10px);
   border-bottom:1px solid #1f1f1f;
+  position:relative;
+  z-index:2;
 }
 
 .nav a{
@@ -34,41 +47,27 @@ body{
   text-align:center;
   padding:80px 20px;
   perspective:1000px;
-}
-
-/* NEON RING */
-.img-wrapper{
   position:relative;
+  z-index:2;
+}
+
+/* STATIC GLOW RING */
+.img-wrapper{
   display:inline-block;
+  padding:6px;
   border-radius:50%;
-  padding:8px;
+  background:radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  box-shadow:0 0 30px rgba(255,255,255,0.15);
 }
 
-.img-wrapper::before{
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border-radius:50%;
-  background:linear-gradient(45deg,#00f0ff,#7c3aed,#00f0ff);
-  animation:rotate 4s linear infinite;
-  z-index:-1;
-  filter:blur(8px);
-}
-
-@keyframes rotate{
-  0%{ transform:rotate(0deg); }
-  100%{ transform:rotate(360deg); }
-}
-
-/* IMAGE */
+/* IMAGE SLIDE */
 .profile-img{
   width:150px;
   border-radius:50%;
-  display:block;
 
   opacity:0;
   transform:translateX(-100px);
-  animation:slideIn 1s ease forwards;
+  animation:slideIn 0.9s ease forwards;
 }
 
 @keyframes slideIn{
@@ -92,6 +91,8 @@ body{
   max-width:900px;
   margin:auto;
   padding:50px 20px;
+  position:relative;
+  z-index:2;
 }
 
 /* GLASS CARD */
@@ -103,10 +104,11 @@ body{
   padding:25px;
   border-radius:16px;
   margin-bottom:25px;
+  cursor:pointer;
   overflow:hidden;
 
-  transform:translateY(40px);
   opacity:0;
+  transform:translateY(40px);
   animation:fadeUp 0.8s ease forwards;
 }
 
@@ -121,7 +123,7 @@ body{
   }
 }
 
-/* LIGHT HOVER EFFECT */
+/* LIGHT SWEEP */
 .card::before{
   content:"";
   position:absolute;
@@ -137,16 +139,45 @@ body{
   left:100%;
 }
 
-/* HOVER DEPTH */
 .card:hover{
   transform:translateY(-8px) scale(1.02);
   box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:5;
+}
+
+.modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal-box{
+  background:#111;
+  padding:30px;
+  border-radius:14px;
+  max-width:400px;
+  text-align:center;
+  border:1px solid #222;
 }
 </style>
 
 </head>
 
 <body>
+
+<div class="cursor-glow" id="glow"></div>
 
 <div class="nav">
   <h2>Mecknown</h2>
@@ -166,33 +197,56 @@ body{
 
 <section class="projects">
 
-  <div class="card">
+  <div class="card" onclick="openModal('Line Following Robot','PID controlled autonomous robot.')">
     <h3>Line Following Robot</h3>
-    <p>PID controlled autonomous robot.</p>
+    <p>Click to view more</p>
   </div>
 
-  <div class="card">
+  <div class="card" onclick="openModal('Voice Assistant','Custom AI with voice recognition.')">
     <h3>Voice Assistant</h3>
-    <p>Custom AI system with voice recognition.</p>
+    <p>Click to view more</p>
   </div>
 
-  <div class="card">
+  <div class="card" onclick="openModal('Gas Safety System','MQ6 based smart automation.')">
     <h3>Gas Safety System</h3>
-    <p>Smart MQ6-based safety automation.</p>
+    <p>Click to view more</p>
   </div>
 
 </section>
 
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h2 id="modal-title"></h2>
+    <p id="modal-desc"></p>
+  </div>
+</div>
+
 <script>
-/* PARALLAX EFFECT */
+// cursor glow
+const glow = document.getElementById("glow");
+document.addEventListener("mousemove",(e)=>{
+  glow.style.left = e.clientX+"px";
+  glow.style.top = e.clientY+"px";
+});
+
+// parallax
 const hero = document.getElementById("hero");
-
-document.addEventListener("mousemove", (e) => {
-  let x = (window.innerWidth / 2 - e.clientX) / 25;
-  let y = (window.innerHeight / 2 - e.clientY) / 25;
-
+document.addEventListener("mousemove",(e)=>{
+  let x = (window.innerWidth/2 - e.clientX)/30;
+  let y = (window.innerHeight/2 - e.clientY)/30;
   hero.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
 });
+
+// modal
+const modal = document.getElementById("modal");
+function openModal(title,desc){
+  document.getElementById("modal-title").innerText = title;
+  document.getElementById("modal-desc").innerText = desc;
+  modal.classList.add("active");
+}
+
+modal.onclick = () => modal.classList.remove("active");
 </script>
 
 </body>
