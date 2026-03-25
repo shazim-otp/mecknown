@@ -368,7 +368,7 @@ footer{
   to{ transform:rotate(360deg); }
 }
 
-/* ===== TEAM SECTION (NEW) ===== */
+/* ===== TEAM SECTION (UPDATED) ===== */
 .team{
   display:flex;
   justify-content:center;
@@ -378,6 +378,11 @@ footer{
 }
 
 .member{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  cursor:pointer;
+
   background:var(--card);
   border:1px solid var(--border);
   padding:25px;
@@ -386,7 +391,6 @@ footer{
   text-align:left;
   transition:0.4s ease;
 
-  /* animation initial state */
   opacity:0;
   transform:translateY(50px);
 }
@@ -412,6 +416,7 @@ footer{
 }
 
 .member:hover{
-  transform:translateY(-6px);
+  transform:translateY(-8px) scale(1.02);
   border-color:#2a2a2a;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
