@@ -367,3 +367,51 @@ footer{
   from{ transform:rotate(0deg); }
   to{ transform:rotate(360deg); }
 }
+
+/* ===== TEAM SECTION (NEW) ===== */
+.team{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  margin-top:50px;
+  flex-wrap:wrap;
+}
+
+.member{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:25px;
+  border-radius:14px;
+  width:260px;
+  text-align:left;
+  transition:0.4s ease;
+
+  /* animation initial state */
+  opacity:0;
+  transform:translateY(50px);
+}
+
+.member.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.member h3{
+  margin-bottom:5px;
+}
+
+.member span{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.member p{
+  margin-top:10px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.member:hover{
+  transform:translateY(-6px);
+  border-color:#2a2a2a;
+}
