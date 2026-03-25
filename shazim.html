@@ -22,37 +22,51 @@ body{
   border-bottom:1px solid #1f1f1f;
 }
 
-.nav a{
-  color:#9ca3af;
-  text-decoration:none;
-}
-
 /* HERO */
 .hero{
   text-align:center;
   padding:60px 20px;
 }
 
-/* IMAGE SLIDE */
+/* IMAGE CONTAINER */
+.img-wrapper{
+  display:inline-block;
+  padding:6px;
+  border-radius:50%;
+  background:linear-gradient(120deg,#ffffff22,#ffffff05);
+  animation:glow 2.5s infinite alternate;
+}
+
+/* GLOW RING */
+@keyframes glow{
+  from{
+    box-shadow:0 0 10px rgba(255,255,255,0.1);
+  }
+  to{
+    box-shadow:0 0 25px rgba(255,255,255,0.3);
+  }
+}
+
+/* IMAGE SLIDE FROM LEFT */
 .profile-img{
   width:140px;
   border-radius:50%;
-  margin-bottom:20px;
 
   opacity:0;
-  transform:translateY(50px);
-  animation:slideUp 0.8s ease forwards;
+  transform:translateX(-80px);
+  animation:slideIn 0.8s ease forwards;
 }
 
-@keyframes slideUp{
+@keyframes slideIn{
   to{
     opacity:1;
-    transform:translateY(0);
+    transform:translateX(0);
   }
 }
 
 .hero h1{
   font-size:32px;
+  margin-top:15px;
 }
 
 .hero p{
@@ -66,17 +80,35 @@ body{
   padding:40px 20px;
 }
 
+/* ANIMATED CARDS */
 .card{
   background:#111;
   border:1px solid #1f1f1f;
   padding:20px;
   border-radius:12px;
   margin-bottom:20px;
-  transition:0.3s;
+
+  opacity:0;
+  transform:translateY(40px);
+  animation:cardFade 0.6s ease forwards;
 }
 
+.card:nth-child(1){ animation-delay:0.2s; }
+.card:nth-child(2){ animation-delay:0.4s; }
+.card:nth-child(3){ animation-delay:0.6s; }
+
+@keyframes cardFade{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* HOVER EFFECT */
 .card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-6px) scale(1.01);
+  border-color:#2a2a2a;
+  box-shadow:0 10px 30px rgba(255,255,255,0.08);
 }
 </style>
 
@@ -86,16 +118,22 @@ body{
 
 <div class="nav">
   <h2>Mecknown</h2>
-  <a href="about.html">← Back</a>
+  <a href="about.html" style="color:#9ca3af;text-decoration:none;">← Back</a>
 </div>
 
 <section class="hero">
-  <img src="shazim.png" class="profile-img">
+
+  <div class="img-wrapper">
+    <img src="shazim.png" class="profile-img">
+  </div>
+
   <h1>Shazim</h1>
   <p>Robotics • App Development • Embedded Systems</p>
+
 </section>
 
 <section class="projects">
+
   <div class="card">
     <h3>Line Following Robot</h3>
     <p>PID controlled robot using Arduino.</p>
@@ -110,6 +148,7 @@ body{
     <h3>Gas Safety System</h3>
     <p>MQ6 based smart safety system.</p>
   </div>
+
 </section>
 
 </body>
