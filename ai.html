@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
 <title>MECK AI - Mecknown</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico"><style>
 
-<link rel="stylesheet" href="style.css">
-
-<style>
-/* FULL PAGE AI */
+/* ===== AI PAGE ===== */
 .ai-container{
-  height:100vh;
+  position:relative;
+  height: calc(100vh - 110px); /* navbar + status bar */
   display:flex;
   flex-direction:column;
 }
@@ -19,31 +17,96 @@
   border:none;
   width:100%;
 }
-</style>
-</head>
 
-<body>
+/* ===== STATUS BAR ===== */
+.ai-status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 20px;
+  background:#0f0f0f;
+  border-bottom:1px solid #1f1f1f;
+  font-size:14px;
+}
 
-<!-- SAME NAVBAR -->
-<nav>
+#status-indicator{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+}
+
+.offline{
+  background:red;
+}
+
+.online{
+  background:limegreen;
+}
+
+/* ===== LOADING OVERLAY ===== */
+.ai-overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0a0a0a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+  font-size:18px;
+  color:#aaa;
+}
+
+</style></head><body><!-- NAVBAR --><nav>
   <h1>Mecknown</h1>
-  <ul>
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>
+  <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
+    <li><a href="ai.html" class="active">Meck AI</a></li>
     <li><a href="shop.html">Shop</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="ai.html" class="active">Meck AI</a></li>
   </ul>
-</nav>
-
-<!-- AI -->
-<div class="ai-container">
-  <iframe 
+</nav><!-- STATUS BAR --><div class="ai-status">
+  <span id="status-indicator" class="offline"></span>
+  <span id="status-text">Starting AI, please wait...</span>
+</div><!-- AI SECTION --><div class="ai-container">  <!-- LOADING OVERLAY -->  <div class="ai-overlay" id="ai-overlay">
+    <p>🚀 Starting AI... please wait</p>
+  </div>  <!-- AI IFRAME -->  <iframe 
     src="https://mecknown-ai.onrender.com/"
-    class="ai-frame">
-  </iframe>
-</div>
+    class="ai-frame"
+    id="ai-frame">
+  </iframe></div><!-- SCRIPTS --><script>
 
-</body>
+/* ===== MOBILE MENU ===== */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if(toggle){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+}
+
+/* ===== AI STATUS ===== */
+const iframe = document.getElementById("ai-frame");
+const overlay = document.getElementById("ai-overlay");
+const statusText = document.getElementById("status-text");
+const statusIndicator = document.getElementById("status-indicator");
+
+iframe.addEventListener("load", () => {
+  overlay.style.display = "none";
+
+  statusText.innerText = "AI is Online";
+  statusIndicator.classList.remove("offline");
+  statusIndicator.classList.add("online");
+});
+
+</script></body>
 </html>
