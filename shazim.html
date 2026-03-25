@@ -14,16 +14,6 @@ body{
   overflow-x:hidden;
 }
 
-/* PAGE TRANSITION */
-.transition{
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:999;
-  transform:translateY(100%);
-  transition:0.6s ease;
-}
-
 /* CURSOR GLOW */
 .cursor-glow{
   position:fixed;
@@ -62,7 +52,7 @@ body{
   z-index:2;
 }
 
-/* IMAGE */
+/* IMAGE WRAPPER */
 .img-wrapper{
   padding:6px;
   border-radius:50%;
@@ -71,19 +61,50 @@ body{
   display:inline-block;
 }
 
+/* SMOOTH IMAGE ANIMATION */
 .profile-img{
   width:150px;
   border-radius:50%;
+
   opacity:0;
-  transform:translateX(-120px);
-  animation:slideIn 1s ease forwards;
+  transform:translateX(-160px) scale(0.95);
+  animation:slideInSmooth 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes slideIn{
-  to{
-    opacity:1;
-    transform:translateX(0);
+@keyframes slideInSmooth{
+  0%{
+    opacity:0;
+    transform:translateX(-160px) scale(0.95);
   }
+  60%{
+    opacity:1;
+    transform:translateX(10px) scale(1.02);
+  }
+  100%{
+    opacity:1;
+    transform:translateX(0) scale(1);
+  }
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:34px;
+
+  opacity:0;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:0.8s;
+}
+
+.hero p{
+  color:#9ca3af;
+
+  opacity:0;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:1s;
+}
+
+@keyframes fadeIn{
+  to{ opacity:1; }
 }
 
 /* PROJECTS */
@@ -104,8 +125,23 @@ body{
   border-radius:16px;
   margin-bottom:25px;
   cursor:pointer;
-  transition:0.2s ease;
   position:relative;
+  transition:0.2s ease;
+
+  opacity:0;
+  transform:translateY(40px);
+  animation:fadeUp 0.8s ease forwards;
+}
+
+.card:nth-child(1){ animation-delay:0.4s; }
+.card:nth-child(2){ animation-delay:0.6s; }
+.card:nth-child(3){ animation-delay:0.8s; }
+
+@keyframes fadeUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 /* LIGHT SWEEP */
@@ -120,6 +156,11 @@ body{
 
 .card:hover::before{
   opacity:1;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
 }
 
 /* MODAL */
@@ -155,12 +196,11 @@ body{
 
 <body>
 
-<div class="transition" id="transition"></div>
 <div class="cursor-glow" id="glow"></div>
 
 <div class="nav">
   <h2>Mecknown</h2>
-  <a href="about.html" onclick="goBack(event)">← Back</a>
+  <a href="about.html">← Back</a>
 </div>
 
 <section class="hero" id="hero">
@@ -176,19 +216,19 @@ body{
   <div class="card" onmousemove="magnet(event,this)" onmouseleave="reset(this)"
        onclick="openModal('Line Following Robot','PID controlled robot.')">
     <h3>Line Following Robot</h3>
-    <p>Interactive project</p>
+    <p>Click to view more</p>
   </div>
 
   <div class="card" onmousemove="magnet(event,this)" onmouseleave="reset(this)"
        onclick="openModal('Voice Assistant','Custom AI system.')">
     <h3>Voice Assistant</h3>
-    <p>Interactive project</p>
+    <p>Click to view more</p>
   </div>
 
   <div class="card" onmousemove="magnet(event,this)" onmouseleave="reset(this)"
        onclick="openModal('Gas Safety System','MQ6 automation.')">
     <h3>Gas Safety System</h3>
-    <p>Interactive project</p>
+    <p>Click to view more</p>
   </div>
 
 </section>
@@ -236,14 +276,6 @@ function openModal(t,d){
   modal.classList.add("active");
 }
 modal.onclick = ()=> modal.classList.remove("active");
-
-// PAGE TRANSITION
-function goBack(e){
-  e.preventDefault();
-  const t = document.getElementById("transition");
-  t.style.transform = "translateY(0)";
-  setTimeout(()=> window.location.href="about.html",500);
-}
 </script>
 
 </body>
