@@ -14,15 +14,26 @@ body{
   overflow-x:hidden;
 }
 
+/* PAGE TRANSITION */
+.transition{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:999;
+  transform:translateY(100%);
+  transition:0.6s ease;
+}
+
 /* CURSOR GLOW */
 .cursor-glow{
   position:fixed;
-  width:300px;
-  height:300px;
-  background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 60%);
+  width:350px;
+  height:350px;
+  background:radial-gradient(circle, rgba(255,255,255,0.12), transparent 60%);
   pointer-events:none;
   transform:translate(-50%,-50%);
   z-index:0;
+  transition:0.08s linear;
 }
 
 /* NAV */
@@ -51,23 +62,21 @@ body{
   z-index:2;
 }
 
-/* STATIC GLOW RING */
+/* IMAGE */
 .img-wrapper{
-  display:inline-block;
   padding:6px;
   border-radius:50%;
   background:radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
-  box-shadow:0 0 30px rgba(255,255,255,0.15);
+  box-shadow:0 0 40px rgba(255,255,255,0.2);
+  display:inline-block;
 }
 
-/* IMAGE SLIDE */
 .profile-img{
   width:150px;
   border-radius:50%;
-
   opacity:0;
-  transform:translateX(-100px);
-  animation:slideIn 0.9s ease forwards;
+  transform:translateX(-120px);
+  animation:slideIn 1s ease forwards;
 }
 
 @keyframes slideIn{
@@ -75,15 +84,6 @@ body{
     opacity:1;
     transform:translateX(0);
   }
-}
-
-.hero h1{
-  margin-top:20px;
-  font-size:34px;
-}
-
-.hero p{
-  color:#9ca3af;
 }
 
 /* PROJECTS */
@@ -95,53 +95,31 @@ body{
   z-index:2;
 }
 
-/* GLASS CARD */
+/* CARD */
 .card{
-  position:relative;
   background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   padding:25px;
   border-radius:16px;
   margin-bottom:25px;
   cursor:pointer;
-  overflow:hidden;
-
-  opacity:0;
-  transform:translateY(40px);
-  animation:fadeUp 0.8s ease forwards;
-}
-
-.card:nth-child(1){ animation-delay:0.3s; }
-.card:nth-child(2){ animation-delay:0.5s; }
-.card:nth-child(3){ animation-delay:0.7s; }
-
-@keyframes fadeUp{
-  to{
-    transform:translateY(0);
-    opacity:1;
-  }
+  transition:0.2s ease;
+  position:relative;
 }
 
 /* LIGHT SWEEP */
 .card::before{
   content:"";
   position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
+  inset:0;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
-  transition:0.6s;
+  opacity:0;
+  transition:0.4s;
 }
 
 .card:hover::before{
-  left:100%;
-}
-
-.card:hover{
-  transform:translateY(-8px) scale(1.02);
-  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+  opacity:1;
 }
 
 /* MODAL */
@@ -177,76 +155,95 @@ body{
 
 <body>
 
+<div class="transition" id="transition"></div>
 <div class="cursor-glow" id="glow"></div>
 
 <div class="nav">
   <h2>Mecknown</h2>
-  <a href="about.html">← Back</a>
+  <a href="about.html" onclick="goBack(event)">← Back</a>
 </div>
 
 <section class="hero" id="hero">
-
   <div class="img-wrapper">
     <img src="shazim.png" class="profile-img">
   </div>
-
   <h1>Shazim</h1>
   <p>Robotics • App Development • Embedded Systems</p>
-
 </section>
 
 <section class="projects">
 
-  <div class="card" onclick="openModal('Line Following Robot','PID controlled autonomous robot.')">
+  <div class="card" onmousemove="magnet(event,this)" onmouseleave="reset(this)"
+       onclick="openModal('Line Following Robot','PID controlled robot.')">
     <h3>Line Following Robot</h3>
-    <p>Click to view more</p>
+    <p>Interactive project</p>
   </div>
 
-  <div class="card" onclick="openModal('Voice Assistant','Custom AI with voice recognition.')">
+  <div class="card" onmousemove="magnet(event,this)" onmouseleave="reset(this)"
+       onclick="openModal('Voice Assistant','Custom AI system.')">
     <h3>Voice Assistant</h3>
-    <p>Click to view more</p>
+    <p>Interactive project</p>
   </div>
 
-  <div class="card" onclick="openModal('Gas Safety System','MQ6 based smart automation.')">
+  <div class="card" onmousemove="magnet(event,this)" onmouseleave="reset(this)"
+       onclick="openModal('Gas Safety System','MQ6 automation.')">
     <h3>Gas Safety System</h3>
-    <p>Click to view more</p>
+    <p>Interactive project</p>
   </div>
 
 </section>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-box">
-    <h2 id="modal-title"></h2>
-    <p id="modal-desc"></p>
+    <h2 id="title"></h2>
+    <p id="desc"></p>
   </div>
 </div>
 
 <script>
-// cursor glow
+// CURSOR GLOW
 const glow = document.getElementById("glow");
-document.addEventListener("mousemove",(e)=>{
+document.addEventListener("mousemove", e=>{
   glow.style.left = e.clientX+"px";
   glow.style.top = e.clientY+"px";
 });
 
-// parallax
+// PARALLAX
 const hero = document.getElementById("hero");
-document.addEventListener("mousemove",(e)=>{
-  let x = (window.innerWidth/2 - e.clientX)/30;
-  let y = (window.innerHeight/2 - e.clientY)/30;
+document.addEventListener("mousemove", e=>{
+  let x = (window.innerWidth/2 - e.clientX)/40;
+  let y = (window.innerHeight/2 - e.clientY)/40;
   hero.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
 });
 
-// modal
-const modal = document.getElementById("modal");
-function openModal(title,desc){
-  document.getElementById("modal-title").innerText = title;
-  document.getElementById("modal-desc").innerText = desc;
-  modal.classList.add("active");
+// MAGNET EFFECT
+function magnet(e,el){
+  const rect = el.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width/2;
+  const y = e.clientY - rect.top - rect.height/2;
+  el.style.transform = `translate(${x*0.2}px, ${y*0.2}px)`;
 }
 
-modal.onclick = () => modal.classList.remove("active");
+function reset(el){
+  el.style.transform = "translate(0,0)";
+}
+
+// MODAL
+const modal = document.getElementById("modal");
+function openModal(t,d){
+  document.getElementById("title").innerText = t;
+  document.getElementById("desc").innerText = d;
+  modal.classList.add("active");
+}
+modal.onclick = ()=> modal.classList.remove("active");
+
+// PAGE TRANSITION
+function goBack(e){
+  e.preventDefault();
+  const t = document.getElementById("transition");
+  t.style.transform = "translateY(0)";
+  setTimeout(()=> window.location.href="about.html",500);
+}
 </script>
 
 </body>
