@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shazim - Portfolio</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#0a0a0a;
+  color:#e5e5e5;
+}
+
+/* NAV */
+.nav{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 6%;
+  background:#111;
+  border-bottom:1px solid #1f1f1f;
+}
+
+.nav a{
+  color:#9ca3af;
+  text-decoration:none;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:60px 20px;
+}
+
+/* IMAGE SLIDE */
+.profile-img{
+  width:140px;
+  border-radius:50%;
+  margin-bottom:20px;
+
+  opacity:0;
+  transform:translateY(50px);
+  animation:slideUp 0.8s ease forwards;
+}
+
+@keyframes slideUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.hero h1{
+  font-size:32px;
+}
+
+.hero p{
+  color:#9ca3af;
+}
+
+/* PROJECTS */
+.projects{
+  max-width:800px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+.card{
+  background:#111;
+  border:1px solid #1f1f1f;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="nav">
+  <h2>Mecknown</h2>
+  <a href="about.html">← Back</a>
+</div>
+
+<section class="hero">
+  <img src="shazim.png" class="profile-img">
+  <h1>Shazim</h1>
+  <p>Robotics • App Development • Embedded Systems</p>
+</section>
+
+<section class="projects">
+  <div class="card">
+    <h3>Line Following Robot</h3>
+    <p>PID controlled robot using Arduino.</p>
+  </div>
+
+  <div class="card">
+    <h3>Voice Assistant</h3>
+    <p>Custom AI assistant built on Linux.</p>
+  </div>
+
+  <div class="card">
+    <h3>Gas Safety System</h3>
+    <p>MQ6 based smart safety system.</p>
+  </div>
+</section>
+
+</body>
+</html>
