@@ -23,6 +23,10 @@
   border-bottom:1px solid #1f1f1f;
 }
 
+.navbar h1{
+  font-size:20px;
+}
+
 .navbar input{
   width:40%;
   padding:8px;
@@ -287,18 +291,24 @@ function loadProducts(){
   });
 }
 
-/* ORDER */
+/* ✅ UPDATED ORDER SYSTEM */
 function placeOrder(name,price){
-  const user=auth.currentUser;
+  const user = auth.currentUser;
 
-  const fd=new FormData();
+  const phone = prompt("Enter your phone number:");
+  if(!phone) return;
+
+  const fd = new FormData();
   fd.append("email",user.email);
   fd.append("product",name);
   fd.append("price",price);
+  fd.append("phone",phone);
+  fd.append("time",new Date().toLocaleString());
 
   fetch("https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec",
   {method:"POST",body:fd})
-  .then(()=>alert("Order placed!"));
+  .then(()=>alert("Order placed!"))
+  .catch(()=>alert("Order failed"));
 }
 
 /* SEARCH */
