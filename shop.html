@@ -12,11 +12,10 @@
 
 <style>
 
-/* ✅ NAVBAR FIX (RIGHT SIDE CLEAN) */
+/* ===== NAVBAR (FIXED PERFECT ALIGNMENT) ===== */
 .navbar{
   display:flex;
   align-items:center;
-  justify-content:flex-start;
   padding:12px 20px;
   background:#0a0a0a;
   border-bottom:1px solid #1f1f1f;
@@ -24,13 +23,14 @@
 
 /* LOGO LEFT */
 .navbar h1{
-  margin-right:auto;
   font-size:20px;
+  margin-right:20px;
 }
 
-/* SEARCH CENTER-RIGHT */
+/* SEARCH CENTER */
 .navbar input{
-  margin-right:20px;
+  flex:1;
+  max-width:400px;
   padding:8px;
   border-radius:8px;
   border:1px solid #222;
@@ -38,12 +38,19 @@
   color:#fff;
 }
 
-/* NAV LINKS RIGHT */
+/* RIGHT SIDE CONTAINER */
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-left:auto;
+}
+
+/* NAV LINKS */
 #nav-links{
   display:flex;
   gap:15px;
   list-style:none;
-  margin-left:auto;
 }
 
 #nav-links a{
@@ -55,21 +62,27 @@
   color:#fff;
 }
 
-/* MOBILE */
+/* MENU ICON */
 .menu-toggle{
   display:none;
+  font-size:20px;
+  cursor:pointer;
 }
 
+/* MOBILE */
 @media(max-width:768px){
-  .menu-toggle{ display:block; }
+
+  .menu-toggle{
+    display:block;
+  }
 
   #nav-links{
-    display:none;
-    flex-direction:column;
-    background:#111;
     position:absolute;
     right:0;
     top:60px;
+    background:#111;
+    flex-direction:column;
+    display:none;
     padding:10px;
   }
 
@@ -78,12 +91,43 @@
   }
 
   .navbar input{
-    width:100%;
-    margin:10px 0;
+    display:none;
   }
 }
 
-/* SHOP GRID */
+/* ===== LOGIN UI ===== */
+.login-box{
+  max-width:350px;
+  margin:40px auto;
+  padding:20px;
+  background:#111;
+  border-radius:16px;
+  border:1px solid #222;
+  text-align:center;
+}
+
+.login-box input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #333;
+  background:#0a0a0a;
+  color:#fff;
+}
+
+.login-box button{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#fff;
+  color:#000;
+  font-weight:600;
+}
+
+/* ===== SHOP ===== */
 .shop-grid{
   display:grid;
   grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
@@ -112,11 +156,6 @@
 }
 
 button{
-  padding:6px 10px;
-  border:none;
-  border-radius:6px;
-  background:#fff;
-  color:#000;
   cursor:pointer;
 }
 
@@ -132,21 +171,23 @@ button{
 
   <input type="text" id="searchBar" placeholder="Search products...">
 
-  <div class="menu-toggle" id="menu-toggle">☰</div>
+  <div class="nav-right">
+    <ul id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ai.html">Meck AI</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
 
-  <ul id="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="ai.html">Meck AI</a></li>
-    <li><a href="shop.html" class="active">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h2>Mecknown Store</h2>
+  <h2>⚡ Mecknown Store</h2>
   <p>Smart gadgets • Robotics • Tech builds</p>
 </section>
 
@@ -154,7 +195,19 @@ button{
 
 <!-- LOGIN -->
 <div id="loginSection" class="login-box">
-  <button onclick="googleLogin()">Sign in with Google</button>
+  <h2 id="authTitle">Login</h2>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="emailAuth()" id="authBtn">Login</button>
+  <button onclick="googleLogin()">Continue with Google</button>
+
+  <div onclick="toggleAuth()" style="margin-top:10px;color:#aaa;cursor:pointer;">
+    Don't have an account? Sign up
+  </div>
+
+  <p id="authError" style="color:red;font-size:13px;"></p>
 </div>
 
 <!-- SHOP -->
@@ -190,7 +243,34 @@ const db = firebase.firestore();
 
 const ADMIN_EMAIL = "shazamotp@gmail.com";
 
-/* LOGIN */
+/* AUTH MODE */
+let isLogin = true;
+
+function toggleAuth(){
+  isLogin = !isLogin;
+
+  document.getElementById("authTitle").innerText = isLogin ? "Login" : "Sign Up";
+  document.getElementById("authBtn").innerText = isLogin ? "Login" : "Create Account";
+}
+
+/* EMAIL LOGIN */
+function emailAuth(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const errorBox = document.getElementById("authError");
+
+  errorBox.innerText = "";
+
+  if(isLogin){
+    auth.signInWithEmailAndPassword(email,password)
+    .catch(err => errorBox.innerText = err.message);
+  } else {
+    auth.createUserWithEmailAndPassword(email,password)
+    .catch(err => errorBox.innerText = err.message);
+  }
+}
+
+/* GOOGLE LOGIN */
 function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
@@ -204,7 +284,7 @@ auth.onAuthStateChanged(user => {
     document.getElementById("userInfo").innerText="👤 "+user.email;
 
     if(user.email === ADMIN_EMAIL){
-      document.getElementById("addProductBtn").style.display="inline-block";
+      document.getElementById("addProductBtn").style.display = "inline-block";
     }
 
     loadProducts();
@@ -306,14 +386,9 @@ document.getElementById("searchBar").addEventListener("input", function(){
 });
 
 /* MOBILE MENU */
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-if(toggle && navLinks){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-  });
-}
+document.getElementById("menu-toggle").addEventListener("click",()=>{
+  document.getElementById("nav-links").classList.toggle("active");
+});
 
 </script>
 
