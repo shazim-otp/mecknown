@@ -195,11 +195,6 @@ button{
 <div id="shopSection" style="display:none;">
   <div style="padding:20px;">
     <p id="userInfo"></p>
-
-    <button id="addProductBtn" onclick="addProduct()" style="display:none;">
-      + Add Product
-    </button>
-
     <button onclick="logout()">Logout</button>
   </div>
 
@@ -220,9 +215,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const ADMIN_EMAIL = "shazamotp@gmail.com";
-
-/* FIXED AUTH */
+/* AUTH */
 let isLogin = true;
 
 function toggleAuth(){
@@ -230,7 +223,7 @@ function toggleAuth(){
   document.getElementById("authTitle").innerText = isLogin ? "Login" : "Sign Up";
 }
 
-/* FIXED LOGIN */
+/* LOGIN */
 function emailAuth(){
   const emailVal = document.getElementById("email").value;
   const passwordVal = document.getElementById("password").value;
@@ -258,10 +251,6 @@ auth.onAuthStateChanged(user=>{
     document.getElementById("loginSection").style.display="none";
     document.getElementById("shopSection").style.display="block";
     document.getElementById("userInfo").innerText="👤 "+user.email;
-
-    if(user.email===ADMIN_EMAIL){
-      document.getElementById("addProductBtn").style.display="inline-block";
-    }
 
     loadProducts();
   }
@@ -298,46 +287,18 @@ function loadProducts(){
   });
 }
 
-/* CLOUDINARY UPLOAD */
-function addProduct(){
-  const user = auth.currentUser;
+/* ORDER */
+function placeOrder(name,price){
+  const user=auth.currentUser;
 
-  if(!user || user.email!==ADMIN_EMAIL){
-    alert("Access denied");
-    return;
-  }
+  const fd=new FormData();
+  fd.append("email",user.email);
+  fd.append("product",name);
+  fd.append("price",price);
 
-  const name = prompt("Product name:");
-  const price = prompt("Price:");
-  const description = prompt("Description:");
-
-  const fileInput=document.createElement("input");
-  fileInput.type="file";
-  fileInput.accept="image/*";
-  fileInput.click();
-
-  fileInput.onchange=async()=>{
-    const file=fileInput.files[0];
-
-    const fd=new FormData();
-    fd.append("file",file);
-    fd.append("upload_preset","mecknown_upload");
-
-    const res=await fetch("https://api.cloudinary.com/v1_1/do8z7aoj4/image/upload",{
-      method:"POST",
-      body:fd
-    });
-
-    const data=await res.json();
-
-    db.collection("products").add({
-      name,price,description,
-      image:data.secure_url,
-      createdAt:new Date()
-    });
-
-    alert("Added!");
-  }
+  fetch("https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec",
+  {method:"POST",body:fd})
+  .then(()=>alert("Order placed!"));
 }
 
 /* SEARCH */
@@ -348,7 +309,7 @@ document.getElementById("searchBar").addEventListener("input", function(){
   });
 });
 
-/* FIXED MENU */
+/* MENU */
 document.getElementById("menu-toggle").addEventListener("click", function(){
   document.getElementById("nav-links").classList.toggle("active");
 });
