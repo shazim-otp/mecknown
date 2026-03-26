@@ -5,9 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<style>
+
+/* 🔥 AUTH UI */
+.login-box{
+  max-width:350px;
+  margin:40px auto;
+  padding:20px;
+  background:#111;
+  border:1px solid #222;
+  border-radius:16px;
+  text-align:center;
+}
+
+.login-box h2{
+  margin-bottom:15px;
+}
+
+.login-box input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #333;
+  background:#0a0a0a;
+  color:#fff;
+}
+
+.login-box button{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#fff;
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.login-box button:hover{
+  opacity:0.85;
+}
+
+.switch{
+  margin-top:10px;
+  font-size:14px;
+  color:#aaa;
+  cursor:pointer;
+}
+
+/* SHOP UI */
+.shop-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+
+.product-card{
+  background:#111;
+  border:1px solid #1f1f1f;
+  border-radius:14px;
+  padding:12px;
+  transition:0.25s;
+}
+
+.product-card:hover{
+  transform:translateY(-5px);
+}
+
+.product-card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.price-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+button{
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .login-box{
+    margin:20px;
+  }
+}
+
+</style>
+
 </head>
 
 <body>
@@ -42,17 +139,27 @@
 
 <!-- LOGIN -->
 <div id="loginSection" class="login-box">
-  <button onclick="googleLogin()">Sign in with Google</button>
+  <h2 id="authTitle">Login</h2>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="emailAuth()" id="authBtn">Login</button>
+
+  <button onclick="googleLogin()">Continue with Google</button>
+
+  <div class="switch" onclick="toggleAuth()">
+    Don't have an account? Sign up
+  </div>
+
+  <p id="authError" style="color:red;font-size:13px;"></p>
 </div>
 
 <!-- SHOP -->
 <div id="shopSection" style="display:none;">
   <div class="shop-header">
     <p id="userInfo"></p>
-
-    <!-- ADMIN BUTTON -->
     <button onclick="addProduct()">+ Add Product</button>
-
     <button onclick="logout()">Logout</button>
   </div>
 
@@ -63,7 +170,7 @@
 
 <script>
 
-/* 🔥 FIREBASE CONFIG */
+/* 🔥 FIREBASE CONFIG (UNCHANGED) */
 const firebaseConfig = {
   apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
   authDomain: "mecknownshop.firebaseapp.com",
@@ -75,10 +182,38 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* 🔐 ADMIN EMAIL */
-const ADMIN_EMAIL = "shazamotp@gmail.com"; // ← change this
+const ADMIN_EMAIL = "shazamotp@gmail.com";
 
-/* LOGIN */
+/* AUTH MODE */
+let isLogin = true;
+
+function toggleAuth(){
+  isLogin = !isLogin;
+
+  document.getElementById("authTitle").innerText = isLogin ? "Login" : "Sign Up";
+  document.getElementById("authBtn").innerText = isLogin ? "Login" : "Create Account";
+  document.querySelector(".switch").innerText =
+    isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
+}
+
+/* EMAIL AUTH */
+function emailAuth(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const errorBox = document.getElementById("authError");
+
+  errorBox.innerText = "";
+
+  if(isLogin){
+    auth.signInWithEmailAndPassword(email,password)
+    .catch(err => errorBox.innerText = err.message);
+  } else {
+    auth.createUserWithEmailAndPassword(email,password)
+    .catch(err => errorBox.innerText = err.message);
+  }
+}
+
+/* GOOGLE LOGIN */
 function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
@@ -100,7 +235,7 @@ function logout(){
   location.reload();
 }
 
-/* 🔥 LOAD PRODUCTS (FIRESTORE LIVE) */
+/* PRODUCTS */
 function loadProducts(){
   const container = document.getElementById("productContainer");
 
@@ -112,31 +247,29 @@ function loadProducts(){
       snapshot.forEach(doc=>{
         const product = doc.data();
 
-        container.innerHTML += `
-          <div class="product-card">
-            <span class="badge">NEW</span>
+        const card = document.createElement("div");
+        card.className = "product-card";
 
-            <img src="${product.image}">
-
-            <h3>${product.name}</h3>
-
-            <div class="rating">⭐⭐⭐⭐☆</div>
-
-            <p>${product.description}</p>
-
-            <div class="price-row">
-              <span class="price">₹${product.price}</span>
-              <button onclick="placeOrder('${product.name}','${product.price}')">
-                Buy
-              </button>
-            </div>
+        card.innerHTML = `
+          <img src="${product.image}">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <div class="price-row">
+            <span>₹${product.price}</span>
+            <button>Buy</button>
           </div>
         `;
+
+        card.querySelector("button").onclick = () => {
+          placeOrder(product.name, product.price);
+        };
+
+        container.appendChild(card);
       });
     });
 }
 
-/* ➕ ADD PRODUCT (ADMIN ONLY) */
+/* ADD PRODUCT */
 function addProduct(){
   const user = auth.currentUser;
 
@@ -162,7 +295,7 @@ function addProduct(){
   .then(()=>alert("✅ Product Added!"));
 }
 
-/* 🛒 ORDER */
+/* ORDER (UNCHANGED) */
 function placeOrder(name, price){
   const user=auth.currentUser;
 
@@ -179,14 +312,14 @@ function placeOrder(name, price){
   .catch(()=>alert("Order failed"));
 }
 
-/* 🔍 SEARCH */
+/* SEARCH */
 document.getElementById("searchBar").addEventListener("input", function(){
   const value=this.value.toLowerCase();
   const cards=document.querySelectorAll(".product-card");
 
   cards.forEach(card=>{
     const text=card.innerText.toLowerCase();
-    card.style.display = text.includes(value) ? "block" : "none";
+    card.style.display = text.includes(value) ? "" : "none";
   });
 });
 
