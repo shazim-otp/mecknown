@@ -7,15 +7,18 @@
 /* ===== AI PAGE ===== */
 .ai-container{
   position:relative;
-  height: calc(100vh - 110px); /* navbar + status bar */
+  height: calc(100dvh - 110px); /* FIXED for mobile viewport */
   display:flex;
   flex-direction:column;
+  overflow:hidden;
 }
 
 .ai-frame{
   flex:1;
-  border:none;
   width:100%;
+  height:100%;
+  border:none;
+  display:block;
 }
 
 /* ===== STATUS BAR ===== */
@@ -46,10 +49,7 @@
 /* ===== LOADING OVERLAY ===== */
 .ai-overlay{
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:#0a0a0a;
   display:flex;
   justify-content:center;
