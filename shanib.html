@@ -3,114 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shanib - Portfolio</title>
+<title>Shanib | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
 body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:#0a0a0a;
-  color:#e5e5e5;
-}
-
-/* NAV */
-.nav{
-  display:flex;
-  justify-content:space-between;
-  padding:20px 6%;
-  background:#111;
-  border-bottom:1px solid #1f1f1f;
-}
-
-.nav a{
-  color:#9ca3af;
-  text-decoration:none;
+    background:#050505;
+    color:#fff;
 }
 
 /* HERO */
 .hero{
-  text-align:center;
-  padding:60px 20px;
+    text-align:center;
+    padding:100px 20px;
 }
 
-/* IMAGE SLIDE */
-.profile-img{
-  width:140px;
-  border-radius:50%;
-  margin-bottom:20px;
-
-  opacity:0;
-  transform:translateY(50px);
-  animation:slideUp 0.8s ease forwards;
+/* IMAGE */
+.profile{
+    width:200px;
+    height:250px;
+    margin:auto;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(255,255,255,0.08);
+    opacity:0;
+    transform:translateY(-120px);
+    animation:drop 1.5s ease forwards;
 }
 
-@keyframes slideUp{
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+@keyframes drop{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
+.profile img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* TEXT */
 .hero h1{
-  font-size:32px;
+    margin-top:20px;
+    font-size:34px;
+}
+
+.hero h3{
+    margin-top:8px;
+    color:#9ca3af;
+    font-weight:400;
 }
 
 .hero p{
-  color:#9ca3af;
+    margin-top:10px;
+    color:#6b7280;
 }
 
-/* PROJECTS */
-.projects{
-  max-width:800px;
-  margin:auto;
-  padding:40px 20px;
+/* SOCIAL ICONS */
+.social{
+    margin-top:20px;
 }
 
+.social a{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#111;
+    margin:0 8px;
+    color:#fff;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.social a:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* SECTION */
+section{
+    padding:60px 8%;
+}
+
+.title{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+/* CARD */
 .card{
-  background:#111;
-  border:1px solid #1f1f1f;
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:20px;
-  transition:0.3s;
+    background:#0d0d0d;
+    padding:18px;
+    border-radius:15px;
+    margin-bottom:15px;
+    border:1px solid #111;
+    transition:0.4s;
 }
 
-.card:hover{
-  transform:translateY(-5px);
+/* SCROLL ANIMATION */
+.hidden{
+    opacity:0;
+    transform:translateY(40px);
+    transition:0.8s;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:20px;
+    color:#555;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="nav">
-  <h2>Mecknown</h2>
-  <a href="about.html">← Back</a>
+<!-- HERO -->
+<div class="hero">
+    <div class="profile">
+        <!-- IMPORTANT: use your PNG here -->
+        <img src="shanib.png" alt="Shanib">
+    </div>
+
+    <h1 class="hidden">Shanib</h1>
+    <h3 class="hidden">Co-Founder & Developer of Mecknown</h3>
+    <p class="hidden">Web & App Developer • Cybersecurity • IoT • Robotics • Embedded Systems • AI Builder</p>
+
+    <div class="social hidden">
+        <a href="https://github.com/Muhammed-Shanu" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/muhammed-shanib-617602395" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/__sha_niii_?igsh=YTZ3eTdrZHluOXht" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <p class="hidden" style="margin-top:25px; max-width:500px; margin-left:auto; margin-right:auto;">
+        I build robotics systems, embedded devices, and smart applications that solve real-world problems.
+    </p>
 </div>
 
-<section class="hero">
-  <img src="shanib.png" class="profile-img">
-  <h1>Shanib</h1>
-  <p>Backend • Systems • Project Execution</p>
+<!-- PROJECTS -->
+<section>
+    <h2 class="title hidden">Projects</h2>
+
+    <div class="card hidden">Road Crack Detecting System</div>
+    <div class="card hidden">AI Robot</div>
+    <div class="card hidden">E-Commerce Website & App</div>
+    <div class="card hidden">AI Assistant</div>
 </section>
 
-<section class="projects">
-  <div class="card">
-    <h3>Backend Architecture</h3>
-    <p>Designed scalable backend systems.</p>
-  </div>
+<!-- SKILLS -->
+<section>
+    <h2 class="title hidden">Skills</h2>
 
-  <div class="card">
-    <h3>System Optimization</h3>
-    <p>Improved performance and efficiency.</p>
-  </div>
-
-  <div class="card">
-    <h3>Project Management</h3>
-    <p>Handled execution and deployment workflows.</p>
-  </div>
+    <div class="card hidden">Cybersecurity</div>
+    <div class="card hidden">IoT Development</div>
+    <div class="card hidden">Embedded Systems</div>
+    <div class="card hidden">Robotics</div>
+    <div class="card hidden">Linux & Raspberry Pi</div>
 </section>
+
+<!-- EXPERIENCE -->
+<section>
+    <h2 class="title hidden">Experience</h2>
+
+    <div class="card hidden">5+ Years Hands-on Experience</div>
+    <div class="card hidden">Real-world Project Development</div>
+    <div class="card hidden">IoT & Robotics Builder</div>
+</section>
+
+<footer>
+    © 2026 Shanib | Mecknown
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        } else {
+            entry.target.classList.remove('show');
+        }
+    });
+});
+
+document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
