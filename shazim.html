@@ -1,239 +1,233 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shazim - Portfolio</title><style>
+<title>Shazim | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
 body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:#0a0a0a;
-  color:#e5e5e5;
-  overflow-x:hidden;
-}
-
-/* MAIN CONTAINER (FIXES ALIGNMENT) */
-.container{
-  max-width:900px;
-  margin:0 auto;
-  padding:0 16px;
-}
-
-/* NAV */
-.nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 0;
-  border-bottom:1px solid #1f1f1f;
-}
-
-.nav a{
-  color:#9ca3af;
-  text-decoration:none;
-  font-size:14px;
+    background:#050505;
+    color:#fff;
 }
 
 /* HERO */
 .hero{
-  text-align:center;
-  padding:80px 0;
-  position:relative;
-}
-
-/* BRUSH BG */
-.hero::before{
-  content:"";
-  position:absolute;
-  width:400px;
-  height:180px;
-  background:radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
-  filter:blur(40px);
-  top:20px;
-  left:50%;
-  transform:translateX(-50%) rotate(-8deg);
-  z-index:-1;
+    text-align:center;
+    padding:100px 20px;
 }
 
 /* IMAGE */
-.profile-img{
-  width:150px;
-  border-radius:14px;
-  display:block;
-  margin:auto;
-
-  opacity:0;
-  transform:translateX(-160px) scale(0.95);
-  animation:slideIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-
-  transition:0.35s;
-  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+.profile{
+    width:200px;
+    height:250px;
+    margin:auto;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(255,255,255,0.08);
+    opacity:0;
+    transform:translateY(-120px);
+    animation:drop 1.5s ease forwards;
 }
 
-.profile-img:hover{
-  transform:translateX(0) scale(1.03) rotateX(3deg) rotateY(-3deg);
-  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+@keyframes drop{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-@keyframes slideIn{
-  0%{opacity:0; transform:translateX(-160px) scale(0.95);}
-  60%{opacity:1; transform:translateX(10px) scale(1.02);}
-  100%{opacity:1; transform:translateX(0) scale(1);}
+.profile img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 /* TEXT */
 .hero h1{
-  margin-top:20px;
-  font-size:32px;
+    margin-top:20px;
+    font-size:34px;
 }
 
-.role{
-  margin-top:5px;
-  font-weight:500;
+.hero h3{
+    margin-top:8px;
+    color:#9ca3af;
+    font-weight:400;
 }
 
-.subtitle{
-  color:#9ca3af;
-  margin-top:6px;
+.hero p{
+    margin-top:10px;
+    color:#6b7280;
 }
 
-/* SOCIALS */
-.socials{
-  margin-top:20px;
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
+/* SOCIAL ICONS */
+.social{
+    margin-top:20px;
 }
 
-.socials a{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 14px;
-  border:1px solid #1f1f1f;
-  border-radius:12px;
-  color:#9ca3af;
-  text-decoration:none;
-  font-size:14px;
-  transition:0.25s;
+.social a{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#111;
+    margin:0 8px;
+    color:#fff;
+    font-size:18px;
+    transition:0.3s;
 }
 
-.socials a:hover{
-  color:#fff;
-  border-color:#444;
-  transform:translateY(-3px);
-}
-
-/* INTRO */
-.intro{
-  text-align:center;
-  color:#9ca3af;
-  line-height:1.6;
-  margin-bottom:40px;
+.social a:hover{
+    background:#fff;
+    color:#000;
 }
 
 /* SECTION */
-.section{
-  margin:40px 0;
+section{
+    padding:60px 8%;
 }
 
-.section h2{
-  margin-bottom:20px;
+.title{
+    font-size:28px;
+    margin-bottom:20px;
 }
 
-/* CARDS */
+/* CARD */
 .card{
-  background:#111;
-  border:1px solid #1f1f1f;
-  padding:18px;
-  border-radius:14px;
-  margin-bottom:12px;
-  transition:0.25s;
+    background:#0d0d0d;
+    padding:18px;
+    border-radius:15px;
+    margin-bottom:15px;
+    border:1px solid #111;
+    transition:0.4s;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  border-color:#2a2a2a;
+    transform:translateY(-5px);
+}
+
+/* SCROLL ANIMATION */
+.hidden{
+    opacity:0;
+    transform:translateY(40px);
+    transition:0.8s;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 /* FOOTER */
-.footer{
-  text-align:center;
-  padding:30px 0;
-  color:#777;
+footer{
+    text-align:center;
+    padding:20px;
+    color:#555;
 }
+</style>
 
-/* MOBILE */
-@media (max-width:768px){
+</head>
 
-  .hero{
-    padding:60px 0;
-  }
+<body>
 
-  .profile-img{
-    width:120px;
-  }
+<!-- HERO -->
 
-  .hero h1{
-    font-size:26px;
-  }
+<div class="hero">
+    <div class="profile">
+        <img src="shazim.png" alt="Shazim">
+    </div>
 
-  .role{
-    font-size:14px;
-  }
+```
+<h1 class="hidden">Shazim</h1>
+<h3 class="hidden">Co-Founder & Developer of Mecknown</h3>
+<p class="hidden">Robotics • Embedded Systems • AI • IoT Builder</p>
 
-  .subtitle{
-    font-size:13px;
-  }
-
-  .intro{
-    font-size:14px;
-  }
-
-}
-</style></head><body><div class="container">  <div class="nav">
-    <h2>Mecknown</h2>
-    <a href="about.html">← Back</a>
-  </div>  <section class="hero">
-    <img src="shazim.png" class="profile-img"><h1>Shazim</h1>
-<p class="role">Co-Founder & Developer of Mecknown</p>
-<p class="subtitle">Robotics • Embedded Systems • AI • IoT Builder</p>
-
-<div class="socials">
-  <a href="https://github.com/shazim-otp" target="_blank">
-    <svg width="16" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 008 10.95c.6.1.82-.26.82-.58v-2.02c-3.26.7-3.95-1.57-3.95-1.57-.54-1.36-1.32-1.72-1.32-1.72-1.08-.73.08-.72.08-.72 1.2.08 1.83 1.24 1.83 1.24 1.06 1.82 2.78 1.3 3.46 1 .1-.77.42-1.3.76-1.6-2.6-.3-5.34-1.3-5.34-5.8 0-1.28.46-2.33 1.22-3.15-.12-.3-.53-1.52.12-3.18 0 0 1-.32 3.3 1.2a11.4 11.4 0 016 0c2.3-1.52 3.3-1.2 3.3-1.2.65 1.66.24 2.88.12 3.18.76.82 1.22 1.87 1.22 3.15 0 4.52-2.75 5.5-5.37 5.79.43.37.82 1.1.82 2.22v3.3c0 .32.22.7.83.58A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/>
-    </svg>
-    GitHub
-  </a>
-
-  <a href="https://instagram.com/shazm._2" target="_blank">
-    <svg width="16" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 5a5 5 0 110 10 5 5 0 010-10zm6.5-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM12 9a3 3 0 100 6 3 3 0 000-6z"/>
-    </svg>
-    Instagram
-  </a>
+<!-- SOCIAL -->
+<div class="social hidden">
+    <a href="https://github.com/shazim-otp" target="_blank">
+        <i class="fab fa-github"></i>
+    </a>
+    <a href="https://instagram.com/shazm._2" target="_blank">
+        <i class="fab fa-instagram"></i>
+    </a>
 </div>
 
-  </section>  <div class="intro">
+<p class="hidden" style="margin-top:25px; max-width:500px; margin-left:auto; margin-right:auto;">
     I build robotics systems, embedded devices, and smart applications that solve real-world problems.
-  </div>  <div class="section">
-    <h2>Projects</h2><div class="card">AI Assistant</div>
-<div class="card">Smart Kitchen Safety System</div>
-<div class="card">Home Automation System</div>
-<div class="card">AFK Bot</div>
+    From autonomous robots to AI tools — I turn ideas into working tech.
+</p>
+```
 
-  </div>  <div class="section">
-    <h2>Skills</h2><div class="card">Arduino, Raspberry Pi, Sensors</div>
-<div class="card">Linux, Firebase, Apps</div>
-<div class="card">IoT, Gadget Building, Hacking Basics</div>
+</div>
 
-  </div>  <div class="section">
-    <h2>Experience</h2><div class="card">5+ years hands-on experience</div>
-<div class="card">Teaching & mentoring</div>
-<div class="card">State-level competitor</div>
+<!-- PROJECTS -->
 
-  </div>  <div class="footer">
+<section>
+    <h2 class="title hidden">Projects</h2>
+
+```
+<div class="card hidden">AI Assistant</div>
+<div class="card hidden">Smart Kitchen Safety System</div>
+<div class="card hidden">Home Automation System</div>
+<div class="card hidden">Aternos AFK Bot</div>
+```
+
+</section>
+
+<!-- SKILLS -->
+
+<section>
+    <h2 class="title hidden">Skills</h2>
+
+```
+<div class="card hidden">Arduino, Raspberry Pi, Sensors, Circuit Design</div>
+<div class="card hidden">Linux, App Development, Firebase, Automation</div>
+<div class="card hidden">IoT Systems, Gadget Building, Ethical Hacking (Basics)</div>
+```
+
+</section>
+
+<!-- EXPERIENCE -->
+
+<section>
+    <h2 class="title hidden">Experience</h2>
+
+```
+<div class="card hidden">5+ Years Hands-on Experience</div>
+<div class="card hidden">Teaching & Mentoring in Robotics</div>
+<div class="card hidden">State-level Technology Competitor</div>
+```
+
+</section>
+
+<footer>
     © 2026 Mecknown
-  </div></div></body>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+    });
+});
+
+document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+</script>
+
+</body>
 </html>
