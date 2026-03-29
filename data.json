@@ -1,0 +1,10 @@
+{
+  "live": {
+    "id": "abc123xyz",
+    "time": "2026-04-01T18:00:00"
+  },
+  "classes": [
+    { "title": "Day 1 - Intro", "video": "vid111" },
+    { "title": "Day 2 - Basics", "video": "vid222" }
+  ]
+}
