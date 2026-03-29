@@ -35,45 +35,6 @@ h1{margin-bottom:10px}
 .back{display:inline-block;margin-top:20px;padding:10px 16px;background:#00d4ff;color:#000;border-radius:8px;text-decoration:none;font-weight:600}
 .back:hover{background:#00b8e6}
 
-/* ===== COMMENTS UI ===== */
-.comments-wrap{
-  margin-top:60px;
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
-  padding:20px;
-  text-align:left;
-}
-
-/* Live badge animation */
-.live-chat-badge{
-  display:inline-block;
-  background:#ff3b3b;
-  color:#fff;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  margin-left:10px;
-  animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(255,59,59,0.7)}
-  70%{box-shadow:0 0 0 10px rgba(255,59,59,0)}
-  100%{box-shadow:0 0 0 0 rgba(255,59,59,0)}
-}
-
-/* smooth appearance */
-.comments-wrap iframe{
-  border-radius:12px;
-  animation:fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(10px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
 </style>
 </head>
 <body>
@@ -98,31 +59,6 @@ h1{margin-bottom:10px}
 </div>
 
 <a href="index.html" class="back">⬅ Back to Home</a>
-
-<!-- ===== COMMENTS ===== -->
-<div class="comments-wrap">
-  <h2 style="color:#fff; font-size:22px; margin-bottom:20px;">
-    Live Chat 
-    <span class="live-chat-badge">LIVE</span>
-  </h2>
-
-  <script src="https://giscus.app/client.js"
-        data-repo="shazim-otp/mecknown"
-        data-repo-id="R_kgDORX2NGA"
-        data-category="General"
-        data-category-id="DIC_kwDORX2NGM4C5joi"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="dark"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
-  </script>
-</div>
 
 </div>
 
@@ -157,14 +93,6 @@ fetch("data.json")
     const mins = Math.floor(diff/60000);
     status.innerText = `Starts in ${mins} minutes`;
   }
-
-/* ===== AUTO SCROLL TO LATEST COMMENT ===== */
-setTimeout(() => {
-  const giscusFrame = document.querySelector("iframe.giscus-frame");
-  if(giscusFrame){
-    giscusFrame.scrollIntoView({ behavior: "smooth", block: "end" });
-  }
-}, 2000);
 
 });
 
