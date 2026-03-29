@@ -36,6 +36,11 @@ body{
     border-radius:20px;
     overflow:hidden;
     box-shadow:0 0 40px rgba(255,255,255,0.08);
+
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+
     opacity:0;
     transform:translateY(-120px);
     animation:drop 1.5s ease forwards;
@@ -52,6 +57,7 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
+    object-position:top; /* FIX: keeps head visible */
 }
 
 /* TEXT */
@@ -173,8 +179,6 @@ footer{
 
 <body>
 
-<!-- HERO -->
-
 <div class="hero">
     <div class="profile">
         <img src="/assets/shazim.png" alt="Shazim">
@@ -198,8 +202,6 @@ footer{
 
 </div>
 
-<!-- PROJECTS -->
-
 <section>
     <h2 class="title hidden">Projects</h2>
 
@@ -212,8 +214,6 @@ footer{
 
 </section>
 
-<!-- SKILLS -->
-
 <section>
     <h2 class="title hidden">Skills</h2>
 
@@ -224,8 +224,6 @@ footer{
 ```
 
 </section>
-
-<!-- EXPERIENCE -->
 
 <section>
     <h2 class="title hidden">Experience</h2>
