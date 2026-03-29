@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Class</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:'Poppins',sans-serif;background:#0b1f3a;color:#fff;}
+
+.navbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 25px;background:#0a1830;border-bottom:1px solid #1a2d4d;
+}
+
+.nav-links a{
+  color:#cbd5e1;text-decoration:none;margin-left:20px;
+}
+.nav-links a:hover{color:#00d4ff;}
+
+.container{padding:25px;max-width:900px;margin:auto;text-align:center;}
+
+.video-box{
+  position:relative;
+  padding-top:56.25%;
+  border-radius:12px;
+  overflow:hidden;
+  margin-top:20px;
+}
+
+.video-box iframe{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  border:none;
+}
+
+.status{
+  margin-top:15px;
+  color:#9fb3c8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>My Academy</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="course.html">Course</a>
+    <a href="live.html">Live</a>
+  </div>
+</div>
+
+<div class="container">
+
+<h1>Live Class</h1>
+
+<div class="video-box" id="liveBox"></div>
+<div class="status" id="status">Checking...</div>
+
+</div>
+
+<script>
+
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+
+  const liveBox = document.getElementById("liveBox");
+  const status = document.getElementById("status");
+
+  const now = new Date().getTime();
+  const start = new Date(data.live.time).getTime();
+
+  if(now >= start){
+    liveBox.innerHTML = `<iframe src="https://www.youtube.com/embed/${data.live.id}?modestbranding=1&rel=0"></iframe>`;
+    status.innerText = "Live Now";
+  }else{
+    status.innerText = "Class not started yet";
+  }
+
+});
+
+</script>
+
+</body>
+</html>
