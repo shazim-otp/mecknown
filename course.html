@@ -1,116 +1,78 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"><style>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
 body{margin:0;font-family:'Poppins',sans-serif;background:#0b1f3a;color:#fff;}
 
-/* NAVBAR */
-.navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background:#0a1830;border-bottom:1px solid #1a2d4d;position:sticky;top:0;z-index:10}
-.logo{font-weight:600;font-size:18px;letter-spacing:1px}
-.nav-links a{color:#cbd5e1;text-decoration:none;margin-left:20px;font-size:14px;transition:.3s}
-.nav-links a:hover{color:#00d4ff}
-
-/* CONTAINER */
-.container{padding:25px;max-width:1200px;margin:auto}
-
-h1{text-align:center;margin-bottom:10px;font-size:28px}
-.subtitle{text-align:center;color:#9fb3c8;margin-bottom:25px}
-
-.section-title{margin:30px 0 15px;font-size:20px;color:#00d4ff}
-
-/* LIVE BOX */
-.live-wrapper{
-  background:#0a1830;
-  padding:15px;
-  border-radius:16px;
-  border:1px solid #1a2d4d;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+.navbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 25px;background:#0a1830;border-bottom:1px solid #1a2d4d;
 }
+.nav-links a{
+  color:#cbd5e1;text-decoration:none;margin-left:20px;
+}
+.nav-links a:hover{color:#00d4ff;}
 
-.video-box{position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden}
-.video-box iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.container{padding:25px;max-width:1200px;margin:auto;}
 
-.status{text-align:center;margin-top:10px;color:#9fb3c8}
-.live-badge{display:inline-block;background:#ff3b3b;color:#fff;font-size:12px;padding:3px 8px;border-radius:6px;margin-left:10px}
+h1{text-align:center;margin-bottom:10px;}
+.subtitle{text-align:center;color:#9fb3c8;margin-bottom:25px;}
 
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
 
 .card{
   background:#0a1830;
   padding:12px;
   border-radius:14px;
   border:1px solid #1a2d4d;
-  transition:.3s;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.6);
+iframe{
+  width:100%;
+  height:180px;
+  border:none;
+  border-radius:10px;
 }
+</style>
+</head>
 
-.card h3{font-size:15px;margin-bottom:8px;color:#e2e8f0}
-iframe{width:100%;height:180px;border:none;border-radius:10px}
+<body>
 
-/* BUTTON */
-.back{display:block;margin:20px auto;width:fit-content;padding:10px 18px;background:#00d4ff;color:#000;border-radius:8px;text-decoration:none;font-weight:600;transition:.3s}
-.back:hover{background:#00b8e6}
-
-/* EMPTY */
-.empty{text-align:center;color:#94a3b8;margin-top:20px}
-
-@media(max-width:600px){
-  h1{font-size:22px}
-}
-
-</style></head>
-<body><div class="navbar">
-  <div class="logo">My Academy</div>
+<div class="navbar">
+  <div>My Academy</div>
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="course.html">Course</a>
     <a href="live.html">Live</a>
   </div>
-</div><div class="container"><h1>Student Dashboard</h1>
-<p class="subtitle">Access your live classes and recorded lessons</p><a href="index.html" class="back">⬅ Back to Home</a>
+</div>
 
-<!-- LIVE --><div class="section-title">🔴 Live Class</div>
-<div class="live-wrapper">
-  <div class="video-box" id="liveBox"></div>
-  <div class="status" id="liveStatus">Checking live class...</div>
-</div><!-- PAST --><div class="section-title">📚 Past Classes</div>
+<div class="container">
+<h1>Course Library</h1>
+<p class="subtitle">All recorded classes</p>
+
 <div class="grid" id="videoList"></div>
-<div class="empty" id="emptyMsg"></div></div><script>
+</div>
 
-const classes = JSON.parse(localStorage.getItem("classes") || "[]");
-const live = JSON.parse(localStorage.getItem("live") || "{}");
+<script>
 
-const liveBox = document.getElementById("liveBox");
-const liveStatus = document.getElementById("liveStatus");
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
 
-if(live.id && live.time){
-  const now = new Date().getTime();
-  const start = new Date(live.time).getTime();
+  const container = document.getElementById("videoList");
 
-  if(now >= start){
-    liveBox.innerHTML = `<iframe src="https://www.youtube.com/embed/${live.id}?modestbranding=1&rel=0"></iframe>`;
-    liveStatus.innerHTML = `Live Now <span class="live-badge">LIVE</span>`;
-  }else{
-    liveStatus.innerText = "Class not started yet";
-  }
-}else{
-  liveStatus.innerText = "No live class scheduled";
-}
-
-const container = document.getElementById("videoList");
-const emptyMsg = document.getElementById("emptyMsg");
-
-if(classes.length === 0){
-  emptyMsg.innerText = "No classes added yet";
-}else{
-  classes.forEach(c => {
+  data.classes.forEach(c => {
     container.innerHTML += `
       <div class="card">
         <h3>${c.title}</h3>
@@ -118,7 +80,10 @@ if(classes.length === 0){
       </div>
     `;
   });
-}
 
-</script></body>
+});
+
+</script>
+
+</body>
 </html>
