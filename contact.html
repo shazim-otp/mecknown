@@ -4,63 +4,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico">  <style>
-  /* AUTH UI */
-  .auth-gate{
-    max-width:600px;
-    margin:40px auto;
+  /* GLASS POPUP */
+  .auth-modal{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,0.4);
+    z-index:999;
+  }
+
+  .auth-card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
     padding:30px;
-    background:#111;
-    border-radius:16px;
+    border-radius:20px;
     text-align:center;
-    box-shadow:0 0 30px rgba(0,255,213,0.08);
+    width:90%;
+    max-width:400px;
+    box-shadow:0 0 40px rgba(0,255,213,0.15);
+    backdrop-filter:blur(20px);
   }
 
-  .auth-gate h3{
-    font-size:22px;
-    margin-bottom:10px;
-  }
-
-  .auth-gate p{
-    color:#aaa;
-    margin-bottom:20px;
-  }
+  .auth-card h3{ margin-bottom:10px; }
+  .auth-card p{ color:#ccc; margin-bottom:20px; }
 
   .auth-btn{
-    padding:12px 18px;
+    width:100%;
+    padding:12px;
+    margin:8px 0;
     border:none;
     border-radius:10px;
-    margin:6px;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
   }
 
-  .google-btn{
-    background:#fff;
-    color:#000;
-  }
+  .google-btn{ background:#fff; color:#000; }
+  .email-btn{ background:#00ffd5; color:#000; }
 
-  .email-btn{
-    background:#00ffd5;
-    color:#000;
-  }
+  .hidden{ display:none; }
 
-  .user-box{
-    text-align:center;
-    margin-bottom:20px;
-  }
-
+  .user-box{ text-align:center; margin-bottom:15px; }
   .logout-btn{
-    margin-top:10px;
+    margin-top:8px;
+    padding:6px 12px;
+    border:none;
+    border-radius:8px;
     background:#ff4d4d;
     color:#fff;
-    border:none;
-    padding:8px 14px;
-    border-radius:8px;
     cursor:pointer;
   }
 
-  .hidden{
-    display:none;
+  .loading{
+    opacity:0.6;
+    pointer-events:none;
   }
   </style></head><body><!-- Loader --><div id="loader">
   <div class="hologram">
@@ -81,36 +81,35 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav><section class="section">
-  <h2>Contact Us</h2>  <!-- AUTH GATE -->  <div id="authGate" class="auth-gate">
-    <h3>Sign in to Contact Us</h3>
-    <p>You need to be signed in to send a message.</p><button class="auth-btn google-btn" onclick="googleLogin()">Continue with Google</button>
-<button class="auth-btn email-btn" onclick="emailLogin()">Sign in with Email</button>
-
-  </div>  <!-- USER INFO -->  <div id="userBox" class="user-box hidden">
+  <h2>Contact Us</h2>  <!-- USER INFO -->  <div id="userBox" class="user-box hidden">
     <p id="userEmail"></p>
     <button class="logout-btn" onclick="logoutUser()">Logout</button>
   </div>  <!-- CONTACT FORM -->  <form id="contactForm" class="hidden">
     <input type="text" name="name" placeholder="Your Name" required>
     <input type="email" name="email" placeholder="Your Email" required>
     <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-    <button type="submit">Send Message</button>
+    <button id="submitBtn" type="submit">Send Message</button>
   </form>
-</section><footer>
+</section><!-- AUTH POPUP --><div id="authModal" class="auth-modal hidden">
+  <div class="auth-card">
+    <h3>Sign in to Contact Us</h3>
+    <p>Access the contact form after login</p><button class="auth-btn google-btn" onclick="googleLogin()">Continue with Google</button>
+<button class="auth-btn email-btn" onclick="emailLogin()">Sign in with Email</button>
+
+  </div>
+</div><footer>
 © 2026 Mecknown.
 </footer><script>
 
-/* Safe Loader */
+/* Loader */
 window.onload = function(){
   const loader = document.getElementById("loader");
-  if(loader){
-    loader.style.display = "none";
-  }
+  if(loader){ loader.style.display = "none"; }
 };
 
-/* Mobile Menu */
+/* Menu */
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
-
 if(toggle && navLinks){
   toggle.addEventListener("click", function(){
     navLinks.classList.toggle("active");
@@ -118,51 +117,38 @@ if(toggle && navLinks){
   });
 }
 
-/* ===== FIREBASE AUTH CHECK (uses your existing setup) ===== */
-
+/* AUTH STATE */
 function onUserLoggedIn(user){
-  document.getElementById("authGate").classList.add("hidden");
+  document.getElementById("authModal").classList.add("hidden");
   document.getElementById("contactForm").classList.remove("hidden");
   document.getElementById("userBox").classList.remove("hidden");
 
   document.getElementById("userEmail").innerText = "Signed in as: " + user.email;
-
-  // auto fill email
   document.querySelector("input[name='email']").value = user.email;
 }
 
 function onUserLoggedOut(){
-  document.getElementById("authGate").classList.remove("hidden");
+  document.getElementById("authModal").classList.remove("hidden");
   document.getElementById("contactForm").classList.add("hidden");
   document.getElementById("userBox").classList.add("hidden");
 }
 
-// THIS USES YOUR EXISTING FIREBASE
 if(typeof firebase !== "undefined"){
   firebase.auth().onAuthStateChanged(function(user){
-    if(user){
-      onUserLoggedIn(user);
-    } else {
-      onUserLoggedOut();
-    }
+    if(user){ onUserLoggedIn(user); }
+    else{ onUserLoggedOut(); }
   });
 }
 
-/* Hook to your existing login functions */
 function googleLogin(){
-  // you already have this
   if(typeof signInWithGoogle === "function"){
     signInWithGoogle();
-  } else {
-    alert("Google login not connected here");
   }
 }
 
 function emailLogin(){
   if(typeof signInWithEmail === "function"){
     signInWithEmail();
-  } else {
-    alert("Email login not connected here");
   }
 }
 
@@ -170,14 +156,23 @@ function logoutUser(){
   firebase.auth().signOut();
 }
 
-/* Google Sheets Integration */
+/* FORM SUBMIT FIX (ANTI-SPAM) */
 const contactForm = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submitBtn");
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
+
+let isSubmitting = false;
 
 if(contactForm){
   contactForm.addEventListener("submit", function(e){
     e.preventDefault();
+
+    if(isSubmitting) return; // prevent multiple clicks
+    isSubmitting = true;
+
+    submitBtn.innerText = "Sending...";
+    submitBtn.classList.add("loading");
 
     const formData = new FormData(contactForm);
     formData.append("sheet", "Contact");
@@ -186,14 +181,19 @@ if(contactForm){
       method: "POST",
       body: formData
     })
-    .then(response => response.text())
-    .then(data => {
+    .then(res => res.text())
+    .then(() => {
       alert("Message sent successfully!");
       contactForm.reset();
     })
-    .catch(error => {
-      alert("Submission failed. Check script deployment.");
-      console.error(error);
+    .catch(err => {
+      alert("Submission failed.");
+      console.error(err);
+    })
+    .finally(() => {
+      isSubmitting = false;
+      submitBtn.innerText = "Send Message";
+      submitBtn.classList.remove("loading");
     });
   });
 }
