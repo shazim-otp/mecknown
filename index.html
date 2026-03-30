@@ -5,22 +5,15 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<link rel="icon" href="favicon.ico">
-
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- PAGE TRANSITION -->
-<div id="page-transition"></div>
-
-<!-- LOADER -->
 <div id="loader">
   <img src="logo.png" class="loader-logo">
 </div>
 
-<!-- NAV -->
 <nav>
   <h1>Mecknown</h1>
 
@@ -39,184 +32,70 @@
   </ul>
 </nav>
 
-<!-- BACKDROP -->
 <div class="nav-backdrop" id="nav-backdrop"></div>
 
-<!-- HERO -->
 <section class="section hero">
   <h2>Engineering Intelligent Futures</h2>
-  <p>
-    Advanced robotics, smart gadgets, and AI-powered solutions designed for real-world impact.
-  </p>
+  <p>Advanced robotics, smart gadgets, and AI-powered solutions.</p>
 
   <div class="hero-buttons">
-    <a href="shop.html"><button class="primary-btn">Shop Products</button></a>
-    <a href="services.html"><button class="secondary-btn">Explore Services</button></a>
+    <a href="shop.html"><button class="primary-btn">Shop</button></a>
+    <a href="services.html"><button class="secondary-btn">Services</button></a>
   </div>
 </section>
 
-<!-- WHY -->
-<section class="section">
-  <h2>Why Choose Mecknown</h2>
-
-  <div class="card-container">
-    <div class="card">
-      <h3>Corporate Precision</h3>
-      <p>Structured engineering workflows built for scalable innovation.</p>
-    </div>
-
-    <div class="card">
-      <h3>Futuristic Technology</h3>
-      <p>Solutions engineered for tomorrow’s challenges.</p>
-    </div>
-
-    <div class="card">
-      <h3>Robotics Lab Mindset</h3>
-      <p>Experiment. Build. Improve. Deploy.</p>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="section">
-  <h2>Our Impact</h2>
-
-  <div class="card-container">
-    <div class="card">
-      <h3><span class="counter" data-target="100">0</span>+</h3>
-      <p>Projects Developed</p>
-    </div>
-
-    <div class="card">
-      <h3><span class="counter" data-target="5">0</span>+</h3>
-      <p>Skills Developed</p>
-    </div>
-
-    <div class="card">
-      <h3><span class="counter" data-target="100">0</span>%</h3>
-      <p>Commitment</p>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
 <section class="section">
   <h2>Projects</h2>
   <div class="card-container" id="homeProjects"></div>
 </section>
 
-<footer>
-© 2026 Mecknown. All Rights Reserved.
-</footer>
+<footer>© 2026 Mecknown</footer>
 
 <script>
 
-/* ===== LOADER ===== */
-window.addEventListener("load", function () {
-  const loader = document.getElementById("loader");
+/* WAIT FOR DOM */
+document.addEventListener("DOMContentLoaded", () => {
 
-  if (loader) {
-    document.body.style.overflow = "hidden";
-
-    setTimeout(() => {
-      loader.style.opacity = "0";
-    }, 100);
-
-    setTimeout(() => {
-      loader.style.display = "none";
-      document.body.style.overflow = "auto";
-    }, 500);
-  }
-
-  document.getElementById("page-transition").classList.add("hide");
-});
-
-/* ===== PAGE TRANSITION ===== */
-document.querySelectorAll("a").forEach(link=>{
-  link.addEventListener("click", function(e){
-    const href = this.getAttribute("href");
-
-    if(href && !href.startsWith("#")){
-      e.preventDefault();
-      document.getElementById("page-transition").classList.remove("hide");
-
-      setTimeout(()=>{
-        window.location.href = href;
-      }, 400);
-    }
-  });
-});
-
-/* ===== MENU ===== */
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 const backdrop = document.getElementById("nav-backdrop");
 
-toggle.addEventListener("click", ()=>{
+/* MENU */
+toggle.onclick = () => {
   navLinks.classList.toggle("active");
   backdrop.classList.toggle("active");
-});
 
-backdrop.addEventListener("click", ()=>{
+  document.body.style.overflow =
+    navLinks.classList.contains("active") ? "hidden" : "auto";
+};
+
+backdrop.onclick = () => {
   navLinks.classList.remove("active");
   backdrop.classList.remove("active");
+  document.body.style.overflow = "auto";
+};
+
+/* LOADER */
+window.addEventListener("load", ()=>{
+  setTimeout(()=>{
+    document.getElementById("loader").style.display="none";
+  },500);
 });
 
-/* ===== DISABLE DOUBLE TAP ZOOM ===== */
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-  const now = (new Date()).getTime();
-  if (now - lastTouchEnd <= 300) {
-    event.preventDefault();
-  }
-  lastTouchEnd = now;
-}, false);
-
-/* ===== COUNTER ===== */
-const counters = document.querySelectorAll(".counter");
-
-counters.forEach(counter => {
-  counter.innerText = '0';
-
-  const updateCounter = () => {
-    const target = +counter.getAttribute("data-target");
-    const current = +counter.innerText;
-    const increment = target / 100;
-
-    if(current < target){
-      counter.innerText = Math.ceil(current + increment);
-      setTimeout(updateCounter, 20);
-    } else {
-      counter.innerText = target;
-    }
-  };
-
-  updateCounter();
-});
-
-/* ===== PROJECT LOAD ===== */
+/* PROJECTS */
 const homeContainer = document.getElementById("homeProjects");
-
 const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-if(projects.length === 0){
-  homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
-}
-
-projects.forEach(proj => {
+projects.forEach(p=>{
   homeContainer.innerHTML += `
     <div class="card">
-      <h3>${proj.title}</h3>
-      <p>${proj.description}</p>
-
-      ${proj.image ? `<img src="${proj.image}">` : ""}
-      ${proj.video ? `<video controls><source src="${proj.video}"></video>` : ""}
-
-      ${proj.link ? `<p><a href="${proj.link}" target="_blank">View Project</a></p>` : ""}
+      <h3>${p.title}</h3>
+      <p>${p.description}</p>
     </div>
   `;
 });
 
+});
 </script>
 
 </body>
