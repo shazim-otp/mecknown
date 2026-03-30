@@ -16,6 +16,12 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Inter',sans-serif;
+max-width:100%;
+}
+
+html, body{
+overflow-x:hidden;
+max-width:100%;
 }
 
 body{
@@ -45,6 +51,7 @@ background:rgba(10,10,10,0.7);
 backdrop-filter:blur(12px);
 border-bottom:1px solid var(--border);
 z-index:1000;
+overflow:hidden;
 }
 
 nav h1{
@@ -85,7 +92,7 @@ nav a:hover{
 color:var(--text);
 }
 
-/* ACTIVE LINK IMPROVEMENT */
+/* ACTIVE LINK */
 nav a.active{
 color:var(--text);
 position:relative;
@@ -107,6 +114,7 @@ border-radius:2px;
 display:none;
 flex-direction:column;
 cursor:pointer;
+z-index:1001;
 }
 
 .menu-toggle span{
@@ -117,8 +125,9 @@ margin:4px 0;
 transition:0.3s;
 }
 
-/* ===== MOBILE ===== */
+/* ===== MOBILE MENU ===== */
 @media(max-width:768px){
+
 .menu-toggle{display:flex;}
 
 nav{
@@ -130,21 +139,46 @@ width:100%;
 margin-top:10px;
 }
 
+/* FIXED SIDE MENU */
 nav ul{
-position:absolute;
-top:60px;
+position:fixed;
+top:0;
 right:0;
-width:220px;
+height:100vh;
+width:70%;
+max-width:260px;
+
 flex-direction:column;
 background:#000;
-padding:20px;
+padding:80px 20px;
+
 transform:translateX(100%);
-transition:0.3s;
+transition:0.35s ease;
+
+box-shadow:-10px 0 30px rgba(0,0,0,0.6);
 }
 
 nav ul.active{
 transform:translateX(0);
 }
+
+}
+
+/* ===== BACKDROP ===== */
+.nav-backdrop{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(4px);
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:999;
+}
+
+.nav-backdrop.active{
+opacity:1;
+pointer-events:auto;
 }
 
 /* ===== SECTIONS ===== */
