@@ -1,24 +1,72 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
   <title>Mecknown - Contact</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="favicon.ico">  <style>
+  /* AUTH UI */
+  .auth-gate{
+    max-width:600px;
+    margin:40px auto;
+    padding:30px;
+    background:#111;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(0,255,213,0.08);
+  }
 
-</head>
+  .auth-gate h3{
+    font-size:22px;
+    margin-bottom:10px;
+  }
 
-<body>
+  .auth-gate p{
+    color:#aaa;
+    margin-bottom:20px;
+  }
 
-<!-- Loader -->
-<div id="loader">
+  .auth-btn{
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    margin:6px;
+    cursor:pointer;
+    font-weight:bold;
+  }
+
+  .google-btn{
+    background:#fff;
+    color:#000;
+  }
+
+  .email-btn{
+    background:#00ffd5;
+    color:#000;
+  }
+
+  .user-box{
+    text-align:center;
+    margin-bottom:20px;
+  }
+
+  .logout-btn{
+    margin-top:10px;
+    background:#ff4d4d;
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+
+  .hidden{
+    display:none;
+  }
+  </style></head><body><!-- Loader --><div id="loader">
   <div class="hologram">
     <span>MECKNOWN</span>
   </div>
-</div>
-
-
-<nav>
+</div><nav>
   <h1>Mecknown</h1>
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
@@ -32,25 +80,24 @@
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-</nav>
+</nav><section class="section">
+  <h2>Contact Us</h2>  <!-- AUTH GATE -->  <div id="authGate" class="auth-gate">
+    <h3>Sign in to Contact Us</h3>
+    <p>You need to be signed in to send a message.</p><button class="auth-btn google-btn" onclick="googleLogin()">Continue with Google</button>
+<button class="auth-btn email-btn" onclick="emailLogin()">Sign in with Email</button>
 
-
-<section class="section">
-  <h2>Contact Us</h2>
-
-  <form id="contactForm">
+  </div>  <!-- USER INFO -->  <div id="userBox" class="user-box hidden">
+    <p id="userEmail"></p>
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+  </div>  <!-- CONTACT FORM -->  <form id="contactForm" class="hidden">
     <input type="text" name="name" placeholder="Your Name" required>
     <input type="email" name="email" placeholder="Your Email" required>
     <textarea name="message" rows="5" placeholder="Your Message"></textarea>
     <button type="submit">Send Message</button>
   </form>
-</section>
-
-<footer>
+</section><footer>
 © 2026 Mecknown.
-</footer>
-
-<script>
+</footer><script>
 
 /* Safe Loader */
 window.onload = function(){
@@ -69,6 +116,58 @@ if(toggle && navLinks){
     navLinks.classList.toggle("active");
     toggle.classList.toggle("active");
   });
+}
+
+/* ===== FIREBASE AUTH CHECK (uses your existing setup) ===== */
+
+function onUserLoggedIn(user){
+  document.getElementById("authGate").classList.add("hidden");
+  document.getElementById("contactForm").classList.remove("hidden");
+  document.getElementById("userBox").classList.remove("hidden");
+
+  document.getElementById("userEmail").innerText = "Signed in as: " + user.email;
+
+  // auto fill email
+  document.querySelector("input[name='email']").value = user.email;
+}
+
+function onUserLoggedOut(){
+  document.getElementById("authGate").classList.remove("hidden");
+  document.getElementById("contactForm").classList.add("hidden");
+  document.getElementById("userBox").classList.add("hidden");
+}
+
+// THIS USES YOUR EXISTING FIREBASE
+if(typeof firebase !== "undefined"){
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){
+      onUserLoggedIn(user);
+    } else {
+      onUserLoggedOut();
+    }
+  });
+}
+
+/* Hook to your existing login functions */
+function googleLogin(){
+  // you already have this
+  if(typeof signInWithGoogle === "function"){
+    signInWithGoogle();
+  } else {
+    alert("Google login not connected here");
+  }
+}
+
+function emailLogin(){
+  if(typeof signInWithEmail === "function"){
+    signInWithEmail();
+  } else {
+    alert("Email login not connected here");
+  }
+}
+
+function logoutUser(){
+  firebase.auth().signOut();
 }
 
 /* Google Sheets Integration */
@@ -99,7 +198,5 @@ if(contactForm){
   });
 }
 
-</script>
-
-</body>
+</script></body>
 </html>
