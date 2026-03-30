@@ -2,31 +2,25 @@
 <html>
 <head>
 <title>Mecknown - Engineering Intelligent Futures</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<link rel="icon" href="favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://mecknown.in/" />
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
 </head>
 
 <body>
 
-<!-- PAGE TRANSITION -->
-<div id="page-transition"></div>
-
 <!-- LOADER -->
 <div id="loader">
-  <img src="logo.png" class="loader-logo">
+  <img src="logo.png" alt="Loading" class="loader-logo">
 </div>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav>
   <h1>Mecknown</h1>
-
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>
-
   <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="ai.html">Meck AI</a></li>
@@ -38,59 +32,54 @@
   </ul>
 </nav>
 
-<!-- BACKDROP -->
-<div class="nav-backdrop" id="nav-backdrop"></div>
-
 <!-- HERO -->
-<section class="section hero reveal">
+<section class="section hero">
   <h2>Engineering Intelligent Futures</h2>
   <p>
     Advanced robotics, smart gadgets, and AI-powered solutions designed for real-world impact.
   </p>
 
   <div class="hero-buttons">
-    <a href="shop.html"><button class="primary-btn">Shop Products</button></a>
-    <a href="services.html"><button class="secondary-btn">Explore Services</button></a>
+    <a href="shop.html">
+      <button class="primary-btn">Shop Products</button>
+    </a>
+    <a href="services.html">
+      <button class="secondary-btn">Explore Services</button>
+    </a>
   </div>
 </section>
 
-<!-- WHY -->
-<section class="section reveal">
+<!-- WHY US -->
+<section class="section">
   <h2>Why Choose Mecknown</h2>
-
   <div class="card-container">
     <div class="card">
       <h3>Corporate Precision</h3>
       <p>Structured engineering workflows built for scalable innovation.</p>
     </div>
-
     <div class="card">
       <h3>Futuristic Technology</h3>
       <p>Solutions engineered for tomorrow’s challenges.</p>
     </div>
-
     <div class="card">
       <h3>Robotics Lab Mindset</h3>
-      <p>Experiment. Build. Improve. Deploy.</p>
+      <p>Experiment. Build. Improve. Deploy. Repeat.</p>
     </div>
   </div>
 </section>
 
 <!-- STATS -->
-<section class="section reveal">
+<section class="section">
   <h2>Our Impact</h2>
-
   <div class="card-container">
     <div class="card">
       <h3><span class="counter" data-target="100">0</span>+</h3>
       <p>Projects Developed</p>
     </div>
-
     <div class="card">
       <h3><span class="counter" data-target="5">0</span>+</h3>
       <p>Skills Developed</p>
     </div>
-
     <div class="card">
       <h3><span class="counter" data-target="100">0</span>%</h3>
       <p>Commitment</p>
@@ -99,8 +88,8 @@
 </section>
 
 <!-- PROJECTS -->
-<section class="section reveal">
-  <h2>Projects</h2>
+<section class="section">
+  <h2>Our Projects</h2>
   <div class="card-container" id="homeProjects"></div>
 </section>
 
@@ -110,7 +99,7 @@
 
 <script>
 
-/* ===== LOADER ===== */
+/* ===== LOADER FINAL ===== */
 window.addEventListener("load", function () {
   const loader = document.getElementById("loader");
 
@@ -126,48 +115,20 @@ window.addEventListener("load", function () {
       document.body.style.overflow = "auto";
     }, 500);
   }
-
-  document.getElementById("page-transition").classList.add("hide");
 });
 
-/* ===== FIXED MENU (ONLY CHANGE) ===== */
-document.addEventListener("DOMContentLoaded", () => {
+/* ===== MOBILE MENU ===== */
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
 
-  const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
-  const backdrop = document.getElementById("nav-backdrop");
-
-  toggle.onclick = () => {
+if(toggle){
+  toggle.addEventListener("click", function(){
     navLinks.classList.toggle("active");
-    backdrop.classList.toggle("active");
-  };
-
-  backdrop.onclick = () => {
-    navLinks.classList.remove("active");
-    backdrop.classList.remove("active");
-  };
-
-});
-
-/* ===== SCROLL ANIMATION ===== */
-const reveals = document.querySelectorAll(".reveal");
-
-function revealOnScroll(){
-  const windowHeight = window.innerHeight;
-
-  reveals.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-
-    if(top < windowHeight - 80){
-      el.classList.add("active");
-    }
+    toggle.classList.toggle("active");
   });
 }
 
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
-
-/* ===== COUNTER ===== */
+/* ===== COUNTERS ===== */
 const counters = document.querySelectorAll(".counter");
 
 counters.forEach(counter => {
@@ -189,28 +150,46 @@ counters.forEach(counter => {
   updateCounter();
 });
 
-/* ===== PROJECT LOAD ===== */
+/* ===== LOAD PROJECTS ===== */
 const homeContainer = document.getElementById("homeProjects");
 
-const projects = JSON.parse(localStorage.getItem("projects")) || [];
+if(homeContainer){
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-if(projects.length === 0){
-  homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
+  if(projects.length === 0){
+    homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
+  }
+
+  projects.forEach(proj => {
+    homeContainer.innerHTML += `
+      <div class="card">
+        <h3>${proj.title}</h3>
+        <p>${proj.description}</p>
+
+        ${proj.image ? `
+          <img src="${proj.image}" 
+               style="width:100%;margin-top:10px;border-radius:10px;">
+        ` : ""}
+
+        ${proj.video ? `
+          <video controls 
+                 style="width:100%;margin-top:10px;border-radius:10px;">
+            <source src="${proj.video}">
+          </video>
+        ` : ""}
+
+        ${proj.link ? `
+          <p style="margin-top:10px;">
+            <a href="${proj.link}" target="_blank" 
+               style="color:#00ffff;">
+               View Project
+            </a>
+          </p>
+        ` : ""}
+      </div>
+    `;
+  });
 }
-
-projects.forEach(proj => {
-  homeContainer.innerHTML += `
-    <div class="card">
-      <h3>${proj.title}</h3>
-      <p>${proj.description}</p>
-
-      ${proj.image ? `<img src="${proj.image}">` : ""}
-      ${proj.video ? `<video controls><source src="${proj.video}"></video>` : ""}
-
-      ${proj.link ? `<p><a href="${proj.link}" target="_blank">View Project</a></p>` : ""}
-    </div>
-  `;
-});
 
 </script>
 
