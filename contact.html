@@ -1,113 +1,77 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
   <title>Mecknown - Contact</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-
-  <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-
-  <style>
-    body{background:#0a0a0a;color:#fff;font-family:Arial;margin:0}
-
-    .section{padding:40px;text-align:center}
-
-    .auth-modal{
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,0.7);
-    }
-
-    .auth-card{
-      background:#111;
-      padding:25px;
-      border-radius:16px;
-      width:90%;
-      max-width:350px;
-    }
-
-    button{
-      width:100%;
-      padding:12px;
-      margin:8px 0;
-      border:none;
-      border-radius:10px;
-      cursor:pointer;
-    }
-
-    .google{background:#fff;color:#000}
-    .email{background:#00ffd5;color:#000}
-
-    .hidden{display:none}
-
-    input,textarea{
-      width:100%;
-      padding:10px;
-      margin:8px 0;
-      border-radius:8px;
-      border:none;
-      background:#111;
-      color:#fff;
-    }
-  </style>
-</head>
-
-<body>
-
-<section class="section">
-  <h2>Contact Us</h2>
-
-  <div id="userBox" class="hidden"></div>
-
-  <form id="contactForm" class="hidden">
-    <input name="name" placeholder="Your Name" required>
-    <input name="email" placeholder="Your Email" required>
-    <textarea name="message" placeholder="Message"></textarea>
-    <button id="submitBtn">Send Message</button>
+  <link rel="icon" href="favicon.ico">  <!-- FIREBASE -->  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>  <style>
+  .auth-modal{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:999;}
+  .auth-card{background:#111;padding:25px;border-radius:16px;text-align:center;width:90%;max-width:380px;}
+  .auth-btn{width:100%;padding:12px;margin:8px 0;border:none;border-radius:10px;font-weight:bold;cursor:pointer;}
+  .google-btn{background:#fff;color:#000;}
+  .email-btn{background:#00ffd5;color:#000;}
+  .hidden{display:none;}
+  .user-box{text-align:center;margin-bottom:15px;}
+  .logout-btn{margin-top:8px;padding:6px 12px;border:none;border-radius:8px;background:#ff4d4d;color:#fff;cursor:pointer;}
+  .loading{opacity:0.6;pointer-events:none;}
+  </style></head><body><!-- Loader --><div id="loader">
+  <div class="hologram"><span>MECKNOWN</span></div>
+</div><nav>
+  <h1>Mecknown</h1>
+  <div class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></div>
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="ai.html">Meck AI</a></li>
+    <li><a href="course.html">Course</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav><section class="section">
+  <h2>Contact Us</h2>  <div id="userBox" class="user-box hidden">
+    <p id="userEmail"></p>
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+  </div>  <form id="contactForm" class="hidden">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+    <button id="submitBtn" type="submit">Send Message</button>
   </form>
-</section>
-
-<!-- LOGIN POPUP -->
-<div id="authModal" class="auth-modal">
+</section><div id="authModal" class="auth-modal">
   <div class="auth-card">
-    <h3>Sign in to Contact</h3>
-    <button class="google" onclick="googleLogin()">Google</button>
-    <button class="email" onclick="emailLogin()">Email</button>
+    <h3>Sign in to Contact Us</h3>
+    <button class="auth-btn google-btn" onclick="googleLogin()">Continue with Google</button>
+    <button class="auth-btn email-btn" onclick="emailLogin()">Sign in with Email</button>
   </div>
-</div>
+</div><footer>© 2026 Mecknown.</footer><script>
 
-<script>
-/* SAFE FIREBASE INIT */
-try{
-  const firebaseConfig = {
-    apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
-    authDomain: "mecknownshop.firebaseapp.com",
-    projectId: "mecknownshop"
-  };
+/* FIX LOADER */
+window.addEventListener("load", ()=>{
+  const loader=document.getElementById("loader");
+  if(loader) loader.style.display="none";
+});
 
-  firebase.initializeApp(firebaseConfig);
-}catch(e){
-  console.log("Firebase already initialized");
-}
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
+  authDomain: "mecknownshop.firebaseapp.com",
+  projectId: "mecknownshop"
+};
 
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
 /* AUTH STATE */
 auth.onAuthStateChanged(user=>{
   if(user){
-    document.getElementById("authModal").style.display="none";
+    document.getElementById("authModal").classList.add("hidden");
     document.getElementById("contactForm").classList.remove("hidden");
-
-    document.getElementById("userBox").innerText="👤 "+user.email;
     document.getElementById("userBox").classList.remove("hidden");
 
-    document.querySelector("input[name='email']").value=user.email;
+    document.getElementById("userEmail").innerText="Signed in as: "+user.email;
+    const emailInput = document.querySelector("input[name='email']");
+    emailInput.value = user.email;
+    emailInput.readOnly = true;
   }
 });
 
@@ -126,34 +90,38 @@ function emailLogin(){
   .catch(()=>auth.createUserWithEmailAndPassword(email,pass));
 }
 
-/* SUBMIT FIX */
-let sending=false;
+function logoutUser(){auth.signOut();}
 
-document.getElementById("contactForm").addEventListener("submit",e=>{
+/* FORM SUBMIT FIX */
+const contactForm=document.getElementById("contactForm");
+const submitBtn=document.getElementById("submitBtn");
+const scriptURL="https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec";
+
+let isSubmitting=false;
+
+contactForm.addEventListener("submit",e=>{
   e.preventDefault();
-  if(sending) return;
+  if(isSubmitting) return;
+  isSubmitting=true;
 
-  sending=true;
-  const btn=document.getElementById("submitBtn");
-  btn.innerText="Sending...";
-  btn.disabled=true;
+  submitBtn.innerText="Sending...";
+  submitBtn.disabled=true;
 
-  const fd=new FormData(e.target);
+  const fd=new FormData(contactForm);
   fd.append("sheet","Contact");
 
-  fetch("https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec",{
-    method:"POST",
-    body:fd
+  fetch(scriptURL,{method:"POST",body:fd})
+  .then(()=>{
+    alert("Message sent!");
+    contactForm.reset();
   })
-  .then(()=>alert("Sent"))
-  .catch(()=>alert("Error"))
+  .catch(()=>alert("Failed"))
   .finally(()=>{
-    sending=false;
-    btn.innerText="Send Message";
-    btn.disabled=false;
+    isSubmitting=false;
+    submitBtn.innerText="Send Message";
+    submitBtn.disabled=false;
   });
 });
-</script>
 
-</body>
+</script></body>
 </html>
