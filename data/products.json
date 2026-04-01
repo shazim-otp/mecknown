@@ -1,8 +1,8 @@
 [
   {
     "name": "Arduino UNO",
-    "price": "$10",
-    "img": "https://via.placeholder.com/300",
+    "price": "325",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXgg_FeF2Zr5KDxwqJniasWb_GS-i6VU9TrA&s",
     "desc": "Main microcontroller board"
   },
   {
