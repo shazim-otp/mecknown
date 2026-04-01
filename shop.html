@@ -243,7 +243,7 @@ function submitOrder(){
   let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
   cart.forEach(i=>msg+=`${i.name} x${i.qty}%0A`);
 
-  window.open(`https://wa.me/?text=${msg}`);
+  window.open(`https://wa.me/+919048585461?text=${msg}`);
 
   document.getElementById('successBox').style.display='flex';
 
