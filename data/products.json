@@ -22,5 +22,11 @@
     "price": 30,
     "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/v1774548114/rpdoilmf1yun94grke4g.jpg",
     "desc": "Proximity Sensor"
+  },
+  {
+    "name": "Official Arduino UNO Q Single Board Computer Model 2GB ABX00162",
+    "price": 5000,
+    "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/q_auto/f_auto/v1775063425/ardq_urmin3.avif",
+    "desc": "Micro processor"
   }
 ]
