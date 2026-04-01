@@ -152,32 +152,36 @@ nav h1{font-size:18px}
 /* FIXES: layering + overflow + mobile */
 body.menu-open, body.cart-open{overflow:hidden}
 
-/* ensure panels above content */
-#nav-links{z-index:3000}
-.cart-panel{z-index:3000}
-
-/* dark overlay */
+/* overlay below panels */
 .overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.5);
   display:none;
-  z-index:2500;
-  pointer-events:none; /* prevent blocking clicks */
-}
-.overlay.active{
-  display:block;
-  pointer-events:auto;
+  z-index:2000;
 }
 .overlay.active{display:block}
 
-/* prevent content showing on right */
-.products{overflow:hidden}
-.card img{max-width:100%;display:block}
+/* nav + cart ABOVE overlay */
+#nav-links{z-index:5000}
+.cart-panel{z-index:5000}
 
-/* better mobile cart width */
+/* prevent horizontal leak */
+html,body{
+  overflow-x:hidden;
+}
+
+/* fix panel edges */
+#nav-links{right:-260px}
+#nav-links.active{right:0}
+
+.cart-panel{left:-320px}
+.cart-panel.active{left:0}
+
+/* better mobile cart */
 @media(max-width:600px){
   .cart-panel{width:85%;max-width:320px}
+}
 }
 
 </style></head>
