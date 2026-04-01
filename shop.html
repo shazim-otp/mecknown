@@ -35,7 +35,28 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff;overfl
 header{text-align:center;padding:100px 20px 40px;position:relative;z-index:1;}
 header::before{content:"";position:absolute;width:300px;height:300px;background:#00ffcc33;filter:blur(120px);top:0;left:50%;transform:translateX(-50%);}
 
-.arduino-intro{width:240px;margin:auto;transform:translateY(-180px);opacity:0;animation:slideDown 1s ease forwards;}
+.arduino-group{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
+}
+
+.device{
+  width:180px;
+  opacity:0;
+  transform:translateY(-180px);
+}
+
+.device img{
+  width:100%;
+  animation:float 4s ease-in-out infinite;
+}
+
+/* animations */
+.arduino{animation:slideDown 1s ease forwards;}
+.esp{animation:slideDown 1s ease forwards; animation-delay:0.5s;}
+.stm{animation:slideDown 1s ease forwards; animation-delay:0.5s;}
 .arduino-intro img{width:100%;animation:float 4s ease-in-out infinite;}
 
 @keyframes slideDown{to{transform:translateY(0);opacity:1;}}
@@ -104,8 +125,18 @@ header::before{content:"";position:absolute;width:300px;height:300px;background:
 </nav>
 
 <header>
-  <div class="arduino-intro" id="arduino">
-    <img src="assets/arduinoq.png">
+  <div class="arduino-group" id="arduino">
+    <div class="device esp">
+      <img src="assets/esp32.png">
+    </div>
+
+    <div class="device arduino">
+      <img src="assets/arduinoq.png">
+    </div>
+
+    <div class="device stm">
+      <img src="assets/stm32.png">
+    </div>
   </div>
   <div class="title-main">Mecknown E-Comp Store</div>
   <div class="subtitle">Build. Hack. Create.</div>
