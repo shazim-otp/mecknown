@@ -7,13 +7,13 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
-/* NAVBAR (YOUR STYLE + FIXED) */
+/* NAVBAR */
 nav{
   position:sticky;
   top:0;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:center;
   padding:15px 20px;
   background:rgba(10,10,10,0.8);
   backdrop-filter:blur(10px);
@@ -22,7 +22,30 @@ nav{
 
 nav h1{font-size:18px}
 
+/* CART */
+.cart-icon{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+.cart-count{
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  background:#22c55e;
+  color:#000;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+}
+
+/* MENU BUTTON */
 .menu-toggle{
+  position:absolute;
+  right:15px;
   display:flex;
   flex-direction:column;
   gap:4px;
@@ -35,7 +58,7 @@ nav h1{font-size:18px}
   background:#fff;
 }
 
-/* SIDE NAV (RIGHT SLIDE) */
+/* SIDE MENU */
 #nav-links{
   position:fixed;
   top:0;
@@ -52,33 +75,14 @@ nav h1{font-size:18px}
   z-index:2000;
 }
 
-#nav-links.active{
-  right:0;
-}
+#nav-links.active{right:0}
 
 #nav-links a{
   color:#94a3b8;
   text-decoration:none;
 }
 
-/* CART */
-.cart-icon{
-  position:absolute;
-  left:20px;
-  cursor:pointer;
-}
-
-.cart-count{
-  position:absolute;
-  top:-8px;
-  right:-8px;
-  background:#22c55e;
-  color:#000;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-}
-
+/* CART PANEL */
 .cart-panel{
   position:fixed;
   top:0;
@@ -100,8 +104,18 @@ nav h1{font-size:18px}
 .total{margin-top:15px;font-weight:600}
 .checkout{margin-top:10px;padding:10px;background:#22c55e;color:#000;text-align:center;border-radius:8px;cursor:pointer}
 
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:40px}
-.card{background:#111;padding:15px;border-radius:10px}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:40px;
+}
+
+.card{
+  background:#111;
+  padding:15px;
+  border-radius:10px;
+}
 
 /* POPUP */
 .address-popup{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:3000}
@@ -112,15 +126,8 @@ nav h1{font-size:18px}
 
 .success{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:4000}
 .success-box{background:#111;padding:30px;border-radius:12px;text-align:center}
-
-/* ADDITIONS: cart + right slide menu */
-.cart-icon{position:absolute;left:20px;cursor:pointer}
-.cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
-#nav-links{position:fixed;top:0;right:-260px;width:250px;height:100%;background:#020617;display:flex;flex-direction:column;gap:20px;padding:80px 20px;list-style:none;transition:0.3s;z-index:2000}
-#nav-links.active{right:0}
 </style></head>
 <body><nav>
-  <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
   <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>  <h1>Mecknown</h1>  <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>  <ul id="nav-links">
@@ -160,31 +167,45 @@ const cartItems=document.getElementById('cartItems');
 const cartCount=document.getElementById('cartCount');
 const totalDiv=document.getElementById('total');
 
-if(toggle){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-  });
-  });
-}
+// MENU
+toggle.addEventListener("click",()=>{
+  navLinks.classList.toggle("active");
+});
 
-function toggleCart(){cartPanel.classList.toggle('active');}
+// CART
+function toggleCart(){
+  cartPanel.classList.toggle('active');
+}
 
 function updateCart(){
   cartItems.innerHTML='';
   let total=0;
+
   cart.forEach((i,index)=>{
     total+=i.price*i.qty;
-    cartItems.innerHTML+=`<div>${i.name} x${i.qty}<div class='qty'><button onclick='changeQty(${index},-1)'>-</button>${i.qty}<button onclick='changeQty(${index},1)'>+</button></div></div>`;
+
+    cartItems.innerHTML+=`
+      <div>
+        ${i.name} x${i.qty}
+        <div class='qty'>
+          <button onclick='changeQty(${index},-1)'>-</button>
+          ${i.qty}
+          <button onclick='changeQty(${index},1)'>+</button>
+        </div>
+      </div>`;
   });
+
   totalDiv.textContent='Total: '+total;
   cartCount.textContent=cart.length;
 }
 
 function addToCart(name,priceStr){
-  const price=parseFloat(priceStr.replace(/[^0-9.]/g,''));
+  const price=parseFloat(priceStr.replace(/[^0-9.]/g,''))||0;
+
   const ex=cart.find(i=>i.name===name);
   if(ex) ex.qty++;
   else cart.push({name,price,qty:1});
+
   localStorage.setItem('cart',JSON.stringify(cart));
   updateCart();
 }
@@ -192,26 +213,40 @@ function addToCart(name,priceStr){
 function changeQty(i,val){
   cart[i].qty+=val;
   if(cart[i].qty<=0) cart.splice(i,1);
+
   localStorage.setItem('cart',JSON.stringify(cart));
   updateCart();
 }
 
-function openAddressPopup(){document.getElementById('addressPopup').style.display='flex';}
-function closeAddressPopup(){document.getElementById('addressPopup').style.display='none';}
+// POPUP
+function openAddressPopup(){
+  if(cart.length===0) return alert('Cart empty');
+  document.getElementById('addressPopup').style.display='flex';
+}
+
+function closeAddressPopup(){
+  document.getElementById('addressPopup').style.display='none';
+}
 
 function submitOrder(){
   const name=nameInput.value;
   const phone=phoneInput.value;
   const address=addressInput.value;
-  if(!name||!phone||!address){errorMsg.textContent='Fill all fields';return;}
+
+  if(!name||!phone||!address){
+    errorMsg.textContent='Fill all fields';
+    return;
+  }
 
   const orderId='ORD-'+Date.now();
+
   let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
   cart.forEach(i=>msg+=`${i.name} x${i.qty}%0A`);
 
-  window.open(`https://wa.me/+919048585461?text=${msg}`);
+  window.open(`https://wa.me/?text=${msg}`);
 
   document.getElementById('successBox').style.display='flex';
+
   setTimeout(()=>{
     document.getElementById('successBox').style.display='none';
     cart=[];
@@ -220,12 +255,22 @@ function submitOrder(){
   },2000);
 }
 
+// PRODUCTS
 async function load(){
   const res=await fetch('data/products.json');
   products=await res.json();
+
   const c=document.getElementById('products');
+  c.innerHTML='';
+
   products.forEach(p=>{
-    c.innerHTML+=`<div class='card'><img src='${p.img}' style='width:100%'><h3>${p.name}</h3><p>${p.price}</p><button onclick="addToCart('${p.name}','${p.price}')">Add</button></div>`;
+    c.innerHTML+=`
+      <div class='card'>
+        <img src='${p.img}' style='width:100%'>
+        <h3>${p.name}</h3>
+        <p>${p.price}</p>
+        <button onclick="addToCart('${p.name}','${p.price}')">Add</button>
+      </div>`;
   });
 }
 
