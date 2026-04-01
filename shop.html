@@ -153,13 +153,7 @@ nav h1{font-size:18px}
 body.menu-open, body.cart-open{overflow:hidden}
 
 /* overlay below panels */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  z-index:2000;
-}
+
 .overlay.active{display:block}
 
 /* nav + cart ABOVE overlay */
@@ -185,8 +179,7 @@ html,body{
 }
 
 </style></head>
-<body>
-<div class="overlay" id="overlay"></div><nav>
+<body><nav>
   <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>  <h1>Mecknown</h1>  <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>  <ul id="nav-links">
@@ -229,7 +222,7 @@ const totalDiv=document.getElementById('total');
 // MENU
 toggle.addEventListener("click",()=>{
   navLinks.classList.toggle("active");
-  overlay.classList.toggle("active");
+  
   document.body.classList.toggle("menu-open");
 });
 
@@ -241,16 +234,15 @@ function closeCart(){
 // CART
 function toggleCart(){
   cartPanel.classList.toggle('active');
-  overlay.classList.toggle('active');
+  
   document.body.classList.toggle('cart-open');
   navLinks.classList.remove('active');
 }
 
 // close on overlay click
-overlay.addEventListener('click',()=>{
-  cartPanel.classList.remove('active');
+
   navLinks.classList.remove('active');
-  overlay.classList.remove('active');
+  
   document.body.classList.remove('cart-open','menu-open');
 });
 
