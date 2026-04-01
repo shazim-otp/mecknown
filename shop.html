@@ -8,95 +8,39 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-html{scroll-behavior:smooth;}
+body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
-body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff;overflow-x:hidden;}
+.navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(10,10,10,0.7);backdrop-filter:blur(12px);z-index:1000}
+.logo{font-weight:600}
+.nav-links{display:flex;gap:20px;list-style:none}
+.nav-links a{color:#94a3b8;text-decoration:none}
 
-/* NAVBAR */
-.navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(10,10,10,0.7);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.1);z-index:1000;}
-.logo{font-size:20px;font-weight:600;}
+.cart-icon{cursor:pointer;position:relative}
+.cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
 
-.nav-links{display:flex;gap:20px;list-style:none;}
-.nav-links a{color:#94a3b8;text-decoration:none;transition:0.3s;}
-.nav-links a:hover{color:#fff;}
-.nav-links .active{color:#00ffcc;}
+.cart-panel{position:fixed;top:0;right:-350px;width:300px;height:100%;background:#111;padding:20px;transition:0.3s;z-index:2000;overflow-y:auto}
+.cart-panel.active{right:0}
+.cart-item{margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:8px}
 
-/* HAMBURGER */
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
-.hamburger span{width:25px;height:3px;background:#fff;border-radius:2px;}
-
-@media(max-width:768px){
-  .hamburger{display:flex;}
-  .nav-links{position:absolute;top:60px;right:0;background:#020617;width:100%;flex-direction:column;align-items:center;padding:20px 0;gap:15px;transform:translateY(-120%);transition:0.3s;}
-  .nav-links.active{transform:translateY(0);}
+.qty{
+  display:flex;gap:8px;align-items:center;margin-top:5px
 }
+.qty button{padding:2px 8px}
 
-/* HEADER */
-header{text-align:center;padding:100px 20px 40px;position:relative;z-index:1;}
-header::before{content:"";position:absolute;width:300px;height:300px;background:#00ffcc33;filter:blur(120px);top:0;left:50%;transform:translateX(-50%);}
+.total{margin-top:15px;font-weight:600}
+.checkout{margin-top:10px;padding:10px;background:#22c55e;color:#000;text-align:center;border-radius:8px;cursor:pointer}
 
-.arduino-group{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:40px;
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:40px}
+.card{background:#111;padding:15px;border-radius:10px;cursor:pointer;position:relative}
+
+.wishlist-btn{position:absolute;top:10px;right:10px;cursor:pointer}
+
+/* SUMMARY MODAL */
+.summary{
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;z-index:3000
 }
-
-.device{
-  width:180px;
-  opacity:0;
-  transform:translateY(-180px);
-}
-
-.device img{
-  width:100%;
-  animation:float 4s ease-in-out infinite;
-}
-
-.arduino{animation:slideDown 1s ease forwards;}
-.esp{animation:slideDown 1s ease forwards; animation-delay:0.5s;}
-.stm{animation:slideDown 1s ease forwards; animation-delay:0.5s;}
-
-@keyframes slideDown{to{transform:translateY(0);opacity:1;}}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-
-.title-main{font-size:34px;font-weight:600;margin-top:30px;}
-.subtitle{color:#94a3b8;margin-top:10px;}
-
-.search-box{max-width:500px;margin:30px auto 0;}
-.search-box input{width:100%;padding:14px 18px;border-radius:12px;border:none;background:rgba(255,255,255,0.08);color:#fff;}
-
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:50px;max-width:1300px;margin:auto;}
-
-.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;transition:0.3s;cursor:pointer;position:relative;}
-.card:hover{transform:translateY(-10px) scale(1.02);}
-
-.card img{width:100%;border-radius:12px;}
-.title{font-size:18px;margin:12px 0 6px;}
-.price{color:#22c55e;margin-bottom:12px;font-weight:600;}
-
-.wishlist-btn{
-  position:absolute;top:12px;right:12px;
-  background:rgba(0,0,0,0.5);
-  border-radius:50%;
-  width:35px;height:35px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  font-size:18px;
-}
-.wishlist-btn.active{color:red;}
-
-.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:0.3s;z-index:9999;}
-.popup.active{opacity:1;pointer-events:auto;}
-
-.popup-content{background:rgba(20,20,20,0.9);padding:25px;border-radius:16px;max-width:400px;width:90%;transform:scale(0.8);transition:0.3s;max-height:80vh;overflow-y:auto;}
-.popup.active .popup-content{transform:scale(1);}
-
-.popup img{width:100%;border-radius:12px;margin-bottom:15px;}
-
-.close-btn,.cart-btn{margin-top:12px;padding:10px;border-radius:8px;text-align:center;cursor:pointer;font-weight:600;}
-.close-btn{background:#fff;color:#000;}
-.cart-btn{background:linear-gradient(90deg,#00ffcc,#22c55e);color:#000;}
+.summary-box{background:#111;padding:20px;border-radius:10px;width:300px}
 
 </style>
 </head>
@@ -104,67 +48,115 @@ header::before{content:"";position:absolute;width:300px;height:300px;background:
 
 <nav class="navbar">
   <div class="logo">Mecknown</div>
+  <ul class="nav-links"><li><a href="shop.html">Shop</a></li></ul>
 
-  <div class="hamburger" id="hamburger">
-    <span></span><span></span><span></span>
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒
+    <span class="cart-count" id="cartCount">0</span>
   </div>
-
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="ai.html">Meck AI</a></li>
-    <li><a href="course.html">Course</a></li>
-    <li><a href="shop.html" class="active">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
 </nav>
 
-<header>
-  <div class="arduino-group" id="arduino">
-    <div class="device esp">
-      <img src="assets/esp32.png">
-    </div>
-
-    <div class="device arduino">
-      <img src="assets/arduinoq.png">
-    </div>
-
-    <div class="device stm">
-      <img src="assets/stm32.png">
-    </div>
-  </div>
-
-  <div class="title-main">Mecknown E-Comp Store</div>
-  <div class="subtitle">Build. Hack. Create.</div>
-
-  <div class="search-box">
-    <input type="text" id="search" placeholder="Search products...">
-  </div>
-</header>
+<div class="cart-panel" id="cartPanel">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <div class="total" id="total">Total: 0</div>
+  <div class="checkout" onclick="checkout()">Checkout</div>
+  <div class="checkout" onclick="openSummary()" style="margin-top:5px;background:#fff;color:#000">View Summary</div>
+</div>
 
 <section class="products" id="products"></section>
 
-<div class="popup" id="popup">
-  <div class="popup-content" id="popupContent"></div>
+<!-- SUMMARY -->
+<div class="summary" id="summary">
+  <div class="summary-box" id="summaryBox"></div>
 </div>
 
 <script>
 let products = [];
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
-const container = document.getElementById("products");
-const searchInput = document.getElementById("search");
-const popup = document.getElementById("popup");
-const popupContent = document.getElementById("popupContent");
+const container = document.getElementById('products');
+const cartPanel = document.getElementById('cartPanel');
+const cartItemsDiv = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const totalDiv = document.getElementById('total');
 
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
+function toggleCart(){cartPanel.classList.toggle('active');}
 
-hamburger.addEventListener('click', ()=>{
-  navLinks.classList.toggle('active');
-});
+function getPrice(p){
+  return parseFloat(p.replace(/[^0-9.]/g,'')) || 0;
+}
+
+function updateCartUI(){
+  cartItemsDiv.innerHTML='';
+  let total = 0;
+
+  cart.forEach((item,i)=>{
+    total += item.price * item.qty;
+
+    cartItemsDiv.innerHTML += `
+      <div class="cart-item">
+        ${item.name}
+        <div class="qty">
+          <button onclick="changeQty(${i},-1)">-</button>
+          ${item.qty}
+          <button onclick="changeQty(${i},1)">+</button>
+          <button onclick="removeCart(${i})">x</button>
+        </div>
+      </div>`;
+  });
+
+  totalDiv.textContent = 'Total: ' + total;
+  cartCount.textContent = cart.length;
+}
+
+function addToCart(name,priceStr){
+  const price = getPrice(priceStr);
+
+  const existing = cart.find(i=>i.name===name);
+  if(existing){existing.qty++;}
+  else{cart.push({name,price,qty:1});}
+
+  localStorage.setItem('cart',JSON.stringify(cart));
+  updateCartUI();
+}
+
+function changeQty(i,val){
+  cart[i].qty += val;
+  if(cart[i].qty<=0) cart.splice(i,1);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  updateCartUI();
+}
+
+function removeCart(i){
+  cart.splice(i,1);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  updateCartUI();
+}
+
+function checkout(){
+  let msg = 'Order:%0A';
+  cart.forEach(i=>{
+    msg += `${i.name} x${i.qty} = ${i.price*i.qty}%0A`;
+  });
+
+  window.open(`https://wa.me/?text=${msg}`);
+}
+
+function openSummary(){
+  const box = document.getElementById('summaryBox');
+  let html = '<h3>Order Summary</h3>';
+
+  cart.forEach(i=>{
+    html += `<p>${i.name} x${i.qty}</p>`;
+  });
+
+  box.innerHTML = html + '<br><button onclick="closeSummary()">Close</button>';
+  document.getElementById('summary').style.display='flex';
+}
+
+function closeSummary(){document.getElementById('summary').style.display='none';}
 
 async function loadProducts(){
   const res = await fetch('data/products.json');
@@ -173,67 +165,30 @@ async function loadProducts(){
 }
 
 function renderProducts(list){
-  container.innerHTML = "";
-  list.forEach((p,i)=>{
-    const isLiked = wishlist.includes(p.name);
+  container.innerHTML='';
+  list.forEach((p)=>{
+    const liked = wishlist.includes(p.name);
 
     container.innerHTML += `
-      <div class="card" onclick="openPopup(${i})">
-        <div class="wishlist-btn ${isLiked?'active':''}" onclick="toggleWishlist(event,'${p.name}')">❤</div>
-        <img src="${p.img}">
-        <div class="title">${p.name}</div>
-        <div class="price">${p.price}</div>
-      </div>
-    `;
+      <div class="card">
+        <div class="wishlist-btn" onclick="toggleWishlist(event,'${p.name}')">${liked?'❤️':'🤍'}</div>
+        <img src="${p.img}" style="width:100%">
+        <h3>${p.name}</h3>
+        <p>${p.price}</p>
+        <button onclick="addToCart('${p.name}','${p.price}')">Add</button>
+      </div>`;
   });
 }
 
 function toggleWishlist(e,name){
   e.stopPropagation();
-
-  if(wishlist.includes(name)){
-    wishlist = wishlist.filter(n=>n!==name);
-  } else {
-    wishlist.push(name);
-  }
-
+  if(wishlist.includes(name)) wishlist = wishlist.filter(n=>n!==name);
+  else wishlist.push(name);
   localStorage.setItem('wishlist',JSON.stringify(wishlist));
   renderProducts(products);
 }
 
-function openPopup(i){
-  const p = products[i];
-  popupContent.innerHTML = `
-    <img src="${p.img}">
-    <h2>${p.name}</h2>
-    <p style="white-space: pre-line;">${p.desc}</p>
-    <div class="price">${p.price}</div>
-    <div class="cart-btn" onclick="addToCart('${p.name}')">Add to Cart</div>
-    <div class="close-btn" onclick="closePopup()">Close</div>
-  `;
-  popup.classList.add('active');
-}
-
-function closePopup(){popup.classList.remove('active');}
-
-function addToCart(name){
-  cart.push(name);
-  alert(name+" added to cart");
-}
-
-popup.addEventListener('click',(e)=>{if(e.target===popup)closePopup();});
-
-searchInput.addEventListener('input',()=>{
-  const val = searchInput.value.toLowerCase();
-  const filtered = products.filter(p=>p.name.toLowerCase().includes(val));
-  renderProducts(filtered);
-});
-
-const arduino = document.getElementById('arduino');
-window.addEventListener('scroll',()=>{
-  arduino.style.transform = `translateY(${window.scrollY*0.4}px)`;
-});
-
+updateCartUI();
 loadProducts();
 </script>
 
