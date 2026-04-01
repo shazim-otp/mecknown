@@ -12,8 +12,6 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
 .navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(10,10,10,0.7);backdrop-filter:blur(12px);z-index:1000}
 .logo{font-weight:600}
-.nav-links{display:flex;gap:20px;list-style:none}
-.nav-links a{color:#94a3b8;text-decoration:none}
 
 .cart-icon{cursor:pointer;position:relative}
 .cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
@@ -22,25 +20,38 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 .cart-panel.active{right:0}
 .cart-item{margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:8px}
 
-.qty{
-  display:flex;gap:8px;align-items:center;margin-top:5px
-}
+.qty{display:flex;gap:8px;align-items:center;margin-top:5px}
 .qty button{padding:2px 8px}
 
 .total{margin-top:15px;font-weight:600}
 .checkout{margin-top:10px;padding:10px;background:#22c55e;color:#000;text-align:center;border-radius:8px;cursor:pointer}
 
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:40px}
-.card{background:#111;padding:15px;border-radius:10px;cursor:pointer;position:relative}
+.card{background:#111;padding:15px;border-radius:10px;cursor:pointer}
 
-.wishlist-btn{position:absolute;top:10px;right:10px;cursor:pointer}
+/* ADDRESS POPUP */
+.address-popup{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:3000}
+.address-box{background:#111;padding:20px;border-radius:10px;width:320px}
 
-/* SUMMARY MODAL */
-.summary{
-  position:fixed;inset:0;background:rgba(0,0,0,0.6);
-  display:none;align-items:center;justify-content:center;z-index:3000
+.address-box input{
+  width:100%;padding:10px;margin-top:10px;border:none;border-radius:8px
 }
-.summary-box{background:#111;padding:20px;border-radius:10px;width:300px}
+
+.address-box button{
+  margin-top:10px;width:100%;padding:10px;border:none;border-radius:8px;
+  background:#22c55e;color:#000;font-weight:600;cursor:pointer
+}
+
+.error{color:#ef4444;font-size:13px;margin-top:5px}
+
+/* SUCCESS */
+.success{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  display:none;align-items:center;justify-content:center;z-index:4000
+}
+.success-box{
+  background:#111;padding:30px;border-radius:12px;text-align:center
+}
 
 </style>
 </head>
@@ -48,7 +59,6 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
 <nav class="navbar">
   <div class="logo">Mecknown</div>
-  <ul class="nav-links"><li><a href="shop.html">Shop</a></li></ul>
 
   <div class="cart-icon" onclick="toggleCart()">
     🛒
@@ -60,21 +70,38 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
   <h3>Your Cart</h3>
   <div id="cartItems"></div>
   <div class="total" id="total">Total: 0</div>
-  <div class="checkout" onclick="checkout()">Checkout</div>
-  <div class="checkout" onclick="openSummary()" style="margin-top:5px;background:#fff;color:#000">View Summary</div>
+  <div class="checkout" onclick="openAddressPopup()">Checkout</div>
 </div>
 
 <section class="products" id="products"></section>
 
-<!-- SUMMARY -->
-<div class="summary" id="summary">
-  <div class="summary-box" id="summaryBox"></div>
+<!-- ADDRESS POPUP -->
+<div class="address-popup" id="addressPopup">
+  <div class="address-box">
+    <h3>Checkout Details</h3>
+
+    <input type="text" id="nameInput" placeholder="Your name">
+    <input type="text" id="phoneInput" placeholder="Phone number">
+    <input type="text" id="addressInput" placeholder="Address">
+
+    <div class="error" id="errorMsg"></div>
+
+    <button onclick="submitOrder()">Confirm Order</button>
+    <button onclick="closeAddressPopup()" style="background:#fff;margin-top:5px">Cancel</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success" id="successBox">
+  <div class="success-box">
+    <h2>Order Placed ✅</h2>
+    <p>Your order has been sent</p>
+  </div>
 </div>
 
 <script>
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
 const container = document.getElementById('products');
 const cartPanel = document.getElementById('cartPanel');
@@ -83,10 +110,6 @@ const cartCount = document.getElementById('cartCount');
 const totalDiv = document.getElementById('total');
 
 function toggleCart(){cartPanel.classList.toggle('active');}
-
-function getPrice(p){
-  return parseFloat(p.replace(/[^0-9.]/g,'')) || 0;
-}
 
 function updateCartUI(){
   cartItemsDiv.innerHTML='';
@@ -112,7 +135,7 @@ function updateCartUI(){
 }
 
 function addToCart(name,priceStr){
-  const price = getPrice(priceStr);
+  const price = parseFloat(priceStr.replace(/[^0-9.]/g,'')) || 0;
 
   const existing = cart.find(i=>i.name===name);
   if(existing){existing.qty++;}
@@ -135,28 +158,71 @@ function removeCart(i){
   updateCartUI();
 }
 
-function checkout(){
-  let msg = 'Order:%0A';
+function generateOrderID(){
+  return 'ORD-' + Date.now();
+}
+
+function openAddressPopup(){
+  if(cart.length===0) return alert('Cart is empty');
+
+  // autofill
+  document.getElementById('nameInput').value = localStorage.getItem('user_name') || '';
+  document.getElementById('phoneInput').value = localStorage.getItem('user_phone') || '';
+  document.getElementById('addressInput').value = localStorage.getItem('user_address') || '';
+
+  document.getElementById('addressPopup').style.display='flex';
+}
+
+function closeAddressPopup(){
+  document.getElementById('addressPopup').style.display='none';
+}
+
+function submitOrder(){
+  const name = document.getElementById('nameInput').value.trim();
+  const phone = document.getElementById('phoneInput').value.trim();
+  const address = document.getElementById('addressInput').value.trim();
+  const error = document.getElementById('errorMsg');
+
+  if(!name || !phone || !address){
+    error.textContent = 'All fields are required';
+    return;
+  }
+
+  if(phone.length < 8){
+    error.textContent = 'Enter valid phone number';
+    return;
+  }
+
+  error.textContent = '';
+
+  // save for autofill
+  localStorage.setItem('user_name',name);
+  localStorage.setItem('user_phone',phone);
+  localStorage.setItem('user_address',address);
+
+  const orderId = generateOrderID();
+
+  let msg = `Order ID: ${orderId}%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0A`;
+
   cart.forEach(i=>{
     msg += `${i.name} x${i.qty} = ${i.price*i.qty}%0A`;
   });
 
-  window.open(`https://wa.me/+919048585461?text=${msg}`);
+  window.open(`https://wa.me/?text=${msg}`);
+
+  closeAddressPopup();
+
+  // success animation
+  const success = document.getElementById('successBox');
+  success.style.display = 'flex';
+
+  setTimeout(()=>{
+    success.style.display = 'none';
+    cart = [];
+    localStorage.setItem('cart',JSON.stringify(cart));
+    updateCartUI();
+  },2000);
 }
-
-function openSummary(){
-  const box = document.getElementById('summaryBox');
-  let html = '<h3>Order Summary</h3>';
-
-  cart.forEach(i=>{
-    html += `<p>${i.name} x${i.qty}</p>`;
-  });
-
-  box.innerHTML = html + '<br><button onclick="closeSummary()">Close</button>';
-  document.getElementById('summary').style.display='flex';
-}
-
-function closeSummary(){document.getElementById('summary').style.display='none';}
 
 async function loadProducts(){
   const res = await fetch('data/products.json');
@@ -167,25 +233,14 @@ async function loadProducts(){
 function renderProducts(list){
   container.innerHTML='';
   list.forEach((p)=>{
-    const liked = wishlist.includes(p.name);
-
     container.innerHTML += `
       <div class="card">
-        <div class="wishlist-btn" onclick="toggleWishlist(event,'${p.name}')">${liked?'❤️':'🤍'}</div>
         <img src="${p.img}" style="width:100%">
         <h3>${p.name}</h3>
         <p>${p.price}</p>
         <button onclick="addToCart('${p.name}','${p.price}')">Add</button>
       </div>`;
   });
-}
-
-function toggleWishlist(e,name){
-  e.stopPropagation();
-  if(wishlist.includes(name)) wishlist = wishlist.filter(n=>n!==name);
-  else wishlist.push(name);
-  localStorage.setItem('wishlist',JSON.stringify(wishlist));
-  renderProducts(products);
 }
 
 updateCartUI();
