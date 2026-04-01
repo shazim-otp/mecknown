@@ -73,7 +73,7 @@ nav h1{font-size:18px}
   padding:100px 20px 20px;
   list-style:none;
   transition:0.3s;
-  z-index:3000;
+  z-index:4000; /* above overlay */
 }
 
 #nav-links.active{
@@ -97,7 +97,9 @@ nav h1{font-size:18px}
   background:#111;
   padding:20px;
   transition:0.3s;
-  z-index:2000;
+  z-index:4000; /* above overlay */
+  overflow-y:auto;
+}
   overflow-y:auto;
 }
 
@@ -156,8 +158,16 @@ body.menu-open, body.cart-open{overflow:hidden}
 
 /* dark overlay */
 .overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.5);
-  display:none;z-index:2500
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  z-index:2500;
+  pointer-events:none; /* prevent blocking clicks */
+}
+.overlay.active{
+  display:block;
+  pointer-events:auto;
 }
 .overlay.active{display:block}
 
