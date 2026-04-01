@@ -65,6 +65,7 @@ button{
   <textarea id="desc" placeholder="Description"></textarea>
 
   <button onclick="addProduct()">Add Product</button>
+  <button onclick="downloadJSON()">Download JSON</button>
 
   <div id="list"></div>
 </div>
@@ -80,10 +81,8 @@ function login(){
 
   if(u === USERNAME && p === PASSWORD){
     localStorage.setItem('adminAuth','true');
-
-    // 🔥 REDIRECT TO SHOP (you asked this)
-    window.location.href = "shop.html";
-
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='block';
   } else {
     document.getElementById('error').textContent = "Wrong login";
   }
@@ -132,6 +131,20 @@ function deleteProduct(i){
   products.splice(i,1);
   localStorage.setItem('products', JSON.stringify(products));
   render();
+}
+
+// 🔥 DOWNLOAD JSON FILE
+function downloadJSON(){
+  const dataStr = JSON.stringify(products, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "products.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
 }
 
 render();
