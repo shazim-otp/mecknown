@@ -141,8 +141,33 @@ nav h1{font-size:18px}
 
 .success{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:4000}
 .success-box{background:#111;padding:30px;border-radius:12px;text-align:center}
+
+/* FIXES: layering + overflow + mobile */
+body.menu-open, body.cart-open{overflow:hidden}
+
+/* ensure panels above content */
+#nav-links{z-index:3000}
+.cart-panel{z-index:3000}
+
+/* dark overlay */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  display:none;z-index:2500
+}
+.overlay.active{display:block}
+
+/* prevent content showing on right */
+.products{overflow:hidden}
+.card img{max-width:100%;display:block}
+
+/* better mobile cart width */
+@media(max-width:600px){
+  .cart-panel{width:85%;max-width:320px}
+}
+
 </style></head>
-<body><nav>
+<body>
+<div class="overlay" id="overlay"></div><nav>
   <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>  <h1>Mecknown</h1>  <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>  <ul id="nav-links">
@@ -185,6 +210,8 @@ const totalDiv=document.getElementById('total');
 // MENU
 toggle.addEventListener("click",()=>{
   navLinks.classList.toggle("active");
+  overlay.classList.toggle("active");
+  document.body.classList.toggle("menu-open");
 });
 
 // BACK BUTTON FOR CART
@@ -195,10 +222,18 @@ function closeCart(){
 // CART
 function toggleCart(){
   cartPanel.classList.toggle('active');
-
-  // close menu if open
+  overlay.classList.toggle('active');
+  document.body.classList.toggle('cart-open');
   navLinks.classList.remove('active');
 }
+
+// close on overlay click
+overlay.addEventListener('click',()=>{
+  cartPanel.classList.remove('active');
+  navLinks.classList.remove('active');
+  overlay.classList.remove('active');
+  document.body.classList.remove('cart-open','menu-open');
+});
 
 function updateCart(){
   cartItems.innerHTML='';
