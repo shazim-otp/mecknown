@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#020617;color:#fff;padding:40px}
+
+h1{margin-bottom:20px}
+.container{max-width:600px;margin:auto}
+
+input,textarea{
+  width:100%;margin:10px 0;padding:12px;border-radius:10px;border:none;outline:none;
+  background:#111;color:#fff;
+}
+
+button{
+  width:100%;padding:12px;background:linear-gradient(90deg,#00ffcc,#22c55e);
+  border:none;border-radius:10px;font-weight:600;cursor:pointer;
+}
+
+.preview{margin-top:30px;background:#111;padding:20px;border-radius:12px}
+pre{white-space:pre-wrap;word-break:break-word}
+
+.img-preview{margin-top:10px}
+.img-preview img{width:100%;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Shop Admin</h1>
+
+  <input type="text" id="name" placeholder="Product Name">
+  <input type="text" id="price" placeholder="Price">
+
+  <!-- IMAGE URL INPUT -->
+  <input type="text" id="img" placeholder="Image URL">
+  <div class="img-preview" id="imgPreview"></div>
+
+  <textarea id="desc" placeholder="Description"></textarea>
+
+  <button onclick="addProduct()">Add Product</button>
+
+  <div class="preview">
+    <h3>Stored Products</h3>
+    <pre id="output"></pre>
+  </div>
+</div>
+
+<script>
+let products = JSON.parse(localStorage.getItem('products')) || [];
+
+const output = document.getElementById('output');
+output.textContent = JSON.stringify(products, null, 2);
+
+const imgInput = document.getElementById('img');
+const preview = document.getElementById('imgPreview');
+
+// LIVE PREVIEW FROM URL
+imgInput.addEventListener('input', ()=>{
+  const url = imgInput.value;
+  if(url){
+    preview.innerHTML = `<img src="${url}">`;
+  }else{
+    preview.innerHTML = "";
+  }
+});
+
+function addProduct(){
+  const name = document.getElementById('name').value;
+  const price = document.getElementById('price').value;
+  const img = document.getElementById('img').value;
+  const desc = document.getElementById('desc').value;
+
+  if(!name || !price) return alert('Fill required fields');
+
+  products.push({name,price,img,desc});
+
+  localStorage.setItem('products', JSON.stringify(products));
+  output.textContent = JSON.stringify(products, null, 2);
+
+  document.getElementById('name').value='';
+  document.getElementById('price').value='';
+  document.getElementById('img').value='';
+  document.getElementById('desc').value='';
+  preview.innerHTML='';
+}
+
+
+// 🔥 GITHUB API CONFIG (EDIT THESE)
+const GITHUB_USERNAME = "YOUR_USERNAME";
+const REPO_NAME = "YOUR_REPO";
+const FILE_PATH = "data/products.json";
+const TOKEN = "YOUR_GITHUB_TOKEN"; // ⚠️ keep private
+
+async function updateGitHub(){
+  const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+
+  // Get current file SHA
+  const getRes = await fetch(url, {
+    headers: { Authorization: `token ${TOKEN}` }
+  });
+  const getData = await getRes.json();
+
+  const content = btoa(JSON.stringify(products, null, 2));
+
+  // Update file
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: `token ${TOKEN}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "update products",
+      content: content,
+      sha: getData.sha
+    })
+  });
+
+  alert("Updated on GitHub ✅");
+}
+
+// MODIFY addProduct
+const originalAdd = addProduct;
+addProduct = function(){
+  originalAdd();
+  updateGitHub();
+}
+
+</script>
+
+</body>
+</html>
