@@ -7,25 +7,91 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
-/* NAVBAR */
-.navbar{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:15px 20px;background:rgba(10,10,10,0.8);backdrop-filter:blur(10px);z-index:1000}
+/* NAVBAR (YOUR STYLE + FIXED) */
+nav{
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 20px;
+  background:rgba(10,10,10,0.8);
+  backdrop-filter:blur(10px);
+  z-index:1000;
+}
 
-.nav-left{display:flex;align-items:center;gap:12px}
-.logo{font-weight:600}
+nav h1{font-size:18px}
 
-.cart-icon{cursor:pointer;position:relative}
-.cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
+.menu-toggle{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
 
-.hamburger{display:flex;flex-direction:column;gap:4px;cursor:pointer}
-.hamburger span{width:22px;height:3px;background:#fff}
+.menu-toggle span{
+  width:22px;
+  height:3px;
+  background:#fff;
+}
 
-/* SIDE MENU (RIGHT) */
-.nav-links{position:fixed;top:0;right:-260px;width:250px;height:100%;background:#020617;display:flex;flex-direction:column;gap:20px;padding:80px 20px;list-style:none;transition:0.3s;z-index:2000}
-.nav-links.open{right:0}
-.nav-links a{color:#94a3b8;text-decoration:none}
+/* SIDE NAV (RIGHT SLIDE) */
+#nav-links{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:250px;
+  height:100%;
+  background:#020617;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding:80px 20px;
+  list-style:none;
+  transition:0.3s;
+  z-index:2000;
+}
 
-/* CART PANEL (LEFT) */
-.cart-panel{position:fixed;top:0;left:-320px;width:300px;height:100%;background:#111;padding:20px;transition:0.3s;z-index:2000;overflow-y:auto}
+#nav-links.active{
+  right:0;
+}
+
+#nav-links a{
+  color:#94a3b8;
+  text-decoration:none;
+}
+
+/* CART */
+.cart-icon{
+  position:absolute;
+  left:20px;
+  cursor:pointer;
+}
+
+.cart-count{
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  background:#22c55e;
+  color:#000;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+}
+
+.cart-panel{
+  position:fixed;
+  top:0;
+  left:-320px;
+  width:300px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  transition:0.3s;
+  z-index:2000;
+  overflow-y:auto;
+}
+
 .cart-panel.active{left:0}
 
 .qty{display:flex;gap:8px;align-items:center;margin-top:5px}
@@ -37,39 +103,43 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:40px}
 .card{background:#111;padding:15px;border-radius:10px}
 
-/* ADDRESS POPUP */
+/* POPUP */
 .address-popup{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:3000}
 .address-box{background:#111;padding:20px;border-radius:10px;width:320px}
 .address-box input{width:100%;padding:10px;margin-top:10px;border:none;border-radius:8px}
 .address-box button{margin-top:10px;width:100%;padding:10px;border:none;border-radius:8px;background:#22c55e;color:#000;font-weight:600;cursor:pointer}
 .error{color:#ef4444;font-size:13px;margin-top:5px}
 
-/* SUCCESS */
 .success{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:4000}
 .success-box{background:#111;padding:30px;border-radius:12px;text-align:center}
+
+/* ADDITIONS: cart + right slide menu */
+.cart-icon{position:absolute;left:20px;cursor:pointer}
+.cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
+#nav-links{position:fixed;top:0;right:-260px;width:250px;height:100%;background:#020617;display:flex;flex-direction:column;gap:20px;padding:80px 20px;list-style:none;transition:0.3s;z-index:2000}
+#nav-links.active{right:0}
 </style></head>
-<body><nav class="navbar">
-  <div class="nav-left">
-    <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
-    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-    <div class="logo">Mecknown</div>
-  </div>
-</nav><ul class="nav-links" id="navLinks">
-  <li><a href="index.html">Home</a></li>
-  <li><a href="ai.html">Meck AI</a></li>
-  <li><a href="course.html">Course</a></li>
-  <li><a href="shop.html">Shop</a></li>
-  <li><a href="services.html">Services</a></li>
-  <li><a href="about.html">About</a></li>
-  <li><a href="contact.html">Contact</a></li>
-</ul><div class="cart-panel" id="cartPanel">
+<body><nav>
+  <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
+  <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>  <h1>Mecknown</h1>  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="ai.html">Meck AI</a></li>
+    <li><a href="course.html">Course</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav><div class="cart-panel" id="cartPanel">
   <h3>Your Cart</h3>
   <div id="cartItems"></div>
   <div class="total" id="total">Total: 0</div>
   <div class="checkout" onclick="openAddressPopup()">Checkout</div>
-</div><section class="products" id="products"></section><!-- ADDRESS POPUP --><div class="address-popup" id="addressPopup">
+</div><section class="products" id="products"></section><div class="address-popup" id="addressPopup">
   <div class="address-box">
-    <h3>Checkout Details</h3>
+    <h3>Checkout</h3>
     <input id="nameInput" placeholder="Name">
     <input id="phoneInput" placeholder="Phone">
     <input id="addressInput" placeholder="Address">
@@ -78,21 +148,24 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
     <button onclick="closeAddressPopup()" style="background:#fff">Cancel</button>
   </div>
 </div><div class="success" id="successBox">
-  <div class="success-box">
-    <h2>Order Placed ✅</h2>
-  </div>
+  <div class="success-box"><h2>Order Placed ✅</h2></div>
 </div><script>
 let products=[];
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
 
-const navLinks=document.getElementById('navLinks');
-const hamburger=document.getElementById('hamburger');
+const toggle=document.getElementById('menu-toggle');
+const navLinks=document.getElementById('nav-links');
 const cartPanel=document.getElementById('cartPanel');
 const cartItems=document.getElementById('cartItems');
 const cartCount=document.getElementById('cartCount');
 const totalDiv=document.getElementById('total');
 
-hamburger.onclick=()=>navLinks.classList.toggle('open');
+if(toggle){
+  toggle.addEventListener("click", function(){
+    navLinks.classList.toggle("active");
+  });
+  });
+}
 
 function toggleCart(){cartPanel.classList.toggle('active');}
 
@@ -136,7 +209,7 @@ function submitOrder(){
   let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
   cart.forEach(i=>msg+=`${i.name} x${i.qty}%0A`);
 
-  window.open(`https://wa.me/?text=${msg}`);
+  window.open(`https://wa.me/+919048585461?text=${msg}`);
 
   document.getElementById('successBox').style.display='flex';
   setTimeout(()=>{
