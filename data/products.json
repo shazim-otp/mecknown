@@ -10,5 +10,50 @@
     "price": "$3",
     "img": "https://via.placeholder.com/300",
     "desc": "Distance measuring sensor"
-  }
+  },
+  {
+    "name": "Summer workshop special kit",
+    "price": "₹1950",
+    "img":"https://collection.cloudinary.com/do8z7aoj4/4920f887e8f7dce4bf978523b6654044",
+    "desc": "(the image is for illustration purpose only.original product may vary)
+1 ESP8266
+
+1 Arduino Uno
+
+2 Data Cable
+
+1 Bread Board
+
+25 M-M Jumper
+
+20 M-F Jumper
+
+5 F-F Jumper
+
+10 LED
+
+5
+
+Res 220
+
+5 Res 10K
+
+3 Button
+
+2 IR sensor
+
+1 UltraSonic sensor
+
+1 1 CH Relay
+
+1 Chasis
+
+1 L298N
+
+2 Rechargeable Battery
+
+1 Holder
+
+1 Charger"
+  },
 ]
