@@ -1,65 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+html{scroll-behavior:smooth;}
 
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-    html{scroll-behavior:smooth;}
+body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff;overflow-x:hidden;}
 
-    body{
-      background:radial-gradient(circle at top,#0f172a,#020617);
-      color:#fff;overflow-x:hidden;
-    }
+/* NAVBAR */
+.navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(10,10,10,0.7);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.1);z-index:1000;}
+.logo{font-size:20px;font-weight:600;}
 
-    header{text-align:center;padding:100px 20px 40px;position:relative;z-index:1;}
+.nav-links{display:flex;gap:20px;list-style:none;}
+.nav-links a{color:#94a3b8;text-decoration:none;transition:0.3s;}
+.nav-links a:hover{color:#fff;}
+.nav-links .active{color:#00ffcc;}
 
-    header::before{content:"";position:absolute;width:300px;height:300px;background:#00ffcc33;filter:blur(120px);top:0;left:50%;transform:translateX(-50%);z-index:0;}
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:25px;height:3px;background:#fff;border-radius:2px;}
 
-    .arduino-intro{width:240px;margin:auto;transform:translateY(-180px);opacity:0;animation:slideDown 1s ease forwards;position:relative;z-index:1;}
-    .arduino-intro img{width:100%;animation:float 4s ease-in-out infinite;}
+@media(max-width:768px){
+  .hamburger{display:flex;}
+  .nav-links{position:absolute;top:60px;right:0;background:#020617;width:100%;flex-direction:column;align-items:center;padding:20px 0;gap:15px;transform:translateY(-120%);transition:0.3s;}
+  .nav-links.active{transform:translateY(0);}
+}
 
-    @keyframes slideDown{to{transform:translateY(0);opacity:1;}}
-    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+/* HEADER */
+header{text-align:center;padding:100px 20px 40px;position:relative;z-index:1;}
+header::before{content:"";position:absolute;width:300px;height:300px;background:#00ffcc33;filter:blur(120px);top:0;left:50%;transform:translateX(-50%);}
 
-    .title-main{font-size:34px;font-weight:600;margin-top:30px;position:relative;}
-    .subtitle{color:#94a3b8;margin-top:10px;}
+.arduino-intro{width:240px;margin:auto;transform:translateY(-180px);opacity:0;animation:slideDown 1s ease forwards;}
+.arduino-intro img{width:100%;animation:float 4s ease-in-out infinite;}
 
-    .search-box{max-width:500px;margin:30px auto 0;}
-    .search-box input{width:100%;padding:14px 18px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,0.08);color:#fff;backdrop-filter:blur(10px);}
+@keyframes slideDown{to{transform:translateY(0);opacity:1;}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
-    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:50px;max-width:1300px;margin:auto;}
+.title-main{font-size:34px;font-weight:600;margin-top:30px;}
+.subtitle{color:#94a3b8;margin-top:10px;}
 
-    .card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;transition:0.3s;cursor:pointer;}
-    .card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,0.6);}
+.search-box{max-width:500px;margin:30px auto 0;}
+.search-box input{width:100%;padding:14px 18px;border-radius:12px;border:none;background:rgba(255,255,255,0.08);color:#fff;}
 
-    .card img{width:100%;border-radius:12px;}
-    .title{font-size:18px;margin:12px 0 6px;}
-    .price{color:#22c55e;margin-bottom:12px;font-weight:600;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:50px;max-width:1300px;margin:auto;}
 
-    .popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:0.3s;z-index:9999;}
-    .popup.active{opacity:1;pointer-events:auto;}
+.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;transition:0.3s;cursor:pointer;position:relative;}
+.card:hover{transform:translateY(-10px) scale(1.02);}
 
-    .popup-content{background:rgba(20,20,20,0.8);backdrop-filter:blur(20px);padding:25px;border-radius:16px;max-width:400px;width:90%;transform:scale(0.8);transition:0.3s;}
-    .popup.active .popup-content{transform:scale(1);}
+.card img{width:100%;border-radius:12px;}
+.title{font-size:18px;margin:12px 0 6px;}
+.price{color:#22c55e;margin-bottom:12px;font-weight:600;}
 
-    .popup img{width:100%;border-radius:12px;margin-bottom:15px;}
+/* ❤️ WISHLIST */
+.wishlist-btn{
+  position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,0.5);
+  border-radius:50%;
+  width:35px;height:35px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  font-size:18px;
+}
+.wishlist-btn.active{color:red;}
 
-    .close-btn,.cart-btn{margin-top:12px;padding:10px;border-radius:8px;text-align:center;cursor:pointer;font-weight:600;}
-    .close-btn{background:#fff;color:#000;}
-    .cart-btn{background:linear-gradient(90deg,#00ffcc,#22c55e);color:#000;}
-  </style>
+/* POPUP */
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:0.3s;z-index:9999;}
+.popup.active{opacity:1;pointer-events:auto;}
+
+.popup-content{background:rgba(20,20,20,0.9);padding:25px;border-radius:16px;max-width:400px;width:90%;transform:scale(0.8);transition:0.3s;}
+.popup.active .popup-content{transform:scale(1);}
+
+.popup img{width:100%;border-radius:12px;margin-bottom:15px;}
+
+.close-btn,.cart-btn{margin-top:12px;padding:10px;border-radius:8px;text-align:center;cursor:pointer;font-weight:600;}
+.close-btn{background:#fff;color:#000;}
+.cart-btn{background:linear-gradient(90deg,#00ffcc,#22c55e);color:#000;}
+
+</style>
 </head>
 <body>
-  <ul id="nav-links">
+
+<nav class="navbar">
+  <div class="logo">Mecknown</div>
+
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="ai.html">Meck AI</a></li>
     <li><a href="course.html">Course</a></li>
-    <li><a href="shop.html">Shop</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
@@ -70,7 +107,7 @@
   <div class="arduino-intro" id="arduino">
     <img src="assets/arduinoq.png">
   </div>
-  <div class="title-main">Mecknown E-Comp  Store</div>
+  <div class="title-main">Mecknown E-Comp Store</div>
   <div class="subtitle">Build. Hack. Create.</div>
 
   <div class="search-box">
@@ -87,13 +124,20 @@
 <script>
 let products = [];
 let cart = [];
+let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
 const container = document.getElementById("products");
 const searchInput = document.getElementById("search");
 const popup = document.getElementById("popup");
 const popupContent = document.getElementById("popupContent");
 
-// 🔥 LOAD FROM GITHUB JSON
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', ()=>{
+  navLinks.classList.toggle('active');
+});
+
 async function loadProducts(){
   const res = await fetch('data/products.json');
   products = await res.json();
@@ -103,14 +147,30 @@ async function loadProducts(){
 function renderProducts(list){
   container.innerHTML = "";
   list.forEach((p,i)=>{
+    const isLiked = wishlist.includes(p.name);
+
     container.innerHTML += `
       <div class="card" onclick="openPopup(${i})">
+        <div class="wishlist-btn ${isLiked?'active':''}" onclick="toggleWishlist(event,'${p.name}')">❤</div>
         <img src="${p.img}">
         <div class="title">${p.name}</div>
         <div class="price">${p.price}</div>
       </div>
     `;
   });
+}
+
+function toggleWishlist(e,name){
+  e.stopPropagation();
+
+  if(wishlist.includes(name)){
+    wishlist = wishlist.filter(n=>n!==name);
+  } else {
+    wishlist.push(name);
+  }
+
+  localStorage.setItem('wishlist',JSON.stringify(wishlist));
+  renderProducts(products);
 }
 
 function openPopup(i){
@@ -141,7 +201,6 @@ searchInput.addEventListener('input',()=>{
   renderProducts(filtered);
 });
 
-// parallax
 const arduino = document.getElementById('arduino');
 window.addEventListener('scroll',()=>{
   arduino.style.transform = `translateY(${window.scrollY*0.4}px)`;
