@@ -1,16 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-<style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"><style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
-.navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(10,10,10,0.7);backdrop-filter:blur(12px);z-index:1000}
+.navbar{
+  position:sticky;
+  top:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:rgba(10,10,10,0.7);
+  backdrop-filter:blur(12px);
+  z-index:1000;
+}
+
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+
+.nav-links{
+  display:flex;
+  gap:18px;
+  list-style:none;
+}
+
+.nav-links a{
+  color:#94a3b8;
+  text-decoration:none;
+  font-size:14px;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
+
+.hamburger span{
+  width:22px;
+  height:3px;
+  background:#fff;
+}
+
+@media(max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:60px;
+    left:0;
+    width:100%;
+    background:#020617;
+    flex-direction:column;
+    align-items:center;
+    padding:20px 0;
+    transform:translateY(-120%);
+    transition:0.3s;
+  }
+
+  .nav-links.active{
+    transform:translateY(0);
+  }
+
+  .hamburger{
+    display:flex;
+  }
+}
 .logo{font-weight:600}
 
 .cart-icon{cursor:pointer;position:relative}
@@ -53,53 +119,52 @@ body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
   background:#111;padding:30px;border-radius:12px;text-align:center
 }
 
-</style>
-</head>
-<body>
+</style></head>
+<body><nav class="navbar">
+  <div class="nav-left">
+    <div class="logo">Mecknown</div><div class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
-<nav class="navbar">
-  <div class="logo">Mecknown</div>
+<ul class="nav-links" id="navLinks">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="ai.html">Meck AI</a></li>
+  <li><a href="course.html">Course</a></li>
+  <li><a href="shop.html">Shop</a></li>
+  <li><a href="services.html">Services</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
 
-  <div class="cart-icon" onclick="toggleCart()">
+  </div>  <div class="cart-icon" onclick="toggleCart()">
     🛒
     <span class="cart-count" id="cartCount">0</span>
   </div>
-</nav>
-
-<div class="cart-panel" id="cartPanel">
+</nav><div class="cart-panel" id="cartPanel">
   <h3>Your Cart</h3>
   <div id="cartItems"></div>
   <div class="total" id="total">Total: 0</div>
   <div class="checkout" onclick="openAddressPopup()">Checkout</div>
-</div>
-
-<section class="products" id="products"></section>
-
-<!-- ADDRESS POPUP -->
-<div class="address-popup" id="addressPopup">
+</div><section class="products" id="products"></section><!-- ADDRESS POPUP --><div class="address-popup" id="addressPopup">
   <div class="address-box">
-    <h3>Checkout Details</h3>
+    <h3>Checkout Details</h3><input type="text" id="nameInput" placeholder="Your name">
+<input type="text" id="phoneInput" placeholder="Phone number">
+<input type="text" id="addressInput" placeholder="Address">
 
-    <input type="text" id="nameInput" placeholder="Your name">
-    <input type="text" id="phoneInput" placeholder="Phone number">
-    <input type="text" id="addressInput" placeholder="Address">
+<div class="error" id="errorMsg"></div>
 
-    <div class="error" id="errorMsg"></div>
+<button onclick="submitOrder()">Confirm Order</button>
+<button onclick="closeAddressPopup()" style="background:#fff;margin-top:5px">Cancel</button>
 
-    <button onclick="submitOrder()">Confirm Order</button>
-    <button onclick="closeAddressPopup()" style="background:#fff;margin-top:5px">Cancel</button>
   </div>
-</div>
-
-<!-- SUCCESS -->
-<div class="success" id="successBox">
+</div><!-- SUCCESS --><div class="success" id="successBox">
   <div class="success-box">
     <h2>Order Placed ✅</h2>
     <p>Your order has been sent</p>
   </div>
-</div>
-
-<script>
+</div><script>
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -108,6 +173,14 @@ const cartPanel = document.getElementById('cartPanel');
 const cartItemsDiv = document.getElementById('cartItems');
 const cartCount = document.getElementById('cartCount');
 const totalDiv = document.getElementById('total');
+
+// MOBILE NAV
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click',()=>{
+  navLinks.classList.toggle('active');
+});
 
 function toggleCart(){cartPanel.classList.toggle('active');}
 
@@ -208,7 +281,7 @@ function submitOrder(){
     msg += `${i.name} x${i.qty} = ${i.price*i.qty}%0A`;
   });
 
-  window.open(`https://wa.me/+919048585461?text=${msg}`);
+  window.open(`https://wa.me/?text=${msg}`);
 
   closeAddressPopup();
 
@@ -245,7 +318,5 @@ function renderProducts(list){
 
 updateCartUI();
 loadProducts();
-</script>
-
-</body>
+</script></body>
 </html>
