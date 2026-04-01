@@ -1,329 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown Shop</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop</title>
 
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+    html{scroll-behavior:smooth;}
 
-<style>
+    body{
+      background:radial-gradient(circle at top,#0f172a,#020617);
+      color:#fff;overflow-x:hidden;
+    }
 
-/* NAVBAR */
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 20px;
-  background:#0a0a0a;
-  border-bottom:1px solid #1f1f1f;
-}
+    header{text-align:center;padding:100px 20px 40px;position:relative;z-index:1;}
 
-.navbar h1{
-  font-size:20px;
-}
+    header::before{content:"";position:absolute;width:300px;height:300px;background:#00ffcc33;filter:blur(120px);top:0;left:50%;transform:translateX(-50%);z-index:0;}
 
-.navbar input{
-  width:40%;
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #222;
-  background:#111;
-  color:#fff;
-}
+    .arduino-intro{width:240px;margin:auto;transform:translateY(-180px);opacity:0;animation:slideDown 1s ease forwards;position:relative;z-index:1;}
+    .arduino-intro img{width:100%;animation:float 4s ease-in-out infinite;}
 
-.nav-right{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
+    @keyframes slideDown{to{transform:translateY(0);opacity:1;}}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
-#nav-links{
-  display:flex;
-  gap:15px;
-  list-style:none;
-}
+    .title-main{font-size:34px;font-weight:600;margin-top:30px;position:relative;}
+    .subtitle{color:#94a3b8;margin-top:10px;}
 
-#nav-links a{
-  color:#ccc;
-  text-decoration:none;
-}
+    .search-box{max-width:500px;margin:30px auto 0;}
+    .search-box input{width:100%;padding:14px 18px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,0.08);color:#fff;backdrop-filter:blur(10px);}
 
-#nav-links a.active{
-  color:#fff;
-}
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:50px;max-width:1300px;margin:auto;}
 
-.menu-toggle{
-  display:none;
-  font-size:22px;
-  cursor:pointer;
-}
+    .card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;transition:0.3s;cursor:pointer;}
+    .card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,0.6);}
 
-@media(max-width:768px){
-  .navbar input{ display:none; }
+    .card img{width:100%;border-radius:12px;}
+    .title{font-size:18px;margin:12px 0 6px;}
+    .price{color:#22c55e;margin-bottom:12px;font-weight:600;}
 
-  .menu-toggle{ display:block; }
+    .popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:0.3s;z-index:9999;}
+    .popup.active{opacity:1;pointer-events:auto;}
 
-  #nav-links{
-    display:none;
-    flex-direction:column;
-    position:absolute;
-    right:0;
-    top:60px;
-    background:#111;
-    padding:10px;
-  }
+    .popup-content{background:rgba(20,20,20,0.8);backdrop-filter:blur(20px);padding:25px;border-radius:16px;max-width:400px;width:90%;transform:scale(0.8);transition:0.3s;}
+    .popup.active .popup-content{transform:scale(1);}
 
-  #nav-links.active{
-    display:flex;
-  }
-}
+    .popup img{width:100%;border-radius:12px;margin-bottom:15px;}
 
-/* LOGIN */
-.login-box{
-  max-width:350px;
-  margin:40px auto;
-  padding:20px;
-  background:#111;
-  border:1px solid #222;
-  border-radius:14px;
-  text-align:center;
-}
-
-.login-box input{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:8px;
-  border:1px solid #333;
-  background:#0a0a0a;
-  color:#fff;
-}
-
-.login-box button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  border-radius:8px;
-  background:#fff;
-  color:#000;
-}
-
-/* SHOP */
-.shop-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-  padding:20px;
-}
-
-.product-card{
-  background:#111;
-  border:1px solid #1f1f1f;
-  border-radius:12px;
-  padding:10px;
-}
-
-.product-card img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.price-row{
-  display:flex;
-  justify-content:space-between;
-  margin-top:10px;
-}
-
-button{
-  cursor:pointer;
-}
-
-</style>
-
+    .close-btn,.cart-btn{margin-top:12px;padding:10px;border-radius:8px;text-align:center;cursor:pointer;font-weight:600;}
+    .close-btn{background:#fff;color:#000;}
+    .cart-btn{background:linear-gradient(90deg,#00ffcc,#22c55e);color:#000;}
+  </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <h1>Mecknown</h1>
-
-  <input type="text" id="searchBar" placeholder="Search products...">
-
-  <div class="nav-right">
-    <ul id="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="ai.html">Meck AI</a></li>
-      <li><a href="shop.html" class="active">Shop</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-
-    <div class="menu-toggle" id="menu-toggle">☰</div>
+<header>
+  <div class="arduino-intro" id="arduino">
+    <img src="assets/arduinoq.png">
   </div>
-</nav>
+  <div class="title-main">Arduino & Robotics Store</div>
+  <div class="subtitle">Build. Hack. Create.</div>
 
-<!-- HERO -->
-<section class="hero">
-  <h2>Mecknown Store</h2>
-  <p>Smart gadgets • Robotics • Tech builds</p>
-</section>
-
-<!-- LOGIN -->
-<div id="loginSection" class="login-box">
-  <h2 id="authTitle">Login</h2>
-
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
-
-  <button onclick="emailAuth()" id="authBtn">Login</button>
-  <button onclick="googleLogin()">Continue with Google</button>
-
-  <div onclick="toggleAuth()" style="margin-top:10px;color:#aaa;cursor:pointer;">
-    Switch to Sign Up
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search products...">
   </div>
+</header>
 
-  <p id="authError" style="color:red;font-size:13px;"></p>
-</div>
+<section class="products" id="products"></section>
 
-<!-- SHOP -->
-<div id="shopSection" style="display:none;">
-  <div style="padding:20px;">
-    <p id="userInfo"></p>
-    <button onclick="logout()">Logout</button>
-  </div>
-
-  <div class="shop-grid" id="productContainer"></div>
+<div class="popup" id="popup">
+  <div class="popup-content" id="popupContent"></div>
 </div>
 
 <script>
+let products = [];
+let cart = [];
 
-/* FIREBASE */
-const firebaseConfig = {
-  apiKey: "AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
-  authDomain: "mecknownshop.firebaseapp.com",
-  projectId: "mecknownshop"
-};
+const container = document.getElementById("products");
+const searchInput = document.getElementById("search");
+const popup = document.getElementById("popup");
+const popupContent = document.getElementById("popupContent");
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-/* AUTH */
-let isLogin = true;
-
-function toggleAuth(){
-  isLogin = !isLogin;
-  document.getElementById("authTitle").innerText = isLogin ? "Login" : "Sign Up";
+// 🔥 LOAD FROM GITHUB JSON
+async function loadProducts(){
+  const res = await fetch('data/products.json');
+  products = await res.json();
+  renderProducts(products);
 }
 
-/* LOGIN */
-function emailAuth(){
-  const emailVal = document.getElementById("email").value;
-  const passwordVal = document.getElementById("password").value;
-  const err = document.getElementById("authError");
-
-  err.innerText = "";
-
-  if(isLogin){
-    auth.signInWithEmailAndPassword(emailVal,passwordVal)
-      .catch(e => err.innerText = e.message);
-  }else{
-    auth.createUserWithEmailAndPassword(emailVal,passwordVal)
-      .catch(e => err.innerText = e.message);
-  }
-}
-
-function googleLogin(){
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
-}
-
-/* AUTH STATE */
-auth.onAuthStateChanged(user=>{
-  if(user){
-    document.getElementById("loginSection").style.display="none";
-    document.getElementById("shopSection").style.display="block";
-    document.getElementById("userInfo").innerText="👤 "+user.email;
-
-    loadProducts();
-  }
-});
-
-/* LOGOUT */
-function logout(){
-  auth.signOut();
-  location.reload();
-}
-
-/* LOAD PRODUCTS */
-function loadProducts(){
-  const container = document.getElementById("productContainer");
-
-  db.collection("products").orderBy("createdAt","desc")
-  .onSnapshot(snap=>{
-    container.innerHTML="";
-
-    snap.forEach(doc=>{
-      const p = doc.data();
-
-      container.innerHTML += `
-      <div class="product-card">
-        <img src="${p.image}">
-        <h3>${p.name}</h3>
-        <p>${p.description}</p>
-        <div class="price-row">
-          <span>₹${p.price}</span>
-          <button onclick="placeOrder('${p.name}','${p.price}')">Buy</button>
-        </div>
-      </div>`;
-    });
+function renderProducts(list){
+  container.innerHTML = "";
+  list.forEach((p,i)=>{
+    container.innerHTML += `
+      <div class="card" onclick="openPopup(${i})">
+        <img src="${p.img}">
+        <div class="title">${p.name}</div>
+        <div class="price">${p.price}</div>
+      </div>
+    `;
   });
 }
 
-/* ✅ ORDER SYSTEM (YOUR URL ADDED) */
-function placeOrder(name,price){
-  const user = auth.currentUser;
-
-  const phone = prompt("Enter your phone number:");
-  if(!phone) return;
-
-  const fd = new FormData();
-  fd.append("email",user.email);
-  fd.append("product",name);
-  fd.append("price",price);
-  fd.append("phone",phone);
-  fd.append("time",new Date().toLocaleString());
-
-  fetch("https://script.google.com/macros/s/AKfycbwYlsLWQZkH3iGed2VA3hWk63gw8mn559sI-iLNR-uzD6UXXlLkirN2DkJMdVLzoniMPA/exec",
-  {method:"POST",body:fd})
-  .then(()=>alert("Order placed!"))
-  .catch(()=>alert("Order failed"));
+function openPopup(i){
+  const p = products[i];
+  popupContent.innerHTML = `
+    <img src="${p.img}">
+    <h2>${p.name}</h2>
+    <p>${p.desc}</p>
+    <div class="price">${p.price}</div>
+    <div class="cart-btn" onclick="addToCart('${p.name}')">Add to Cart</div>
+    <div class="close-btn" onclick="closePopup()">Close</div>
+  `;
+  popup.classList.add('active');
 }
 
-/* SEARCH */
-document.getElementById("searchBar").addEventListener("input", function(){
-  const v=this.value.toLowerCase();
-  document.querySelectorAll(".product-card").forEach(c=>{
-    c.style.display=c.innerText.toLowerCase().includes(v)?"":"none";
-  });
+function closePopup(){popup.classList.remove('active');}
+
+function addToCart(name){
+  cart.push(name);
+  alert(name+" added to cart");
+}
+
+popup.addEventListener('click',(e)=>{if(e.target===popup)closePopup();});
+
+searchInput.addEventListener('input',()=>{
+  const val = searchInput.value.toLowerCase();
+  const filtered = products.filter(p=>p.name.toLowerCase().includes(val));
+  renderProducts(filtered);
 });
 
-/* MENU */
-document.getElementById("menu-toggle").addEventListener("click", function(){
-  document.getElementById("nav-links").classList.toggle("active");
+// parallax
+const arduino = document.getElementById('arduino');
+window.addEventListener('scroll',()=>{
+  arduino.style.transform = `translateY(${window.scrollY*0.4}px)`;
 });
 
+loadProducts();
 </script>
 
 </body>
