@@ -117,6 +117,37 @@ nav h1{font-size:18px}
   border-radius:10px;
 }
 
+/* FEATURED MICROCONTROLLERS */
+.featured{
+  padding:30px 20px;
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+}
+
+.feature-card{
+  min-width:220px;
+  background:#111;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+
+  opacity:0;
+  transform:translateY(50px);
+  transition:0.6s ease;
+}
+
+.feature-card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.feature-card img{
+  width:100%;
+  height:140px;
+  object-fit:contain;
+}
+
 /* OVERLAY */
 .overlay{
   position:fixed;
@@ -186,12 +217,16 @@ html,body{overflow-x:hidden}
 @media(max-width:600px){
   .cart-panel{width:85%;max-width:320px}
 }
-</style></head><body><nav>
+</style></head><body>
+
+<nav>
   <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
   <h1>Mecknown</h1>
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
-  </div>  <ul id="nav-links">
+  </div>
+
+  <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="ai.html">Meck AI</a></li>
     <li><a href="course.html">Course</a></li>
@@ -200,12 +235,38 @@ html,body{overflow-x:hidden}
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-</nav><div class="overlay" id="overlay"></div><div class="cart-panel" id="cartPanel">
+</nav>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="cart-panel" id="cartPanel">
   <h3>Your Cart</h3>
   <div id="cartItems"></div>
   <div class="total" id="total">Total: 0</div>
   <div class="checkout" onclick="openAddressPopup()">Checkout</div>
-</div><section class="products" id="products"></section><div class="address-popup" id="addressPopup">
+</div>
+
+<!-- ✅ FEATURED SECTION -->
+<section class="featured">
+  <div class="feature-card">
+    <img src="assets/arduinoq.png">
+    <h3>Arduino</h3>
+  </div>
+
+  <div class="feature-card">
+    <img src="assets/esp32.png">
+    <h3>ESP32</h3>
+  </div>
+
+  <div class="feature-card">
+    <img src="assets/stm32.png">
+    <h3>STM32</h3>
+  </div>
+</section>
+
+<section class="products" id="products"></section>
+
+<div class="address-popup" id="addressPopup">
   <div class="address-box">
     <h3>Checkout</h3>
     <input id="nameInput" placeholder="Name">
@@ -215,9 +276,13 @@ html,body{overflow-x:hidden}
     <button onclick="submitOrder()">Confirm</button>
     <button onclick="closeAddressPopup()" style="background:#fff">Cancel</button>
   </div>
-</div><div class="success" id="successBox">
+</div>
+
+<div class="success" id="successBox">
   <div class="success-box"><h2>Order Placed ✅</h2></div>
-</div><script>
+</div>
+
+<script>
 let products=[];
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
 
@@ -233,9 +298,7 @@ const totalDiv=document.getElementById('total');
 /* MENU */
 toggle.addEventListener("click",()=>{
   const isOpen = navLinks.classList.toggle("active");
-
   cartPanel.classList.remove('active');
-
   overlay.classList.toggle("active", isOpen);
   document.body.classList.toggle("menu-open", isOpen);
 });
@@ -243,9 +306,7 @@ toggle.addEventListener("click",()=>{
 /* CART */
 function toggleCart(){
   const isOpen = cartPanel.classList.toggle('active');
-
   navLinks.classList.remove('active');
-
   overlay.classList.toggle('active', isOpen);
   document.body.classList.toggle("cart-open", isOpen);
 }
@@ -256,6 +317,15 @@ overlay.addEventListener('click',()=>{
   navLinks.classList.remove('active');
   overlay.classList.remove('active');
   document.body.classList.remove("cart-open","menu-open");
+});
+
+/* FEATURE ANIMATION */
+window.addEventListener("load",()=>{
+  document.querySelectorAll('.feature-card').forEach((el,i)=>{
+    setTimeout(()=>{
+      el.classList.add('show');
+    },i*200);
+  });
 });
 
 /* CART LOGIC */
@@ -332,7 +402,6 @@ function submitOrder(){
   let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
   cart.forEach(i=>msg+=`${i.name} x${i.qty}%0A`);
 
-  // ✅ YOUR WHATSAPP NUMBER ADDED
   window.open(`https://wa.me/919048585461?text=${msg}`);
 
   document.getElementById('successBox').style.display='flex';
@@ -375,7 +444,6 @@ addToCart=function(name,priceStr){
   showAddedFeedback(name);
 };
 
-/* NAV CLOSE */
 navLinks.querySelectorAll('a').forEach(link=>{
   link.addEventListener('click',()=>{
     navLinks.classList.remove('active');
