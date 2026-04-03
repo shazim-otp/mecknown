@@ -28,5 +28,10 @@
     "price": 5000,
     "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/q_auto/f_auto/v1775217488/arduinoq_r69cut_c1u9mz.jpg",
     "desc": "Micro processor"
-  }
+  },
+  {
+    "name": "18650 Li-ion Battery 3.7v 1200 mah",
+    "price": 60,
+    "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/q_auto/f_auto/v1775217823/3.7v-2200mah-21_gwv2bl.png",
+    "desc": "Battery"
 ]
