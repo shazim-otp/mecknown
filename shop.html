@@ -277,6 +277,11 @@ const cartItems=document.getElementById('cartItems');
 const cartCount=document.getElementById('cartCount');
 const totalDiv=document.getElementById('total');
 
+/* FORMAT ₹ */
+function formatPrice(num){
+  return "₹"+Number(num).toLocaleString('en-IN');
+}
+
 /* HERO ANIMATION */
 window.addEventListener("load",()=>{
   setTimeout(()=>arduinoHero.classList.add("show"),200);
@@ -330,10 +335,11 @@ function updateCart(){
           ${i.qty}
           <button onclick='changeQty(${index},1)'>+</button>
         </div>
+        <div>${formatPrice(i.price*i.qty)}</div>
       </div>`;
   });
 
-  totalDiv.textContent='Total: '+total;
+  totalDiv.textContent='Total: '+formatPrice(total);
   cartCount.textContent=cart.length;
 }
 
@@ -386,7 +392,7 @@ function submitOrder(){
   const orderId='ORD-'+Date.now();
 
   let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
-  cart.forEach(i=>msg+=`${i.name} x${i.qty}%0A`);
+  cart.forEach(i=>msg+=`${i.name} x${i.qty} - ₹${i.price*i.qty}%0A`);
 
   window.open(`https://wa.me/919048585461?text=${msg}`);
 
@@ -402,6 +408,7 @@ function submitOrder(){
 
 updateCart();
 
+/* LOAD PRODUCTS */
 async function load(){
   const res=await fetch('data/products.json');
   products=await res.json();
@@ -414,7 +421,7 @@ async function load(){
       <div class='card'>
         <img src='${p.img}' style='width:100%'>
         <h3>${p.name}</h3>
-        <p>${p.price}</p>
+        <p>${formatPrice(p.price)}</p>
         <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
       </div>`;
   });
