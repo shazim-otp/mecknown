@@ -2,7 +2,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"><style>
+<title>Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:radial-gradient(circle at top,#0f172a,#020617);color:#fff}
 
@@ -18,83 +21,90 @@ nav{
   backdrop-filter:blur(12px);
   z-index:3000;
 }
-
 nav h1{font-size:18px}
 
-/* CART */
-.cart-icon{
-  position:absolute;
-  left:15px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-}
-
-.cart-count{
-  position:absolute;
-  top:-8px;
-  right:-8px;
-  background:#22c55e;
-  color:#000;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-}
-
-/* MENU */
-.menu-toggle{
-  position:absolute;
-  right:15px;
+/* HERO */
+.hero{
   display:flex;
   flex-direction:column;
-  gap:4px;
-  cursor:pointer;
-}
-
-.menu-toggle span{
-  width:22px;
-  height:3px;
-  background:#fff;
-}
-
-/* SIDE MENU */
-#nav-links{
-  position:fixed;
-  top:0;
-  right:-260px;
-  width:260px;
-  height:100vh;
-  background:#020617;
-  display:flex;
-  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:90vh;
+  text-align:center;
   gap:20px;
-  padding:100px 20px 20px;
-  list-style:none;
-  transition:0.3s;
-  z-index:3000;
 }
 
+.hero h1{
+  font-size:28px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:0.6s ease;
+}
+.hero h1.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Arduino Bounce + Glow */
+.hero-img{
+  width:280px;
+  opacity:0;
+  transform:translateY(-120px);
+  filter:drop-shadow(0 0 0px #22c55e);
+}
+.hero-img.show{
+  animation:dropBounce 1s ease forwards, glow 2s ease-in-out infinite alternate;
+}
+
+/* ESP + STM */
+.hero-small{
+  width:260px;
+  opacity:0;
+  transform:translateY(-100px);
+  filter:drop-shadow(0 0 0px #22c55e);
+}
+.hero-small.show{
+  animation:dropBounce 0.9s ease forwards, glow 2s ease-in-out infinite alternate;
+}
+
+.hero-row{
+  display:flex;
+  gap:20px;
+}
+
+/* ANIMATIONS */
+@keyframes dropBounce{
+  0%{opacity:0;transform:translateY(-120px)}
+  60%{opacity:1;transform:translateY(10px)}
+  80%{transform:translateY(-5px)}
+  100%{transform:translateY(0)}
+}
+
+@keyframes glow{
+  from{filter:drop-shadow(0 0 5px #22c55e)}
+  to{filter:drop-shadow(0 0 20px #22c55e)}
+}
+
+/* CART + MENU + EXISTING */
+.cart-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);cursor:pointer}
+.cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
+.menu-toggle{position:absolute;right:15px;display:flex;flex-direction:column;gap:4px;cursor:pointer}
+.menu-toggle span{width:22px;height:3px;background:#fff}
+
+#nav-links{
+  position:fixed;top:0;right:-260px;width:260px;height:100vh;
+  background:#020617;display:flex;flex-direction:column;
+  gap:20px;padding:100px 20px 20px;list-style:none;
+  transition:0.3s;z-index:3000;
+}
 #nav-links.active{right:0}
+#nav-links a{color:#94a3b8;text-decoration:none}
 
-#nav-links a{
-  color:#94a3b8;
-  text-decoration:none;
-}
-
-/* CART PANEL */
 .cart-panel{
-  position:fixed;
-  top:0;
-  left:-320px;
-  width:300px;
-  height:100%;
-  background:#111;
-  padding:20px;
-  transition:0.3s;
-  z-index:3000;
-  overflow-y:auto;
+  position:fixed;top:0;left:-320px;width:300px;height:100%;
+  background:#111;padding:20px;transition:0.3s;
+  z-index:3000;overflow-y:auto;
 }
-
 .cart-panel.active{left:0}
 
 .qty{display:flex;gap:8px;align-items:center;margin-top:5px}
@@ -103,7 +113,6 @@ nav h1{font-size:18px}
 .total{margin-top:15px;font-weight:600}
 .checkout{margin-top:10px;padding:10px;background:#22c55e;color:#000;text-align:center;border-radius:8px;cursor:pointer}
 
-/* PRODUCTS */
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -111,113 +120,46 @@ nav h1{font-size:18px}
   padding:40px;
 }
 
-.card{
-  background:#111;
-  padding:15px;
-  border-radius:10px;
-}
-
-/* FEATURED MICROCONTROLLERS */
-.featured{
-  padding:30px 20px;
-  display:flex;
-  gap:20px;
-  overflow-x:auto;
-}
-
-.feature-card{
-  min-width:220px;
-  background:#111;
-  padding:15px;
-  border-radius:12px;
-  text-align:center;
-
-  opacity:0;
-  transform:translateY(50px);
-  transition:0.6s ease;
-}
-
-.feature-card.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.feature-card img{
-  width:100%;
-  height:140px;
-  object-fit:contain;
-}
+.card{background:#111;padding:15px;border-radius:10px}
 
 /* OVERLAY */
 .overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  z-index:2000;
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  display:none;z-index:2000;
 }
 .overlay.active{display:block}
 
 /* POPUP */
 .address-popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:6000;
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;z-index:6000;
 }
 .address-box{
-  background:#111;
-  padding:20px;
-  border-radius:10px;
-  width:320px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  background:#111;padding:20px;border-radius:10px;width:320px;
+  display:flex;flex-direction:column;gap:10px;
 }
 .address-box input{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#020617;
-  color:#fff;
+  width:100%;padding:12px;border:none;border-radius:8px;
+  background:#020617;color:#fff;
 }
 .address-box button{
-  margin-top:10px;
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#22c55e;
-  color:#000;
-  font-weight:600;
-  cursor:pointer;
+  margin-top:10px;width:100%;padding:10px;border:none;
+  border-radius:8px;background:#22c55e;color:#000;
+  font-weight:600;cursor:pointer;
 }
-.error{color:#ef4444;font-size:13px;margin-top:5px}
 
-/* SUCCESS */
 .success{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:7000;
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  display:none;align-items:center;justify-content:center;z-index:7000;
 }
 .success-box{background:#111;padding:30px;border-radius:12px;text-align:center}
 
-/* FIXES */
 body.menu-open, body.cart-open{overflow:hidden}
 html,body{overflow-x:hidden}
+</style>
+</head>
 
-@media(max-width:600px){
-  .cart-panel{width:85%;max-width:320px}
-}
-</style></head><body>
+<body>
 
 <nav>
   <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
@@ -239,30 +181,22 @@ html,body{overflow-x:hidden}
 
 <div class="overlay" id="overlay"></div>
 
+<!-- HERO -->
+<section class="hero">
+  <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero">
+  <h1 id="heroText">Mecknown E Comp Store</h1>
+  <div class="hero-row">
+    <img src="assets/esp32.png" class="hero-small" id="espHero">
+    <img src="assets/stm32.png" class="hero-small" id="stmHero">
+  </div>
+</section>
+
 <div class="cart-panel" id="cartPanel">
   <h3>Your Cart</h3>
   <div id="cartItems"></div>
   <div class="total" id="total">Total: 0</div>
   <div class="checkout" onclick="openAddressPopup()">Checkout</div>
 </div>
-
-<!-- ✅ FEATURED SECTION -->
-<section class="featured">
-  <div class="feature-card">
-    <img src="assets/arduinoq.png">
-    <h3>Arduino</h3>
-  </div>
-
-  <div class="feature-card">
-    <img src="assets/esp32.png">
-    <h3>ESP32</h3>
-  </div>
-
-  <div class="feature-card">
-    <img src="assets/stm32.png">
-    <h3>STM32</h3>
-  </div>
-</section>
 
 <section class="products" id="products"></section>
 
@@ -295,6 +229,21 @@ const cartItems=document.getElementById('cartItems');
 const cartCount=document.getElementById('cartCount');
 const totalDiv=document.getElementById('total');
 
+/* HERO SEQUENCE */
+window.addEventListener("load",()=>{
+  setTimeout(()=>arduinoHero.classList.add("show"),200);
+  setTimeout(()=>heroText.classList.add("show"),600);
+  setTimeout(()=>{
+    espHero.classList.add("show");
+    stmHero.classList.add("show");
+  },1100);
+
+  // AUTO SCROLL
+  setTimeout(()=>{
+    document.getElementById("products").scrollIntoView({behavior:"smooth"});
+  },2500);
+});
+
 /* MENU */
 toggle.addEventListener("click",()=>{
   const isOpen = navLinks.classList.toggle("active");
@@ -317,15 +266,6 @@ overlay.addEventListener('click',()=>{
   navLinks.classList.remove('active');
   overlay.classList.remove('active');
   document.body.classList.remove("cart-open","menu-open");
-});
-
-/* FEATURE ANIMATION */
-window.addEventListener("load",()=>{
-  document.querySelectorAll('.feature-card').forEach((el,i)=>{
-    setTimeout(()=>{
-      el.classList.add('show');
-    },i*200);
-  });
 });
 
 /* CART LOGIC */
@@ -414,44 +354,8 @@ function submitOrder(){
   },2000);
 }
 
-/* UI FEEDBACK */
-function animateCart(){
-  cartCount.style.transform='scale(1.3)';
-  setTimeout(()=>cartCount.style.transform='scale(1)',200);
-}
+updateCart();
 
-function showAddedFeedback(name){
-  const note=document.createElement('div');
-  note.textContent=name+' added to cart';
-  note.style.position='fixed';
-  note.style.bottom='20px';
-  note.style.left='50%';
-  note.style.transform='translateX(-50%)';
-  note.style.background='#22c55e';
-  note.style.color='#000';
-  note.style.padding='10px 16px';
-  note.style.borderRadius='8px';
-  note.style.zIndex='8000';
-  document.body.appendChild(note);
-
-  setTimeout(()=>note.remove(),1500);
-}
-
-const oldAdd=addToCart;
-addToCart=function(name,priceStr){
-  oldAdd(name,priceStr);
-  animateCart();
-  showAddedFeedback(name);
-};
-
-navLinks.querySelectorAll('a').forEach(link=>{
-  link.addEventListener('click',()=>{
-    navLinks.classList.remove('active');
-    overlay.classList.remove('active');
-  });
-});
-
-/* PRODUCTS */
 async function load(){
   const res=await fetch('data/products.json');
   products=await res.json();
@@ -470,7 +374,7 @@ async function load(){
   });
 }
 
-updateCart();
 load();
-</script></body>
+</script>
+</body>
 </html>
