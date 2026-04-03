@@ -31,25 +31,39 @@ nav h1{font-size:18px}
   justify-content:center;
   height:90vh;
   text-align:center;
-  gap:15px;
+  gap:20px;
+  perspective:1000px;
 }
 
-/* Images */
-.hero-img,
-.hero-small{
-  width:260px;
-  max-width:80%;
-  opacity:0;
-  transform:translateY(-120px);
-  filter:drop-shadow(0 0 0px #22c55e);
-}
-
+/* IMAGE ROW */
 .hero-row{
   display:flex;
-  gap:15px;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 
-/* Title */
+/* IMAGE STYLE */
+.hero-img{
+  width:220px;
+  max-width:30vw;
+  transform:translateY(-120px) rotateX(0deg) rotateY(0deg);
+  opacity:0;
+  transition:transform 0.2s ease;
+}
+
+/* SHOW */
+.hero-img.show{
+  opacity:1;
+  animation:dropBounce 1s ease forwards, glow 2s ease-in-out infinite alternate;
+}
+
+/* HOVER TILT */
+.hero-img:hover{
+  transform:scale(1.05) rotateX(8deg) rotateY(-8deg);
+}
+
+/* TITLE */
 .hero h1{
   font-size:30px;
   opacity:0;
@@ -61,7 +75,7 @@ nav h1{font-size:18px}
   transform:translateY(0);
 }
 
-/* Subtitle */
+/* SUBTITLE */
 .hero p{
   font-size:14px;
   color:#94a3b8;
@@ -74,12 +88,7 @@ nav h1{font-size:18px}
   transform:translateY(0);
 }
 
-/* Animation */
-.hero-img.show,
-.hero-small.show{
-  animation:dropBounce 1s ease forwards, glow 2s ease-in-out infinite alternate;
-}
-
+/* ANIMATIONS */
 @keyframes dropBounce{
   0%{opacity:0;transform:translateY(-120px)}
   60%{opacity:1;transform:translateY(10px)}
@@ -93,73 +102,28 @@ nav h1{font-size:18px}
 }
 
 /* CART */
-.cart-icon{
-  position:absolute;
-  left:15px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-}
-.cart-count{
-  position:absolute;
-  top:-8px;
-  right:-8px;
-  background:#22c55e;
-  color:#000;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-}
+.cart-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);cursor:pointer}
+.cart-count{position:absolute;top:-8px;right:-8px;background:#22c55e;color:#000;font-size:12px;padding:2px 6px;border-radius:50%}
 
 /* MENU */
-.menu-toggle{
-  position:absolute;
-  right:15px;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  cursor:pointer;
-}
-.menu-toggle span{
-  width:22px;
-  height:3px;
-  background:#fff;
-}
+.menu-toggle{position:absolute;right:15px;display:flex;flex-direction:column;gap:4px;cursor:pointer}
+.menu-toggle span{width:22px;height:3px;background:#fff}
 
 /* SIDE MENU */
 #nav-links{
-  position:fixed;
-  top:0;
-  right:-260px;
-  width:260px;
-  height:100vh;
-  background:#020617;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-  padding:100px 20px 20px;
-  list-style:none;
-  transition:0.3s;
-  z-index:3000;
+  position:fixed;top:0;right:-260px;width:260px;height:100vh;
+  background:#020617;display:flex;flex-direction:column;
+  gap:20px;padding:100px 20px 20px;list-style:none;
+  transition:0.3s;z-index:3000;
 }
 #nav-links.active{right:0}
-#nav-links a{
-  color:#94a3b8;
-  text-decoration:none;
-}
+#nav-links a{color:#94a3b8;text-decoration:none}
 
 /* CART PANEL */
 .cart-panel{
-  position:fixed;
-  top:0;
-  left:-320px;
-  width:300px;
-  height:100%;
-  background:#111;
-  padding:20px;
-  transition:0.3s;
-  z-index:3000;
-  overflow-y:auto;
+  position:fixed;top:0;left:-320px;width:300px;height:100%;
+  background:#111;padding:20px;transition:0.3s;
+  z-index:3000;overflow-y:auto;
 }
 .cart-panel.active{left:0}
 
@@ -167,15 +131,7 @@ nav h1{font-size:18px}
 .qty button{padding:2px 8px}
 
 .total{margin-top:15px;font-weight:600}
-.checkout{
-  margin-top:10px;
-  padding:10px;
-  background:#22c55e;
-  color:#000;
-  text-align:center;
-  border-radius:8px;
-  cursor:pointer;
-}
+.checkout{margin-top:10px;padding:10px;background:#22c55e;color:#000;text-align:center;border-radius:8px;cursor:pointer}
 
 /* PRODUCTS */
 .products{
@@ -184,78 +140,41 @@ nav h1{font-size:18px}
   gap:20px;
   padding:40px;
 }
-.card{
-  background:#111;
-  padding:15px;
-  border-radius:10px;
-}
+.card{background:#111;padding:15px;border-radius:10px}
 
 /* OVERLAY */
 .overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  z-index:2000;
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  display:none;z-index:2000;
 }
 .overlay.active{display:block}
 
 /* POPUP */
 .address-popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:6000;
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;z-index:6000;
 }
 .address-box{
-  background:#111;
-  padding:20px;
-  border-radius:10px;
-  width:320px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  background:#111;padding:20px;border-radius:10px;width:320px;
+  display:flex;flex-direction:column;gap:10px;
 }
 .address-box input{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#020617;
-  color:#fff;
+  width:100%;padding:12px;border:none;border-radius:8px;
+  background:#020617;color:#fff;
 }
 .address-box button{
-  margin-top:10px;
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#22c55e;
-  color:#000;
-  font-weight:600;
-  cursor:pointer;
+  margin-top:10px;width:100%;padding:10px;border:none;
+  border-radius:8px;background:#22c55e;color:#000;
+  font-weight:600;cursor:pointer;
 }
 .error{color:#ef4444;font-size:13px;margin-top:5px}
 
 /* SUCCESS */
 .success{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:7000;
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  display:none;align-items:center;justify-content:center;z-index:7000;
 }
-.success-box{
-  background:#111;
-  padding:30px;
-  border-radius:12px;
-  text-align:center;
-}
+.success-box{background:#111;padding:30px;border-radius:12px;text-align:center}
 
 /* FIXES */
 body.menu-open, body.cart-open{overflow:hidden}
@@ -291,17 +210,14 @@ html,body{overflow-x:hidden}
 
 <!-- HERO -->
 <section class="hero">
-
-  <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero">
-
   <div class="hero-row">
-    <img src="assets/esp32.png" class="hero-small" id="espHero">
-    <img src="assets/stm32.png" class="hero-small" id="stmHero">
+    <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero">
+    <img src="assets/esp32.png" class="hero-img" id="espHero">
+    <img src="assets/stm32.png" class="hero-img" id="stmHero">
   </div>
 
   <h1 id="heroText">Mecknown E Comp Store</h1>
   <p id="heroSub">Build • Learn • Innovate with Electronics</p>
-
 </section>
 
 <div class="cart-panel" id="cartPanel">
@@ -342,15 +258,11 @@ const cartItems=document.getElementById('cartItems');
 const cartCount=document.getElementById('cartCount');
 const totalDiv=document.getElementById('total');
 
-/* HERO SEQUENCE */
+/* HERO ANIMATION */
 window.addEventListener("load",()=>{
   setTimeout(()=>arduinoHero.classList.add("show"),200);
-
-  setTimeout(()=>{
-    espHero.classList.add("show");
-    stmHero.classList.add("show");
-  },700);
-
+  setTimeout(()=>espHero.classList.add("show"),500);
+  setTimeout(()=>stmHero.classList.add("show"),800);
   setTimeout(()=>heroText.classList.add("show"),1200);
   setTimeout(()=>heroSub.classList.add("show"),1500);
 
