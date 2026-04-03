@@ -1,31 +1,31 @@
 [
   {
     "name": "Arduino UNO",
-    "price": 325,
+    "price": 325 Rs,
     "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/q_auto/f_auto/v1775063169/arduino_uno_xp4cf2.jpg",
     "desc": "Main microcontroller board"
   },
   {
     "name": "Ultrasonic Sensor",
-    "price": 100,
+    "price": 100 Rs,
     "img": "https://m.media-amazon.com/images/I/61V7-pm5ktL._AC_UF1000,1000_QL80_.jpg",
     "desc": "Distance measuring sensor"
   },
   {
     "name": "Summer workshop special kit",
-    "price": 1950,
+    "price": 1950 Rs,
     "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/q_auto/f_auto/v1775062471/kit_square_ku6wnb.jpg",
     "desc": "This Summer Workshop Special Kit is carefully curated for beginners and enthusiasts to explore electronics, robotics, and IoT. It includes all essential components required to build and experiment with real-world projects.\n\nKit Includes:\n- 1 × ESP8266 Wi-Fi Module\n- 1 × Arduino Uno\n- 2 × Data Cables\n- 1 × Breadboard\n- 25 × Male-to-Male Jumper Wires\n- 20 × Male-to-Female Jumper Wires\n- 5 × Female-to-Female Jumper Wires\n- 10 × LEDs\n- 5 × 220Ω Resistors\n- 5 × 10KΩ Resistors\n- 3 × Push Buttons\n- 2 × IR Sensors\n- 1 × Ultrasonic Sensor\n- 1 × Single Channel Relay Module\n- 1 × Robot Chassis\n- 1 × L298N Motor Driver\n- 2 × Rechargeable Batteries\n- 1 × Battery Holder\n- 1 × Charger\n\nNote: Image is for illustration purposes only. Actual product may vary slightly."
   },
  {
     "name": "IR Proximity Sensor",
-    "price": 30,
+    "price": 30 Rs,
     "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/v1774548114/rpdoilmf1yun94grke4g.jpg",
     "desc": "Proximity Sensor"
   },
   {
     "name": "Official Arduino UNO Q Single Board Computer Model 2GB ABX00162",
-    "price": 5000,
+    "price": 5000 Rs,
     "img": "https://res.cloudinary.com/do8z7aoj4/image/upload/q_auto/f_auto/v1775063425/ardq_urmin3.avif",
     "desc": "Micro processor"
   }
