@@ -13,9 +13,8 @@
 <link rel="icon" href="favicon.ico">
 
 <style>
-/* ONLY KEEP CRITICAL FIXES HERE (rest moved to style.css) */
 
-/* NAVBAR FIX (match index) */
+/* ===== NAVBAR FIX ===== */
 nav{
   justify-content:space-between !important;
   padding:18px 6% !important;
@@ -30,10 +29,37 @@ nav{
   position:relative !important;
 }
 
-/* overlay fix */
+/* ===== OVERLAY ===== */
+.overlay{
+  display:none;
+}
 .overlay.active{
   display:block;
 }
+
+/* ===== FIX CART PANEL (NO LEAK) ===== */
+.cart-panel{
+  left:-100% !important;
+}
+.cart-panel.active{
+  left:0 !important;
+}
+
+/* ===== FIX POPUPS ===== */
+.address-popup{
+  display:none !important;
+}
+.success{
+  display:none !important;
+}
+
+/* ===== PERFORMANCE BOOST ===== */
+.hero-img,
+.card{
+  will-change:transform;
+  transform:translateZ(0);
+}
+
 </style>
 
 </head>
@@ -69,9 +95,9 @@ nav{
 <!-- HERO -->
 <section class="hero">
   <div class="hero-row">
-    <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero">
-    <img src="assets/esp32.png" class="hero-img" id="espHero">
-    <img src="assets/stm32.png" class="hero-img" id="stmHero">
+    <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero" loading="lazy">
+    <img src="assets/esp32.png" class="hero-img" id="espHero" loading="lazy">
+    <img src="assets/stm32.png" class="hero-img" id="stmHero" loading="lazy">
   </div>
 
   <h1 id="heroText">Mecknown Robotics Store</h1>
@@ -128,17 +154,15 @@ function formatPrice(num){
   return "₹"+Number(num).toLocaleString('en-IN');
 }
 
-/* ===== HERO ANIMATION (UNCHANGED) ===== */
+/* ===== HERO ANIMATION (OPTIMIZED) ===== */
 window.addEventListener("load",()=>{
-  setTimeout(()=>arduinoHero.classList.add("show"),200);
-  setTimeout(()=>espHero.classList.add("show"),500);
-  setTimeout(()=>stmHero.classList.add("show"),800);
-  setTimeout(()=>heroText.classList.add("show"),1200);
-  setTimeout(()=>heroSub.classList.add("show"),1500);
-
-  setTimeout(()=>{
-    document.getElementById("products").scrollIntoView({behavior:"smooth"});
-  },3000);
+  requestAnimationFrame(()=>{
+    setTimeout(()=>arduinoHero.classList.add("show"),200);
+    setTimeout(()=>espHero.classList.add("show"),500);
+    setTimeout(()=>stmHero.classList.add("show"),800);
+    setTimeout(()=>heroText.classList.add("show"),1200);
+    setTimeout(()=>heroSub.classList.add("show"),1500);
+  });
 });
 
 /* ===== MENU ===== */
@@ -191,20 +215,16 @@ function updateCart(){
 
 function addToCart(name,priceStr){
   const price=parseFloat(priceStr.replace(/[^0-9.]/g,''))||0;
-
   const ex=cart.find(i=>i.name===name);
   if(ex) ex.qty++;
   else cart.push({name,price,qty:1});
-
   localStorage.setItem('cart',JSON.stringify(cart));
   updateCart();
 }
 
-/* ===== CHANGE QTY ===== */
 function changeQty(i,val){
   cart[i].qty+=val;
   if(cart[i].qty<=0) cart.splice(i,1);
-
   localStorage.setItem('cart',JSON.stringify(cart));
   updateCart();
 }
@@ -212,9 +232,7 @@ function changeQty(i,val){
 /* ===== POPUP ===== */
 function openAddressPopup(){
   if(cart.length===0) return alert('Cart empty');
-
   document.getElementById('addressPopup').style.display='flex';
-
   cartPanel.classList.remove('active');
   overlay.classList.remove('active');
   document.body.classList.remove("cart-open");
@@ -254,7 +272,7 @@ function submitOrder(){
 
 updateCart();
 
-/* ===== LOAD PRODUCTS ===== */
+/* ===== LOAD PRODUCTS (OPTIMIZED) ===== */
 async function load(){
   const res=await fetch('data/products.json');
   products=await res.json();
@@ -265,7 +283,7 @@ async function load(){
   products.forEach(p=>{
     c.innerHTML+=`
       <div class='card'>
-        <img src='${p.img}'>
+        <img src='${p.img}' loading="lazy">
         <h3>${p.name}</h3>
         <p>${formatPrice(p.price)}</p>
         <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
