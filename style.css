@@ -46,10 +46,11 @@ body::before{
 }
 
 /* ===== NAVBAR ===== */
+/* ===== NAVBAR FIXED ===== */
 nav{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   padding:18px 6%;
   position:sticky;
   top:0;
@@ -59,11 +60,13 @@ nav{
   z-index:1000;
 }
 
+/* logo LEFT aligned */
 nav h1{
   font-weight:600;
   letter-spacing:1px;
 }
 
+/* menu normal */
 nav ul{
   display:flex;
   gap:25px;
@@ -941,4 +944,24 @@ body.shop-page{
     display:none;
   }
 
+}
+  /* ===== HARD FIX: REMOVE SIDE SCROLL ===== */
+html, body{
+  width:100%;
+  overflow-x:hidden;
+}
+
+/* prevent any element from breaking layout */
+*{
+  max-width:100%;
+}
+
+/* ===== FIX HERO OVERFLOW ===== */
+.hero{
+  overflow:hidden;
+}
+
+.hero-row{
+  flex-wrap:wrap; /* prevent overflow */
+  justify-content:center;
 }
