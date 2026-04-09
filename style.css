@@ -984,3 +984,26 @@ nav{
   width:100%;
   overflow:hidden;
 }
+/* ===== FINAL NAVBAR ALIGN FIX ===== */
+
+/* reset logo position */
+nav h1{
+  margin:0 !important;
+}
+
+/* force proper flex alignment */
+nav{
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:center !important;
+}
+
+/* keep menu on right */
+nav ul{
+  margin-left:auto !important;
+}
+
+/* prevent accidental shifting */
+nav *{
+  flex-shrink:0;
+}
