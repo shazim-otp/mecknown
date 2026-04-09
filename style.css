@@ -399,3 +399,56 @@ footer{
   background:#222;
   border-radius:10px;
 }
+
+/* ===== GLASS MORPHISM ADD-ON (SAFE) ===== */
+
+/* reusable glass class */
+.glass{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* enhance navbar (already has blur, this boosts it) */
+nav{
+  background:rgba(10,10,10,0.6) !important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+
+/* cards glass upgrade */
+.card{
+  background:rgba(255,255,255,0.04) !important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+/* team cards glass */
+.member{
+  background:rgba(255,255,255,0.05) !important;
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* forms glass */
+input, textarea{
+  background:rgba(255,255,255,0.04) !important;
+  backdrop-filter:blur(10px);
+}
+
+/* popup glass (shop / modals) */
+.address-box,
+.success-box{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* subtle hover glow */
+.card:hover,
+.member:hover{
+  box-shadow:0 20px 50px rgba(0,0,0,0.7);
+}
