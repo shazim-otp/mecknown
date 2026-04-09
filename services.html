@@ -1,62 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+<title>Mecknown Services | Robotics, AI & Development</title>
+
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mecknown - Services</title>
+
+<!-- SEO -->
+<meta name="description" content="Explore Mecknown services including robotics engineering, AI development, web & app solutions, and custom technology systems.">
+<meta name="keywords" content="robotics services, AI development, web development company, embedded systems, Mecknown services">
+<meta name="author" content="Mecknown">
+<link rel="canonical" href="https://mecknown.in/services">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Mecknown Services">
+<meta property="og:description" content="Robotics, AI, and software solutions built for the future.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mecknown.in/services">
+<meta property="og:image" content="https://mecknown.in/assets/logo.png">
+
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
+
+<style>
+
+/* ===== HEADER ===== */
+.section p{
+  margin-top:10px;
+}
+
+/* SERVICE CARD ENHANCEMENT */
+.card{
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.02);
+  border-color:#2a2a2a;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* CTA SECTION */
+.cta{
+  margin-top:30px;
+}
+
+.cta p{
+  margin-bottom:15px;
+}
+
+</style>
+
 </head>
+
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+  <img src="assets/logo.png" alt="Loading" class="loader-logo">
+</div>
+
+<!-- NAVBAR -->
 <nav>
   <h1>Mecknown</h1>
+
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>
+
   <ul id="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="ai.html">Meck AI</a></li>
     <li><a href="course.html">Course</a></li>
     <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
+<!-- SERVICES -->
 <section class="section">
   <h2>Our Services</h2>
 
+  <p>
+    We provide cutting-edge solutions in robotics, artificial intelligence,
+    and software development — built for real-world impact and scalability.
+  </p>
+
   <div class="card-container">
-    
+
     <div class="card" onclick="goContact()">
       <h3>Robotics Engineering</h3>
-      <p>Smart robotic systems with AI-powered automation.</p>
+      <p>Design and development of intelligent robotic systems with automation and AI integration.</p>
     </div>
 
     <div class="card" onclick="goContact()">
       <h3>AI Development</h3>
-      <p>Custom machine learning and intelligent software solutions.</p>
+      <p>Custom machine learning models and intelligent software tailored to your needs.</p>
     </div>
 
     <div class="card" onclick="goContact()">
       <h3>Web & App Development</h3>
-      <p>Modern websites and scalable applications.</p>
+      <p>Modern, scalable, and high-performance applications for businesses and startups.</p>
     </div>
 
     <div class="card" onclick="goContact()">
-      <h3>Custom AI Solutions for Educational Institutions</h3>
-      <p>Innovative AI solutions designed to simplify and elevate educational experiences</p>
+      <h3>Educational AI Solutions</h3>
+      <p>Smart AI tools designed to transform and simplify learning experiences.</p>
     </div>
 
   </div>
 </section>
 
-<!-- 🔥 CONTACT CTA -->
-<section class="section">
+<!-- CTA -->
+<section class="section cta">
   <h2>Have a Project in Mind?</h2>
+
   <p>
-    Let’s build something powerful together. Reach out to discuss your idea.
+    Let’s build something powerful together. Share your idea and we’ll turn it into reality.
   </p>
 
   <a href="contact.html">
@@ -65,12 +129,28 @@
 </section>
 
 <footer>
-© 2026 Mecknown.
+© 2026 Mecknown. All Rights Reserved.
 </footer>
 
 <script>
 
-/* Mobile Menu */
+/* ===== LOADER ===== */
+window.addEventListener("load", function () {
+  const loader = document.getElementById("loader");
+
+  if (loader) {
+    document.body.style.overflow = "hidden";
+
+    setTimeout(() => loader.style.opacity = "0", 100);
+
+    setTimeout(() => {
+      loader.style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 500);
+  }
+});
+
+/* ===== MENU ===== */
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 
@@ -81,7 +161,7 @@ if(toggle && navLinks){
   });
 }
 
-/* Redirect Function */
+/* ===== REDIRECT ===== */
 function goContact(){
   window.location.href = "contact.html";
 }

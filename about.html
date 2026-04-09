@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Mecknown - About</title>
+
+<title>About Mecknown | Robotics, AI & Innovation Company</title>
+
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<meta name="description" content="Learn about Mecknown - a future-focused company building robotics, AI systems, and smart digital platforms. Meet the founders and vision behind the innovation.">
+<meta name="keywords" content="Mecknown, robotics company, AI development, embedded systems, tech startup India, robotics engineers">
+<meta name="author" content="Mecknown">
+<link rel="canonical" href="https://mecknown.in/about">
+
+<!-- Open Graph (for sharing) -->
+<meta property="og:title" content="About Mecknown">
+<meta property="og:description" content="We build robotics, AI systems, and intelligent solutions for the future.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mecknown.in/about">
+<meta property="og:image" content="https://mecknown.in/assets/logo.png">
+
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
+
 </head>
 
 <body>
 
-<div id="loader"><div class="hologram">MECKNOWN</div></div>
+<!-- LOADER (MATCHED WITH INDEX) -->
+<div id="loader">
+  <img src="assets/logo.png" alt="Mecknown Loading" class="loader-logo">
+</div>
 
 <nav>
   <h1>Mecknown</h1>
@@ -22,30 +43,35 @@
     <li><a href="course.html">Course</a></li>
     <li><a href="shop.html">Shop</a></li>
     <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
+    <li><a href="about.html" class="active">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
 <section class="section">
   <h2>About Mecknown</h2>
+
   <p>
-    Mecknown is a future-focused innovation company building intelligent robotics,
-    AI systems, and immersive digital platforms.
-    We believe in engineering tomorrow’s technology with precision, creativity,
-    and bold futuristic design.
+    Mecknown is a future-focused innovation company specializing in robotics,
+    artificial intelligence, and embedded systems. We design and develop
+    intelligent solutions that bridge hardware and software to solve real-world problems.
   </p>
 
-  <!-- Team Section -->
+  <p style="margin-top:15px;">
+    Our mission is to engineer advanced technologies with precision, creativity,
+    and a strong focus on scalability — shaping the next generation of smart systems.
+  </p>
+
+  <!-- TEAM -->
   <div class="team">
 
     <!-- SHAZIM -->
     <a href="shazim.html" class="member">
       <h3>Shazim</h3>
-      <span>Co Founder & Developer</span>
+      <span>Co-Founder & Developer</span>
       <p>
-        Focused on robotics, embedded systems, and app development.
-        Builds innovative tech solutions combining hardware and software.
+        Specializes in robotics, embedded systems, and AI-driven applications.
+        Focused on building innovative hardware-software integrated solutions.
       </p>
     </a>
 
@@ -54,23 +80,40 @@
       <h3>Shanib</h3>
       <span>Co-Founder & Developer</span>
       <p>
-        Handles backend systems, design, and project execution,
-        ensuring smooth and scalable development.
+        Leads backend systems, architecture, and scalable platform development,
+        ensuring performance and reliability across projects.
       </p>
     </a>
 
   </div>
+
 </section>
 
-<footer>© 2026 Mecknown</footer>
+<footer>
+© 2026 Mecknown. All Rights Reserved.
+</footer>
 
 <script>
-// Loader
-window.onload = function(){
-  document.getElementById("loader").style.display = "none";
-};
 
-// Mobile Menu
+/* ===== LOADER (MATCH INDEX) ===== */
+window.addEventListener("load", function () {
+  const loader = document.getElementById("loader");
+
+  if (loader) {
+    document.body.style.overflow = "hidden";
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+    }, 100);
+
+    setTimeout(() => {
+      loader.style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 500);
+  }
+});
+
+/* ===== MOBILE MENU ===== */
 const toggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 
@@ -81,7 +124,7 @@ if(toggle){
   });
 }
 
-// Scroll Animation
+/* ===== SCROLL ANIMATION ===== */
 const members = document.querySelectorAll('.member');
 
 const observer = new IntersectionObserver((entries) => {
@@ -95,6 +138,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 
 members.forEach(member => observer.observe(member));
+
 </script>
 
 </body>

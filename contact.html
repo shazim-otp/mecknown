@@ -1,136 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Mecknown - Contact</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<title>Contact Mecknown | Robotics & AI Services</title>
 
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter, sans-serif;background:linear-gradient(135deg,#020617,#0f172a);color:#fff;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* NAVBAR */
-    nav{
-      position:fixed;
-      top:0;width:100%;
-      display:flex;justify-content:space-between;align-items:center;
-      padding:12px 20px;
-      background:rgba(0,0,0,0.6);
-      backdrop-filter:blur(10px);
-      z-index:1000;
-    }
+<!-- SEO -->
+<meta name="description" content="Contact Mecknown for robotics, AI, and development services. Let's build something powerful together.">
+<meta name="keywords" content="contact Mecknown, robotics company, AI services, tech support">
+<meta name="author" content="Mecknown">
+<link rel="canonical" href="https://mecknown.in/contact">
 
-    nav h1{margin:0;font-size:20px}
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
 
-    #nav-links{
-      display:flex;gap:15px;list-style:none;
-    }
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
-    #nav-links a{color:#ccc;text-decoration:none;font-size:14px}
-    #nav-links a:hover{color:#fff}
+<style>
 
-    .menu-toggle{
-      display:none;
-      flex-direction:column;
-      cursor:pointer;
-      gap:4px;
-    }
+/* ===== LAYOUT ===== */
+.container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:100px 20px 60px;
+}
 
-    .menu-toggle span{
-      width:22px;height:2px;background:#fff;
-    }
+/* CARD */
+.card{
+  width:100%;
+  max-width:420px;
+  padding:25px;
+  border-radius:16px;
 
-    @media(max-width:768px){
-      #nav-links{
-        position:absolute;
-        top:60px;right:0;
-        background:#111;
-        flex-direction:column;
-        padding:15px;
-        display:none;
-      }
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
 
-      #nav-links.active{display:flex}
+  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+  transition:0.3s;
+}
 
-      .menu-toggle{display:flex}
-    }
+.card:hover{
+  transform:translateY(-5px);
+}
 
-    .container{
-      min-height:100vh;
-      display:flex;align-items:center;justify-content:center;
-      padding:80px 20px 20px;
-    }
+/* TEXT */
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
 
-    .card{
-      width:100%;max-width:420px;
-      padding:25px;border-radius:20px;
-      background:rgba(255,255,255,0.05);
-      backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,0.1);
-      box-shadow:0 0 40px rgba(0,255,213,0.1);
-    }
+.top-info{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:10px;
+}
 
-    h2{text-align:center;margin-bottom:20px}
+.logout{
+  color:#ef4444;
+  cursor:pointer;
+  font-size:12px;
+}
 
-    input,textarea{
-      width:100%;padding:12px;margin:8px 0;
-      border-radius:10px;border:1px solid #1f2937;
-      background:#020617;color:#fff;
-    }
+/* INPUT */
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#0f0f0f;
+  color:#fff;
+}
 
-    button{
-      width:100%;padding:12px;margin-top:10px;
-      border:none;border-radius:10px;
-      background:#00ffd5;color:#000;font-weight:600;
-      cursor:pointer;
-    }
+/* BUTTON */
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+}
 
-    .google{background:#fff;color:#000}
-    .hidden{display:none}
+.primary{
+  background:#fff;
+  color:#000;
+}
 
-    .top-info{text-align:center;color:#94a3b8;margin-bottom:10px}
-    .logout{color:#f87171;cursor:pointer;font-size:12px}
+.google{
+  background:#fff;
+  color:#000;
+}
 
-    .loading-btn{opacity:0.7;pointer-events:none}
-  </style>
+.hidden{display:none}
+
+.loading-btn{
+  opacity:0.6;
+  pointer-events:none;
+}
+
+</style>
+
 </head>
 
 <body>
+  
 
-<nav>
-  <h1>Mecknown</h1>
+<!-- GLOBAL NAVBAR -->
+<div id="navbar"></div>
 
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span><span></span><span></span>
-  </div>
-
-  <ul id="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="ai.html">Meck AI</a></li>
-    <li><a href="course.html">Course</a></li>
-    <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+<!-- LOADER -->
+<div id="loader">
+  <img src="assets/logo.png" class="loader-logo">
+</div>
 
 <div class="container">
 
-  <div id="loginCard" class="card">
-    <h2>Sign in To Contact Us</h2>
+  <!-- LOGIN -->
+  <div id="loginCard" class="card fade-in">
+    <h2>Sign in to Contact</h2>
 
     <input id="loginEmail" placeholder="Email">
     <input id="loginPass" type="password" placeholder="Password">
 
-    <button onclick="emailLogin(this)">Login / Signup</button>
+    <button class="primary" onclick="emailLogin(this)">Login / Signup</button>
     <button class="google" onclick="googleLogin(this)">Continue with Google</button>
   </div>
 
-  <div id="contactCard" class="card hidden">
+  <!-- CONTACT -->
+  <div id="contactCard" class="card hidden fade-in">
     <div id="userInfo" class="top-info"></div>
 
     <h2>Contact Us</h2>
@@ -139,20 +142,51 @@
       <input name="name" placeholder="Your Name" required>
       <input name="email" id="userEmail" required>
       <textarea name="message" rows="4" placeholder="Your Message"></textarea>
-      <button id="submitBtn">Send Message</button>
+      <button id="submitBtn" class="primary">Send Message</button>
     </form>
   </div>
 
 </div>
 
+<footer>
+© 2026 Mecknown. All Rights Reserved.
+</footer>
+
 <script>
 
-/* MENU */
-document.getElementById("menu-toggle").addEventListener("click",()=>{
-  document.getElementById("nav-links").classList.toggle("active");
+/* ===== LOAD NAVBAR ===== */
+fetch("navbar.html")
+.then(res => res.text())
+.then(data => {
+  document.getElementById("navbar").innerHTML = data;
+
+  const toggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  if(toggle){
+    toggle.addEventListener("click", ()=>{
+      navLinks.classList.toggle("active");
+    });
+  }
+
+  const current = location.pathname.split("/").pop().replace(".html","");
+  document.querySelectorAll("#nav-links a").forEach(link=>{
+    if(link.dataset.page === current){
+      link.classList.add("active");
+    }
+  });
 });
 
-/* FIREBASE */
+/* ===== LOADER ===== */
+window.onload = ()=>{
+  const loader=document.getElementById("loader");
+  setTimeout(()=>{
+    loader.style.opacity="0";
+    setTimeout(()=>loader.style.display="none",400);
+  },200);
+};
+
+/* ===== FIREBASE (UNCHANGED) ===== */
 try{
   firebase.initializeApp({
     apiKey:"AIzaSyDyh1Bi_29TpEG-_N3QijtxB7rdjLdHy3M",
@@ -165,25 +199,28 @@ const auth=firebase.auth();
 
 auth.onAuthStateChanged(user=>{
   if(user){
-    document.getElementById("loginCard").classList.add("hidden");
-    document.getElementById("contactCard").classList.remove("hidden");
+    loginCard.classList.add("hidden");
+    contactCard.classList.remove("hidden");
 
-    document.getElementById("userInfo").innerHTML=
+    userInfo.innerHTML=
       `👤 ${user.email} <div class='logout' onclick='logout()'>Logout</div>`;
 
-    const emailField=document.getElementById("userEmail");
-    emailField.value=user.email;
-    emailField.readOnly=true;
+    userEmail.value=user.email;
+    userEmail.readOnly=true;
   }
 });
 
 function emailLogin(btn){
   btn.classList.add("loading-btn");
 
-  const email=document.getElementById("loginEmail").value;
-  const pass=document.getElementById("loginPass").value;
+  const email=loginEmail.value;
+  const pass=loginPass.value;
 
-  if(!email||!pass){alert("Fill fields");btn.classList.remove("loading-btn");return;}
+  if(!email||!pass){
+    alert("Fill fields");
+    btn.classList.remove("loading-btn");
+    return;
+  }
 
   auth.signInWithEmailAndPassword(email,pass)
   .catch(()=>auth.createUserWithEmailAndPassword(email,pass))
@@ -196,33 +233,75 @@ function googleLogin(btn){
   auth.signInWithPopup(provider).finally(()=>btn.classList.remove("loading-btn"));
 }
 
-function logout(){auth.signOut();location.reload();}
+function logout(){
+  auth.signOut();
+  location.reload();
+}
 
+/* ===== FORM ===== */
 let sending=false;
 
-document.getElementById("contactForm").addEventListener("submit",e=>{
+contactForm.addEventListener("submit",e=>{
   e.preventDefault();
   if(sending)return;
 
   sending=true;
-  const btn=document.getElementById("submitBtn");
-  btn.innerText="Sending...";
-  btn.classList.add("loading-btn");
+  submitBtn.innerText="Sending...";
+  submitBtn.classList.add("loading-btn");
 
   const fd=new FormData(e.target);
   fd.append("sheet","Contact");
 
   fetch("https://script.google.com/macros/s/AKfycbz4NzPug47y38qVTu9LiDLwp2a9X6J7Iygmq5qQUktEUjyEKp5R7FG5L_0XhMfFApVI/exec",{
-    method:"POST",body:fd
+    method:"POST",
+    body:fd
   })
   .then(()=>alert("Message sent"))
   .catch(()=>alert("Error"))
   .finally(()=>{
     sending=false;
-    btn.innerText="Send Message";
-    btn.classList.remove("loading-btn");
+    submitBtn.innerText="Send Message";
+    submitBtn.classList.remove("loading-btn");
   });
 });
+
+/* ===== SCROLL ANIMATION ===== */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+},{threshold:0.2});
+
+document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
+
+/* LOAD NAVBAR */
+fetch("navbar.html")
+.then(res => res.text())
+.then(data => {
+  document.getElementById("navbar").innerHTML = data;
+
+  /* MENU TOGGLE */
+  const toggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  if(toggle){
+    toggle.addEventListener("click", function(){
+      navLinks.classList.toggle("active");
+      toggle.classList.toggle("active");
+    });
+  }
+
+  /* ACTIVE LINK AUTO */
+  const current = location.pathname.split("/").pop().replace(".html","");
+
+  document.querySelectorAll("#nav-links a").forEach(link=>{
+    if(link.dataset.page === current){
+      link.classList.add("active");
+    }
+  });
+
+});
+
 
 </script>
 
