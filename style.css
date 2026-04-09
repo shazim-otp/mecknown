@@ -950,7 +950,7 @@ html, body{
 }
 
 /* prevent any element from breaking layout */
-*{
+
   max-width:100%;
 }
 
