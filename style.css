@@ -877,22 +877,30 @@ body.shop-page{
 .shop-page .cart-panel{
   background:linear-gradient(145deg,#111,#0a0a0a);
   border-right:1px solid rgba(255,90,122,0.2);
+}
+
 /* FIX CART PANEL COMPLETELY HIDDEN */
 .cart-panel{
   position:fixed;
   top:0;
-  left:-320px !important; /* EXACT width match */
+  left:0;
+  transform:translateX(-110%);
   width:300px;
   height:100%;
   background:#111;
   padding:20px;
-  transition:0.3s;
+  transition:0.35s ease;
   z-index:4000;
   overflow-y:auto;
 }
 
 .cart-panel.active{
-  left:0 !important;
+  transform:translateX(0);
+}
+
+/* ===== OVERLAY ===== */
+.shop-page .overlay{
+  backdrop-filter:blur(4px);
 }
 
 /* ===== CHECKOUT ===== */
@@ -931,19 +939,9 @@ body.shop-page{
     transform:none !important;
   }
 
-  #nav-links li{
-    list-style:none;
-  }
-
-  #nav-links a{
-    color:var(--text);
-  }
-
-  /* hide hamburger on desktop */
   .menu-toggle{
     display:none;
   }
-
 }
   /* ===== HARD FIX: REMOVE SIDE SCROLL ===== */
 html, body{
