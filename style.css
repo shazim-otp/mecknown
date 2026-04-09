@@ -743,3 +743,148 @@ nav h1{
 #nav-links.active{
   transform:translateX(0);
 }
+/* ===== SHOP PAGE (SCOPED) ===== */
+
+/* body theme (only shop page) */
+body.shop-page{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,90,122,0.08), transparent 40%),
+    radial-gradient(circle at top,#0f172a,#020617);
+}
+
+/* ===== HERO ===== */
+.shop-page .hero{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:90vh;
+  text-align:center;
+  gap:20px;
+  perspective:1000px;
+}
+
+.shop-page .hero-row{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.shop-page .hero-img{
+  width:220px;
+  max-width:30vw;
+  transform:translateY(-120px);
+  opacity:0;
+}
+
+.shop-page .hero-img.show{
+  opacity:1;
+  animation:dropBounce 1s ease forwards;
+}
+
+@keyframes dropBounce{
+  0%{opacity:0;transform:translateY(-120px)}
+  100%{transform:translateY(0)}
+}
+
+/* ===== PRODUCTS ===== */
+.shop-page .products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:40px;
+}
+
+/* ===== CARD ===== */
+.shop-page .card{
+  position:relative;
+  background:linear-gradient(145deg,rgba(255,90,122,0.12),rgba(10,10,10,0.7));
+  border:1px solid rgba(255,90,122,0.2);
+  padding:15px;
+  border-radius:14px;
+  backdrop-filter:blur(12px);
+  transition:0.35s ease;
+  overflow:hidden;
+}
+
+.shop-page .card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(120deg, transparent, rgba(255,90,122,0.6), transparent);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+.shop-page .card:hover{
+  transform:translateY(-8px) scale(1.02);
+  border-color:#ff5a7a;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.7),
+    0 0 25px rgba(255,90,122,0.4);
+}
+
+.shop-page .card img{
+  width:100%;
+  border-radius:10px;
+  transition:0.4s;
+}
+.shop-page .card:hover img{
+  transform:scale(1.05);
+}
+
+/* ===== BUTTON ===== */
+.shop-page .add-btn{
+  margin-top:10px;
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  color:#000;
+  background:linear-gradient(135deg,#ff5a7a,#ff8fa3);
+  box-shadow:0 4px 15px rgba(255,90,122,0.3);
+  transition:0.25s;
+}
+
+.shop-page .add-btn:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 8px 25px rgba(255,90,122,0.6);
+}
+
+/* ===== CART PANEL ===== */
+.shop-page .cart-panel{
+  background:linear-gradient(145deg,#111,#0a0a0a);
+  border-right:1px solid rgba(255,90,122,0.2);
+}
+
+/* ===== CHECKOUT ===== */
+.shop-page .checkout{
+  background:linear-gradient(135deg,#ff5a7a,#ff8fa3);
+  color:#000;
+  box-shadow:0 0 15px rgba(255,90,122,0.4);
+}
+
+/* ===== POPUP ===== */
+.shop-page .address-box{
+  background:linear-gradient(145deg,#111,#0a0a0a);
+  border:1px solid rgba(255,90,122,0.2);
+}
+
+/* ===== SUCCESS ===== */
+.shop-page .success-box{
+  background:linear-gradient(145deg,#111,#0a0a0a);
+  border:1px solid rgba(255,90,122,0.2);
+}
+
+/* ===== OVERLAY ===== */
+.shop-page .overlay{
+  backdrop-filter:blur(4px);
+}
