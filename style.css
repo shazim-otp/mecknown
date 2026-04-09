@@ -703,3 +703,43 @@ input:focus, textarea:focus{
   color:var(--accent);
   text-shadow:0 0 8px rgba(255,90,122,0.6);
 }
+/* ===== FIX NAVBAR LIKE INDEX ===== */
+
+/* reset nav layout */
+nav{
+  justify-content:space-between !important;
+  padding:18px 6% !important;
+}
+
+/* fix cart icon */
+.cart-icon{
+  position:static !important;
+  transform:none !important;
+}
+
+/* fix menu toggle */
+.menu-toggle{
+  position:static !important;
+}
+
+/* align properly */
+nav{
+  display:flex;
+  align-items:center;
+}
+
+/* optional: spacing */
+nav h1{
+  margin:0 auto;
+}
+
+/* mobile menu style like index */
+#nav-links{
+  top:70px !important;
+  right:0 !important;
+  transform:translateX(100%);
+}
+
+#nav-links.active{
+  transform:translateX(0);
+}
