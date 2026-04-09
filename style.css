@@ -14,7 +14,7 @@
 
 <style>
 
-/* NAVBAR FIX */
+/* ===== NAVBAR FIX ===== */
 nav{
   justify-content:space-between !important;
   padding:18px 6% !important;
@@ -28,29 +28,39 @@ nav{
   position:relative !important;
 }
 
-/* OVERLAY */
+/* ===== OVERLAY ===== */
 .overlay{display:none;}
 .overlay.active{display:block;}
 
-/* CART PANEL FIX (NO PREVIEW) */
+/* ===== FIXED CART (FINAL) ===== */
 .cart-panel{
-  left:-320px !important;
+  position:fixed;
+  top:0;
+  left:0;
+  transform:translateX(-110%);
+  width:300px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  transition:transform 0.35s ease;
+  z-index:4000;
+  overflow-y:auto;
 }
+
 .cart-panel.active{
-  left:0 !important;
+  transform:translateX(0);
 }
 
-/* POPUP FIX (IMPORTANT) */
+/* ===== POPUPS ===== */
 .address-popup{
-  display:none; /* ❌ removed !important */
+  display:none;
 }
 
-/* SUCCESS FIX */
 .success{
   display:none;
 }
 
-/* PERFORMANCE */
+/* ===== PERFORMANCE ===== */
 .hero-img,
 .card{
   will-change:transform;
@@ -145,7 +155,7 @@ function formatPrice(num){
   return "₹"+Number(num).toLocaleString('en-IN');
 }
 
-/* HERO ANIMATION (NO AUTOSCROLL) */
+/* HERO ANIMATION */
 window.addEventListener("load",()=>{
   setTimeout(()=>arduinoHero.classList.add("show"),200);
   setTimeout(()=>espHero.classList.add("show"),500);
@@ -159,7 +169,6 @@ toggle.addEventListener("click",()=>{
   const isOpen = navLinks.classList.toggle("active");
   cartPanel.classList.remove('active');
   overlay.classList.toggle("active", isOpen);
-  document.body.classList.toggle("menu-open", isOpen);
 });
 
 /* CART */
@@ -167,7 +176,6 @@ function toggleCart(){
   const isOpen = cartPanel.classList.toggle('active');
   navLinks.classList.remove('active');
   overlay.classList.toggle('active', isOpen);
-  document.body.classList.toggle("cart-open", isOpen);
 }
 
 /* CLOSE */
@@ -175,7 +183,6 @@ overlay.addEventListener('click',()=>{
   cartPanel.classList.remove('active');
   navLinks.classList.remove('active');
   overlay.classList.remove('active');
-  document.body.classList.remove("cart-open","menu-open");
 });
 
 /* CART LOGIC */
@@ -261,7 +268,7 @@ function submitOrder(){
 
 updateCart();
 
-/* LOAD */
+/* LOAD PRODUCTS */
 async function load(){
   const res=await fetch('data/products.json');
   products=await res.json();
