@@ -468,3 +468,78 @@ nav{
 button:hover{
   transform:translateY(-4px);
 }
+
+/* ===== GRADIENT + SKEUO + GLASS COMBO ===== */
+
+/* global subtle gradient glow */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34,197,94,0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.04), transparent 40%);
+  z-index:-1;
+}
+
+/* gradient cards */
+.card{
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)) !important;
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* gradient hover glow */
+.card:hover{
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.7),
+    0 0 20px rgba(34,197,94,0.2);
+}
+
+/* gradient buttons */
+button{
+  background:
+    linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+.primary-btn{
+  background:
+    linear-gradient(135deg, #ffffff, #d1d5db);
+  color:#000;
+}
+
+/* gradient navbar glow */
+nav{
+  background:linear-gradient(
+    180deg,
+    rgba(10,10,10,0.7),
+    rgba(10,10,10,0.4)
+  ) !important;
+}
+
+/* team cards premium */
+.member{
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)) !important;
+}
+
+/* inputs */
+input, textarea{
+  background:
+    linear-gradient(145deg, #0f0f0f, #141414) !important;
+}
+
+/* subtle accent glow */
+.card:hover,
+.member:hover{
+  border-color:rgba(34,197,94,0.3);
+}
+
+/* gradient text enhancement */
+.gradient-text{
+  background:linear-gradient(90deg,#fff,#9ca3af,#22c55e);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
