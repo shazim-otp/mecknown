@@ -902,3 +902,31 @@ body.shop-page{
 /* ===== OVERLAY ===== */
 .shop-page .overlay{
   backdrop-filter:blur(4px);
+/* ===== DESKTOP NAV FIX ===== */
+@media(min-width:768px){
+
+  #nav-links{
+    position:static;
+    width:auto;
+    height:auto;
+    flex-direction:row;
+    gap:30px;
+    padding:0;
+    background:none;
+    transform:none !important;
+  }
+
+  #nav-links li{
+    list-style:none;
+  }
+
+  #nav-links a{
+    color:var(--text);
+  }
+
+  /* hide hamburger on desktop */
+  .menu-toggle{
+    display:none;
+  }
+
+}
