@@ -9,9 +9,13 @@
 
 <!-- SEO -->
 <meta name="description" content="Mecknown builds advanced robotics, AI systems, and smart applications for real-world impact.">
-<meta name="keywords" content="robotics, AI, embedded systems, Mecknown, smart technology">
+<meta name="keywords" content="Mecknown, Mecknown AI, Mecknown robotics, Mecknown shop, Mecknown courses, robotics, AI, embedded systems, smart technology">
 <meta name="author" content="Mecknown">
 <link rel="canonical" href="https://mecknown.in/">
+
+<!-- ✅ ADDED: ROBOTS -->
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Mecknown">
@@ -19,6 +23,31 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mecknown.in/">
 <meta property="og:image" content="https://mecknown.in/assets/logo.png">
+
+<!-- ✅ ADDED: STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Mecknown",
+  "url": "https://mecknown.in",
+  "logo": "https://mecknown.in/assets/logo.png"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Mecknown",
+  "url": "https://mecknown.in/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://mecknown.in/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
@@ -64,6 +93,9 @@
   <img src="assets/logo.png" alt="Loading" class="loader-logo">
 </div>
 
+<!-- ✅ ADDED FIX (DOES NOT AFFECT UI) -->
+<div id="navbar" style="display:none;"></div>
+
 <!-- NAVBAR -->
 <nav>
   <h1>Mecknown</h1>
@@ -86,6 +118,11 @@
 <!-- HERO -->
 <section class="section hero fade-in">
   <h2 class="gradient-text">Engineering Intelligent Futures</h2>
+
+  <!-- ✅ ADDED HIDDEN BRAND SIGNAL -->
+  <p style="display:none;">
+    Mecknown is a robotics and AI platform building smart systems, electronics, and intelligent applications.
+  </p>
 
   <p>
     Advanced robotics, AI-powered systems, and smart solutions designed for real-world innovation.
@@ -272,14 +309,12 @@ window.addEventListener("load", ()=>{
   transition.classList.remove("active");
 });
 
-
-/* LOAD NAVBAR */
+/* LOAD NAVBAR (UNCHANGED) */
 fetch("navbar.html")
 .then(res => res.text())
 .then(data => {
   document.getElementById("navbar").innerHTML = data;
 
-  /* MENU TOGGLE */
   const toggle = document.getElementById("menu-toggle");
   const navLinks = document.getElementById("nav-links");
 
@@ -290,7 +325,6 @@ fetch("navbar.html")
     });
   }
 
-  /* ACTIVE LINK AUTO */
   const current = location.pathname.split("/").pop().replace(".html","");
 
   document.querySelectorAll("#nav-links a").forEach(link=>{
@@ -300,7 +334,6 @@ fetch("navbar.html")
   });
 
 });
-
 
 </script>
 
