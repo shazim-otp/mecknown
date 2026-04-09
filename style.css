@@ -452,3 +452,71 @@ input, textarea{
 .member:hover{
   box-shadow:0 20px 50px rgba(0,0,0,0.7);
 }
+
+/* ===== SKEUOMORPHISM ADD-ON (SAFE) ===== */
+
+/* soft raised surface */
+.skeuo{
+  background:linear-gradient(145deg,#0d0d0d,#141414);
+  box-shadow:
+    6px 6px 12px rgba(0,0,0,0.6),
+    -4px -4px 10px rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.04);
+}
+
+/* pressed effect */
+.skeuo-press:active{
+  box-shadow:
+    inset 4px 4px 10px rgba(0,0,0,0.6),
+    inset -3px -3px 8px rgba(255,255,255,0.05);
+}
+
+/* buttons upgrade */
+button{
+  background:linear-gradient(145deg,#111,#1a1a1a);
+  box-shadow:
+    4px 4px 10px rgba(0,0,0,0.5),
+    -2px -2px 6px rgba(255,255,255,0.05);
+}
+
+button:active{
+  transform:scale(0.97);
+  box-shadow:
+    inset 3px 3px 8px rgba(0,0,0,0.6),
+    inset -2px -2px 6px rgba(255,255,255,0.05);
+}
+
+/* card depth boost */
+.card{
+  box-shadow:
+    8px 8px 20px rgba(0,0,0,0.6),
+    -4px -4px 10px rgba(255,255,255,0.03);
+}
+
+/* input tactile feel */
+input, textarea{
+  box-shadow:
+    inset 3px 3px 8px rgba(0,0,0,0.6),
+    inset -2px -2px 6px rgba(255,255,255,0.04);
+}
+
+/* navbar depth */
+nav{
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* team cards extra realism */
+.member{
+  box-shadow:
+    10px 10px 25px rgba(0,0,0,0.7),
+    -5px -5px 12px rgba(255,255,255,0.04);
+}
+
+/* subtle hover lift */
+.card:hover,
+.member:hover,
+button:hover{
+  transform:translateY(-4px);
+}
