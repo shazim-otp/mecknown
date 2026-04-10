@@ -6,6 +6,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <!-- SEO -->
 <meta name="description" content="Mecknown builds advanced robotics, AI systems, and smart applications for real-world impact.">
@@ -253,26 +254,47 @@ counters.forEach(counter => {
 const homeContainer = document.getElementById("homeProjects");
 
 if(homeContainer){
-  const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-  if(projects.length === 0){
-    homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
+  const SUPABASE_URL = "https://jlluaxbraqoyumgkfxyt.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsbHVheGJyYXFveXVtZ2tmeHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDA5OTgsImV4cCI6MjA5MTM3Njk5OH0.z2i1oL-VVNyBu3SSY5nr2lJ5Zh7GE3hIOzMHHSTAxUw";
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function loadProjects(){
+
+    const { data, error } = await supabase.from('projects').select('*');
+
+    if(error){
+      console.error(error);
+      homeContainer.innerHTML = "<p>Error loading projects</p>";
+      return;
+    }
+
+    if(!data || data.length === 0){
+      homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
+      return;
+    }
+
+    homeContainer.innerHTML = "";
+
+    data.forEach(proj => {
+      homeContainer.innerHTML += `
+        <div class="card fade-in">
+          <h3>${proj.name}</h3>
+          <p>${proj.desc}</p>
+
+          ${proj.img ? `<img src="${proj.img}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
+
+          <!-- keeping your old features safe -->
+          ${proj.video ? `<video controls style="width:100%;margin-top:10px;border-radius:10px;"><source src="${proj.video}"></video>` : ""}
+
+          ${proj.link ? `<p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>` : ""}
+        </div>
+      `;
+    });
   }
 
-  projects.forEach(proj => {
-    homeContainer.innerHTML += `
-      <div class="card fade-in">
-        <h3>${proj.title}</h3>
-        <p>${proj.description}</p>
-
-        ${proj.image ? `<img src="${proj.image}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
-
-        ${proj.video ? `<video controls style="width:100%;margin-top:10px;border-radius:10px;"><source src="${proj.video}"></video>` : ""}
-
-        ${proj.link ? `<p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>` : ""}
-      </div>
-    `;
-  });
+  loadProjects();
 }
 
 /* ===== SCROLL ANIMATION ===== */
