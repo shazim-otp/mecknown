@@ -161,6 +161,12 @@ nav{
   <div class="total" id="total">Total: 0</div>
  <button class="checkout" onclick="openAddressPopup()">Checkout</button>
 </div>
+  c.innerHTML+=`
+  <div>
+    ${i.name} x${i.qty}
+    <button onclick="removeItem(${index})">❌</button>
+    ...
+  </div>`;
 
 <!-- PRODUCTS -->
 <section class="products" id="products"></section>
@@ -260,7 +266,7 @@ function updateCart(){
   });
 
   totalDiv.textContent='Total: '+formatPrice(total);
-  cartCount.textContent=cart.length;
+  cartCount.textContent = cart.reduce((sum,i)=>sum+i.qty,0);
 }
 
 function addToCart(name,priceStr){
@@ -342,6 +348,11 @@ async function load(){
         <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
       </div>`;
   });
+}
+  function removeItem(index){
+  cart.splice(index,1);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  updateCart();
 }
 
 load();
