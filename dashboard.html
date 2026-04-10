@@ -1,273 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<title>Admin Dashboard | Mecknown</title>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- SEO -->
-<meta name="description" content="Admin dashboard for managing Mecknown projects, uploads, and content.">
-<meta name="robots" content="noindex, nofollow">
-
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
+<title>MECK Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <style>
-
-/* ===== CONTAINER ===== */
-.dashboard{
-  max-width:900px;
-  margin:auto;
-  padding:100px 20px 60px;
-}
-
-/* HEADER */
-.dashboard h2{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-/* FORM */
-#projectForm{
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:14px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* FILE INPUT */
-input[type="file"]{
-  padding:10px;
-  background:#0f0f0f;
-  border:1px solid var(--border);
-  border-radius:8px;
-}
-
-/* BUTTON */
-button{
-  margin-top:10px;
-}
-
-/* PROJECT LIST */
-#projects{
-  margin-top:30px;
-  display:grid;
-  gap:20px;
-}
-
-/* CARD */
-.project-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  transition:0.3s;
-}
-
-.project-card:hover{
-  transform:translateY(-5px);
-  border-color:#2a2a2a;
-}
-
-/* DELETE BUTTON */
-.project-card button{
-  margin-top:10px;
-  background:#ef4444;
-  color:#fff;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#0f172a;color:#fff;padding:20px}
+.container{max-width:1000px;margin:auto}
+h1{margin-bottom:20px}
+.card{background:#1e293b;padding:20px;border-radius:12px;margin-bottom:20px}
+input,textarea,button{width:100%;padding:10px;margin-top:10px;border:none;border-radius:8px}
+input,textarea{background:#0f172a;color:#fff}
+button{background:#38bdf8;color:#000;font-weight:600;cursor:pointer}
+button:hover{opacity:.8}
+.list{margin-top:20px}
+.item{background:#0f172a;padding:10px;border-radius:8px;margin-bottom:10px}
 </style>
-
 </head>
 
 <body>
-<div id="navbar"></div>
+<div class="container">
+<h1>Admin Panel (Supabase)</h1>
 
-<!-- LOADER -->
-<div id="loader">
-  <img src="assets/logo.png" alt="Loading" class="loader-logo">
+<!-- PRODUCT SECTION -->
+<div class="card">
+<h2>Add Product</h2>
+<input type="text" id="pName" placeholder="Product Name">
+<input type="number" id="pPrice" placeholder="Price">
+<input type="text" id="pImg" placeholder="Image URL">
+<textarea id="pDesc" placeholder="Description"></textarea>
+<button onclick="addProduct()">Add Product</button>
+
+<div class="list" id="productList"></div>
 </div>
 
-<!-- NAVBAR -->
-<nav>
-  <h1>Mecknown Admin</h1>
-</nav>
+<!-- PROJECT SECTION -->
+<div class="card">
+<h2>Add Project</h2>
+<input type="text" id="prName" placeholder="Project Title">
+<input type="text" id="prImg" placeholder="Image URL">
+<textarea id="prDesc" placeholder="Description"></textarea>
+<button onclick="addProject()">Add Project</button>
 
-<div class="dashboard">
-
-<h2>Project Dashboard</h2>
-
-<form id="projectForm">
-  <input type="text" id="title" placeholder="Project Title" required>
-  <textarea id="description" placeholder="Project Description" required></textarea>
-
-  <input type="url" id="link" placeholder="Project Link (GitHub / Demo)">
-
-  <label>Upload Image</label>
-  <input type="file" id="image" accept="image/*">
-
-  <label>Upload Video</label>
-  <input type="file" id="video" accept="video/*">
-
-  <button type="submit" class="primary-btn">Add Project</button>
-</form>
-
-<div id="projects"></div>
-
+<div class="list" id="projectList"></div>
 </div>
 
-<footer>
-© 2026 Mecknown Admin
-</footer>
+</div>
 
 <script>
+// 🔥 PUT YOUR REAL KEYS HERE
+const SUPABASE_URL = "YOUR_URL";
+const SUPABASE_KEY = "YOUR_KEY";
 
-/* ===== PROTECT PAGE (UNCHANGED) ===== */
-if(localStorage.getItem("adminLoggedIn") !== "true"){
-  window.location.href = "admin.html";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// LOAD DATA
+async function loadData(){
+  const { data: products } = await supabase.from('products').select('*');
+  const { data: projects } = await supabase.from('projects').select('*');
+
+  renderProducts(products || []);
+  renderProjects(projects || []);
 }
 
-/* ===== LOADER ===== */
-window.addEventListener("load", function () {
-  const loader = document.getElementById("loader");
+// ADD PRODUCT
+async function addProduct(){
+  const name = document.getElementById('pName').value;
+  const price = document.getElementById('pPrice').value;
+  const img = document.getElementById('pImg').value;
+  const description = document.getElementById('pDesc').value;
 
-  if (loader) {
-    document.body.style.overflow = "hidden";
+  if(!name || !price) return alert("Fill required fields");
 
-    setTimeout(() => loader.style.opacity = "0", 100);
+  await supabase.from('products').insert([
+    { name, price, img, description }
+  ]);
 
-    setTimeout(() => {
-      loader.style.display = "none";
-      document.body.style.overflow = "auto";
-    }, 500);
-  }
-});
-
-/* ===== BASE64 ===== */
-function convertToBase64(file){
-  return new Promise((resolve,reject)=>{
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
+  loadData();
 }
 
-/* ===== LOAD PROJECTS ===== */
-async function loadProjects(){
-  const projects = JSON.parse(localStorage.getItem("projects")) || [];
-  const container = document.getElementById("projects");
-  container.innerHTML = "";
+// ADD PROJECT
+async function addProject(){
+  const name = document.getElementById('prName').value;
+  const img = document.getElementById('prImg').value;
+  const description = document.getElementById('prDesc').value;
 
-  projects.forEach((proj,index)=>{
-    container.innerHTML += `
-      <div class="project-card">
-        <h3>${proj.title}</h3>
-        <p>${proj.description}</p>
+  if(!name) return alert("Fill required fields");
 
-        ${proj.image ? `
-          <img src="${proj.image}" style="width:100%;margin-top:10px;border-radius:10px;">
-        ` : ""}
+  await supabase.from('projects').insert([
+    { name, img, description }
+  ]);
 
-        ${proj.video ? `
-          <video controls style="width:100%;margin-top:10px;border-radius:10px;">
-            <source src="${proj.video}">
-          </video>
-        ` : ""}
+  loadData();
+}
 
-        ${proj.link ? `
-          <p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>
-        ` : ""}
+// RENDER PRODUCTS
+function renderProducts(products){
+  const list = document.getElementById('productList');
+  list.innerHTML = '';
 
-        <button onclick="deleteProject(${index})">Delete</button>
+  products.forEach(p=>{
+    list.innerHTML += `
+      <div class="item">
+        <b>${p.name}</b> - ₹${p.price}
       </div>
     `;
   });
 }
 
-/* ===== DELETE ===== */
-function deleteProject(index){
-  let projects = JSON.parse(localStorage.getItem("projects")) || [];
-  projects.splice(index,1);
-  localStorage.setItem("projects", JSON.stringify(projects));
-  loadProjects();
+// RENDER PROJECTS
+function renderProjects(projects){
+  const list = document.getElementById('projectList');
+  list.innerHTML = '';
+
+  projects.forEach(p=>{
+    list.innerHTML += `
+      <div class="item">
+        <b>${p.name}</b>
+      </div>
+    `;
+  });
 }
 
-/* ===== SUBMIT ===== */
-document.getElementById("projectForm").addEventListener("submit", async function(e){
-  e.preventDefault();
-
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const link = document.getElementById("link").value;
-  const imageFile = document.getElementById("image").files[0];
-  const videoFile = document.getElementById("video").files[0];
-
-  let imageBase64 = "";
-  let videoBase64 = "";
-
-  if(imageFile){
-    imageBase64 = await convertToBase64(imageFile);
-  }
-
-  if(videoFile){
-    videoBase64 = await convertToBase64(videoFile);
-  }
-
-  let projects = JSON.parse(localStorage.getItem("projects")) || [];
-
-  projects.push({
-    title,
-    description,
-    link,
-    image:imageBase64,
-    video:videoBase64
-  });
-
-  localStorage.setItem("projects", JSON.stringify(projects));
-
-  this.reset();
-  loadProjects();
-});
-
-/* INIT */
-loadProjects();
-
-
-/* LOAD NAVBAR */
-fetch("navbar.html")
-.then(res => res.text())
-.then(data => {
-  document.getElementById("navbar").innerHTML = data;
-
-  /* MENU TOGGLE */
-  const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
-
-  if(toggle){
-    toggle.addEventListener("click", function(){
-      navLinks.classList.toggle("active");
-      toggle.classList.toggle("active");
-    });
-  }
-
-  /* ACTIVE LINK AUTO */
-  const current = location.pathname.split("/").pop().replace(".html","");
-
-  document.querySelectorAll("#nav-links a").forEach(link=>{
-    if(link.dataset.page === current){
-      link.classList.add("active");
-    }
-  });
-
-});
-
-
+loadData();
 </script>
 
 </body>
