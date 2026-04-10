@@ -639,3 +639,30 @@ footer{
   }
 
 }
+
+/* ===== STOP HORIZONTAL SCROLL ===== */
+html, body{
+  overflow-x:hidden;
+}
+
+/* restore safety */
+*{
+  max-width:100%;
+}
+
+/* ===== FIX HERO OVERFLOW ===== */
+.shop-page .hero-row{
+  max-width:100%;
+  overflow:hidden;
+}
+
+.shop-page .hero-img{
+  max-width:30vw;
+  height:auto;
+}
+
+/* ===== FIX NAVBAR ALIGNMENT ===== */
+nav h1{
+  flex:none !important;
+  text-align:left !important;
+}
