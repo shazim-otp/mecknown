@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="Shop Arduino, sensors, and robotics components at affordable prices. Fast ordering via WhatsApp.">
+<meta name="keywords" content="Arduino, robotics, sensors, electronics shop, buy Arduino India">
+<meta name="author" content="Mecknown">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
+
+<!-- ONLY SHOWING FIXED CSS + SMALL HTML CHANGE + JS CHANGE -->
 
 <style>
 
@@ -16,7 +22,16 @@ nav{
   padding:18px 6% !important;
 }
 
-/* ===== OVERLAY FIX ===== */
+.cart-icon{
+  position:relative !important;
+  transform:none !important;
+}
+
+.menu-toggle{
+  position:relative !important;
+}
+
+/* ===== OVERLAY FIX (FIXED ERROR) ===== */
 .overlay{
   position:fixed;
   inset:0;
@@ -27,12 +42,13 @@ nav{
   transition:0.3s;
   z-index:2000;
 }
+
 .overlay.active{
   opacity:1;
   pointer-events:auto;
 }
 
-/* ===== CART PANEL FIX ===== */
+/* ===== FIX CART PANEL (SMOOTH) ===== */
 .cart-panel{
   position:fixed !important;
   top:0;
@@ -46,11 +62,12 @@ nav{
   z-index:4000;
   overflow-y:auto;
 }
+
 .cart-panel.active{
   transform:translateX(0);
 }
 
-/* ===== CHECKOUT POPUP FIX ===== */
+/* ===== FIX POPUP (CENTER) ===== */
 .address-popup{
   position:fixed !important;
   inset:0;
@@ -59,17 +76,17 @@ nav{
   align-items:center;
   z-index:5000;
 }
+
 .address-popup.active{
   display:flex !important;
 }
 
 .address-box{
-  margin:auto;
-  width:90%;
-  max-width:350px;
   background:#111;
   padding:25px;
   border-radius:12px;
+  width:90%;
+  max-width:350px;
 }
 
 /* ===== SUCCESS FIX ===== */
@@ -81,146 +98,253 @@ nav{
   align-items:center;
   z-index:6000;
 }
+
 .success.active{
   display:flex;
 }
 
+/* ===== PERFORMANCE BOOST ===== */
+.hero-img,
+.card{
+  will-change:transform;
+  transform:translateZ(0);
+}
+
 </style>
+
 </head>
 
 <body class="shop-page">
 
+<!-- NAVBAR -->
 <nav>
-  <div onclick="toggleCart()">🛒<span id="cartCount">0</span></div>
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒<span class="cart-count" id="cartCount">0</span>
+  </div>
+
   <h1>Mecknown</h1>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>
+
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="ai.html">Meck AI</a></li>
+    <li><a href="course.html">Course</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
 </nav>
 
+<!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-row">
+    <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero" loading="lazy">
+    <img src="assets/esp32.png" class="hero-img" id="espHero" loading="lazy">
+    <img src="assets/stm32.png" class="hero-img" id="stmHero" loading="lazy">
+  </div>
+
+  <h1 id="heroText">Mecknown Robotics Store</h1>
+  <p id="heroSub">Build • Learn • Innovate with Electronics</p>
+</section>
 
 <!-- CART -->
 <div class="cart-panel" id="cartPanel">
-
-  <div style="display:flex;justify-content:space-between;">
-    <h3>Your Cart</h3>
-    <button onclick="toggleCart()">✕</button>
-  </div>
-
+  <h3>Your Cart</h3>
   <div id="cartItems"></div>
-  <div id="total">Total: 0</div>
-
-  <button onclick="openAddressPopup()">Checkout</button>
-
+  <div class="total" id="total">Total: 0</div>
+ <button class="checkout" onclick="openAddressPopup()">Checkout</button>
 </div>
 
 <!-- PRODUCTS -->
-<section id="products"></section>
+<section class="products" id="products"></section>
 
 <!-- ADDRESS POPUP -->
 <div class="address-popup" id="addressPopup">
   <div class="address-box">
     <h3>Checkout</h3>
-
-    <input id="nameInput" placeholder="Name"><br><br>
-    <input id="phoneInput" placeholder="Phone"><br><br>
-    <input id="addressInput" placeholder="Address"><br><br>
-
-    <div id="errorMsg"></div>
-
+    <input id="nameInput" placeholder="Name">
+    <input id="phoneInput" placeholder="Phone">
+    <input id="addressInput" placeholder="Address">
+    <div class="error" id="errorMsg"></div>
     <button onclick="submitOrder()">Confirm</button>
-    <button onclick="closeAddressPopup()">Cancel</button>
+    <button onclick="closeAddressPopup()" style="background:#fff">Cancel</button>
   </div>
 </div>
 
 <!-- SUCCESS -->
 <div class="success" id="successBox">
-  <div class="success-box">
-    <h2>Order Placed ✅</h2>
-  </div>
+  <div class="success-box"><h2>Order Placed ✅</h2></div>
 </div>
 
 <script>
 
-let cart=[];
+/* ===== DATA ===== */
+let products=[];
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
+
+/* ===== ELEMENTS ===== */
+const toggle=document.getElementById('menu-toggle');
+const navLinks=document.getElementById('nav-links');
 const cartPanel=document.getElementById('cartPanel');
 const overlay=document.getElementById('overlay');
 
-/* CART */
-function toggleCart(){
-  const open=cartPanel.classList.toggle('active');
-  overlay.classList.toggle('active',open);
+const cartItems=document.getElementById('cartItems');
+const cartCount=document.getElementById('cartCount');
+const totalDiv=document.getElementById('total');
+
+/* ===== FORMAT ₹ ===== */
+function formatPrice(num){
+  return "₹"+Number(num).toLocaleString('en-IN');
 }
 
-/* OVERLAY CLOSE */
-overlay.onclick=()=>{
+/* ===== HERO ANIMATION (OPTIMIZED) ===== */
+window.addEventListener("load",()=>{
+  requestAnimationFrame(()=>{
+    setTimeout(()=>arduinoHero.classList.add("show"),200);
+    setTimeout(()=>espHero.classList.add("show"),500);
+    setTimeout(()=>stmHero.classList.add("show"),800);
+    setTimeout(()=>heroText.classList.add("show"),1200);
+    setTimeout(()=>heroSub.classList.add("show"),1500);
+  });
+});
+
+/* ===== MENU ===== */
+toggle.addEventListener("click",()=>{
+  const isOpen = navLinks.classList.toggle("active");
   cartPanel.classList.remove('active');
-  overlay.classList.remove('active');
+  overlay.classList.toggle("active", isOpen);
+  document.body.classList.toggle("menu-open", isOpen);
+});
+
+/* ===== CART ===== */
+function toggleCart(){
+  const isOpen = cartPanel.classList.toggle('active');
+  navLinks.classList.remove('active');
+  overlay.classList.toggle('active', isOpen);
+  document.body.classList.toggle("cart-open", isOpen);
 }
 
-/* UPDATE CART */
+/* ===== OVERLAY CLOSE ===== */
+overlay.addEventListener('click',()=>{
+  cartPanel.classList.remove('active');
+  navLinks.classList.remove('active');
+  overlay.classList.remove('active');
+  document.body.classList.remove("cart-open","menu-open");
+});
+
+/* ===== CART LOGIC ===== */
 function updateCart(){
-  const items=document.getElementById('cartItems');
-  const total=document.getElementById('total');
+  cartItems.innerHTML='';
+  let total=0;
 
-  let t=0;
-  items.innerHTML='';
+  cart.forEach((i,index)=>{
+    total+=i.price*i.qty;
 
-  cart.forEach(i=>{
-    t+=i.price;
-    items.innerHTML+=`<div>${i.name} - ₹${i.price}</div>`;
+    cartItems.innerHTML+=`
+      <div>
+        ${i.name} x${i.qty}
+        <div class='qty'>
+          <button onclick='changeQty(${index},-1)'>-</button>
+          ${i.qty}
+          <button onclick='changeQty(${index},1)'>+</button>
+        </div>
+        <div>${formatPrice(i.price*i.qty)}</div>
+      </div>`;
   });
 
-  total.innerText="Total: ₹"+t;
-  document.getElementById('cartCount').innerText=cart.length;
+  totalDiv.textContent='Total: '+formatPrice(total);
+  cartCount.textContent=cart.length;
 }
 
-/* ADD */
-function addToCart(name,price){
-  cart.push({name,price});
+function addToCart(name,priceStr){
+  const price=parseFloat(priceStr.replace(/[^0-9.]/g,''))||0;
+  const ex=cart.find(i=>i.name===name);
+  if(ex) ex.qty++;
+  else cart.push({name,price,qty:1});
+  localStorage.setItem('cart',JSON.stringify(cart));
   updateCart();
 }
 
-/* POPUP */
-function openAddressPopup(){
-  if(cart.length===0) return alert("Cart empty");
+function changeQty(i,val){
+  cart[i].qty+=val;
+  if(cart[i].qty<=0) cart.splice(i,1);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  updateCart();
+}
 
-  document.getElementById('addressPopup').classList.add('active');
+/* ===== POPUP ===== */
+function openAddressPopup(){
+  if(cart.length===0) return alert('Cart empty');
+
+  const popup = document.getElementById('addressPopup');
+  popup.classList.add('active');
 
   cartPanel.classList.remove('active');
   overlay.classList.remove('active');
+  document.body.classList.remove("cart-open");
 }
 
 function closeAddressPopup(){
   document.getElementById('addressPopup').classList.remove('active');
 }
 
-/* ORDER */
+/* ===== WHATSAPP ORDER ===== */
 function submitOrder(){
   const name=nameInput.value;
   const phone=phoneInput.value;
   const address=addressInput.value;
 
   if(!name||!phone||!address){
-    errorMsg.innerText="Fill all fields";
+    errorMsg.textContent='Fill all fields';
     return;
   }
 
-  let msg=`Order:%0A${name}%0A${phone}%0A${address}%0A`;
+  const orderId='ORD-'+Date.now();
 
-  cart.forEach(i=>{
-    msg+=`${i.name} - ₹${i.price}%0A`;
-  });
+  let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
+  cart.forEach(i=>msg+=`${i.name} x${i.qty} - ₹${i.price*i.qty}%0A`);
 
   window.open(`https://wa.me/919048585461?text=${msg}`);
 
-  document.getElementById('successBox').classList.add('active');
+  document.getElementById('successBox').style.display='flex';
 
   setTimeout(()=>{
-    document.getElementById('successBox').classList.remove('active');
+    document.getElementById('successBox').style.display='none';
     cart=[];
+    localStorage.setItem('cart','[]');
     updateCart();
-    closeAddressPopup();
   },2000);
 }
+
+updateCart();
+
+/* ===== LOAD PRODUCTS (OPTIMIZED) ===== */
+async function load(){
+  const res=await fetch('data/products.json');
+  products=await res.json();
+
+  const c=document.getElementById('products');
+  c.innerHTML='';
+
+  products.forEach(p=>{
+    c.innerHTML+=`
+      <div class='card'>
+        <img src='${p.img}' loading="lazy">
+        <h3>${p.name}</h3>
+        <p>${formatPrice(p.price)}</p>
+        <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
+      </div>`;
+  });
+}
+
+load();
 
 </script>
 
