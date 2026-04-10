@@ -53,16 +53,18 @@ button:hover{opacity:.8}
 
 <script>
 console.log("Admin JS Loaded");
-// 🔥 PUT YOUR REAL KEYS HERE
+
+// ✅ YOUR SUPABASE KEYS
 const SUPABASE_URL = "https://jlluaxbraqoyumgkfxyt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsbHVheGJyYXFveXVtZ2tmeHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDA5OTgsImV4cCI6MjA5MTM3Njk5OH0.z2i1oL-VVNyBu3SSY5nr2lJ5Zh7GE3hIOzMHHSTAxUw";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// ✅ FIXED NAME (no conflict)
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // LOAD DATA
 async function loadData(){
-  const { data: products } = await supabase.from('products').select('*');
-  const { data: projects } = await supabase.from('projects').select('*');
+  const { data: products } = await supabaseClient.from('products').select('*');
+  const { data: projects } = await supabaseClient.from('projects').select('*');
 
   renderProducts(products || []);
   renderProjects(projects || []);
@@ -77,9 +79,23 @@ async function addProduct(){
 
   if(!name || !price) return alert("Fill required fields");
 
-  await supabase.from('products').insert([
+  const { error } = await supabaseClient.from('products').insert([
     { name, price, img, description }
   ]);
+
+  if(error){
+    alert(error.message);
+    console.error(error);
+    return;
+  }
+
+  alert("Product added ✅");
+
+  // clear inputs
+  document.getElementById('pName').value = "";
+  document.getElementById('pPrice').value = "";
+  document.getElementById('pImg').value = "";
+  document.getElementById('pDesc').value = "";
 
   loadData();
 }
@@ -92,9 +108,22 @@ async function addProject(){
 
   if(!name) return alert("Fill required fields");
 
-  await supabase.from('projects').insert([
+  const { error } = await supabaseClient.from('projects').insert([
     { name, img, description }
   ]);
+
+  if(error){
+    alert(error.message);
+    console.error(error);
+    return;
+  }
+
+  alert("Project added ✅");
+
+  // clear inputs
+  document.getElementById('prName').value = "";
+  document.getElementById('prImg').value = "";
+  document.getElementById('prDesc').value = "";
 
   loadData();
 }
