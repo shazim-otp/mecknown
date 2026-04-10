@@ -22,40 +22,59 @@ nav{
 
 .cart-icon{
   position:relative !important;
-  transform:none !important;
 }
 
 .menu-toggle{
   position:relative !important;
 }
 
-/* ===== OVERLAY ===== */
+/* ===== OVERLAY FIX ===== */
 .overlay{
-  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(3px);
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:2000;
 }
 .overlay.active{
-  display:block;
+  opacity:1;
+  pointer-events:auto;
 }
 
-/* ===== FIX CART PANEL (NO LEAK) ===== */
+/* ===== CART PANEL ===== */
 .cart-panel{
-  left:-100% !important;
+  position:fixed;
+  top:0;
+  left:-100%;
+  width:300px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  transition:0.3s;
+  z-index:4000;
 }
 .cart-panel.active{
-  left:0 !important;
+  left:0;
 }
 
-/* ===== FIX POPUPS ===== */
-.address-popup{
-  display:none !important;
-}
-.success{
-  display:none !important;
+/* ===== CHECKOUT BUTTON ===== */
+.checkout-btn{
+  width:100%;
+  margin-top:15px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  background:linear-gradient(135deg,#ff5a7a,#ff8fa3);
+  color:#000;
 }
 
-/* ===== PERFORMANCE BOOST ===== */
-.hero-img,
-.card{
+/* ===== PERFORMANCE ===== */
+.hero-img,.card{
   will-change:transform;
   transform:translateZ(0);
 }
@@ -95,9 +114,9 @@ nav{
 <!-- HERO -->
 <section class="hero">
   <div class="hero-row">
-    <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero" loading="lazy">
-    <img src="assets/esp32.png" class="hero-img" id="espHero" loading="lazy">
-    <img src="assets/stm32.png" class="hero-img" id="stmHero" loading="lazy">
+    <img src="assets/arduinoq.png" class="hero-img" id="arduinoHero">
+    <img src="assets/esp32.png" class="hero-img" id="espHero">
+    <img src="assets/stm32.png" class="hero-img" id="stmHero">
   </div>
 
   <h1 id="heroText">Mecknown Robotics Store</h1>
@@ -106,10 +125,17 @@ nav{
 
 <!-- CART -->
 <div class="cart-panel" id="cartPanel">
-  <h3>Your Cart</h3>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <h3>Your Cart</h3>
+    <button onclick="toggleCart()" style="background:none;border:none;font-size:20px;color:white;cursor:pointer;">✕</button>
+  </div>
+
   <div id="cartItems"></div>
   <div class="total" id="total">Total: 0</div>
-  <div class="checkout" onclick="openAddressPopup()">Checkout</div>
+
+  <button class="checkout-btn" onclick="openAddressPopup()">Checkout</button>
+
 </div>
 
 <!-- PRODUCTS -->
@@ -120,7 +146,7 @@ nav{
   <div class="address-box">
     <h3>Checkout</h3>
     <input id="nameInput" placeholder="Name">
-    <input id="phoneInput" placeholder="Phone">
+    <input id="phoneInput" type="tel" placeholder="Phone">
     <input id="addressInput" placeholder="Address">
     <div class="error" id="errorMsg"></div>
     <button onclick="submitOrder()">Confirm</button>
@@ -154,23 +180,11 @@ function formatPrice(num){
   return "₹"+Number(num).toLocaleString('en-IN');
 }
 
-/* ===== HERO ANIMATION (OPTIMIZED) ===== */
-window.addEventListener("load",()=>{
-  requestAnimationFrame(()=>{
-    setTimeout(()=>arduinoHero.classList.add("show"),200);
-    setTimeout(()=>espHero.classList.add("show"),500);
-    setTimeout(()=>stmHero.classList.add("show"),800);
-    setTimeout(()=>heroText.classList.add("show"),1200);
-    setTimeout(()=>heroSub.classList.add("show"),1500);
-  });
-});
-
 /* ===== MENU ===== */
 toggle.addEventListener("click",()=>{
   const isOpen = navLinks.classList.toggle("active");
   cartPanel.classList.remove('active');
   overlay.classList.toggle("active", isOpen);
-  document.body.classList.toggle("menu-open", isOpen);
 });
 
 /* ===== CART ===== */
@@ -178,7 +192,6 @@ function toggleCart(){
   const isOpen = cartPanel.classList.toggle('active');
   navLinks.classList.remove('active');
   overlay.classList.toggle('active', isOpen);
-  document.body.classList.toggle("cart-open", isOpen);
 }
 
 /* ===== OVERLAY CLOSE ===== */
@@ -186,7 +199,6 @@ overlay.addEventListener('click',()=>{
   cartPanel.classList.remove('active');
   navLinks.classList.remove('active');
   overlay.classList.remove('active');
-  document.body.classList.remove("cart-open","menu-open");
 });
 
 /* ===== CART LOGIC ===== */
@@ -200,7 +212,7 @@ function updateCart(){
     cartItems.innerHTML+=`
       <div>
         ${i.name} x${i.qty}
-        <div class='qty'>
+        <div>
           <button onclick='changeQty(${index},-1)'>-</button>
           ${i.qty}
           <button onclick='changeQty(${index},1)'>+</button>
@@ -235,18 +247,17 @@ function openAddressPopup(){
   document.getElementById('addressPopup').style.display='flex';
   cartPanel.classList.remove('active');
   overlay.classList.remove('active');
-  document.body.classList.remove("cart-open");
 }
 
 function closeAddressPopup(){
   document.getElementById('addressPopup').style.display='none';
 }
 
-/* ===== WHATSAPP ORDER ===== */
+/* ===== WHATSAPP ORDER AUTO SEND ===== */
 function submitOrder(){
-  const name=nameInput.value;
-  const phone=phoneInput.value;
-  const address=addressInput.value;
+  const name=nameInput.value.trim();
+  const phone=phoneInput.value.trim();
+  const address=addressInput.value.trim();
 
   if(!name||!phone||!address){
     errorMsg.textContent='Fill all fields';
@@ -255,8 +266,19 @@ function submitOrder(){
 
   const orderId='ORD-'+Date.now();
 
-  let msg=`Order ID:${orderId}%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A`;
-  cart.forEach(i=>msg+=`${i.name} x${i.qty} - ₹${i.price*i.qty}%0A`);
+  let msg=`🛒 Mecknown Order%0A`;
+  msg+=`🆔 ${orderId}%0A`;
+  msg+=`👤 ${name}%0A📞 ${phone}%0A📍 ${address}%0A%0A`;
+
+  let total=0;
+
+  cart.forEach(i=>{
+    const itemTotal=i.price*i.qty;
+    total+=itemTotal;
+    msg+=`${i.name} x${i.qty} - ₹${itemTotal}%0A`;
+  });
+
+  msg+=`%0ATotal: ₹${total}`;
 
   window.open(`https://wa.me/919048585461?text=${msg}`);
 
@@ -267,12 +289,13 @@ function submitOrder(){
     cart=[];
     localStorage.setItem('cart','[]');
     updateCart();
+    closeAddressPopup();
   },2000);
 }
 
 updateCart();
 
-/* ===== LOAD PRODUCTS (OPTIMIZED) ===== */
+/* ===== LOAD PRODUCTS ===== */
 async function load(){
   const res=await fetch('data/products.json');
   products=await res.json();
@@ -283,7 +306,7 @@ async function load(){
   products.forEach(p=>{
     c.innerHTML+=`
       <div class='card'>
-        <img src='${p.img}' loading="lazy">
+        <img src='${p.img}'>
         <h3>${p.name}</h3>
         <p>${formatPrice(p.price)}</p>
         <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
