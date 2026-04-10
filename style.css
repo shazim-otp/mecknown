@@ -687,3 +687,8 @@ nav{
 .menu-toggle{
   z-index:6000 !important;
 }
+/* hide navbar when cart is open */
+body.cart-open nav{
+  transform:translateY(-100%);
+  transition:0.3s ease;
+}
