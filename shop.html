@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <!-- ONLY SHOWING FIXED CSS + SMALL HTML CHANGE + JS CHANGE -->
 
@@ -328,27 +329,32 @@ updateCart();
 updateCart();
 
 /* ===== LOAD PRODUCTS (OPTIMIZED) ===== */
+const SUPABASE_URL = "YOUR_URL";
+const SUPABASE_KEY = "YOUR_KEY";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 async function load(){
-const res=await fetch('data/products.json');
-products=await res.json();
+  const { data, error } = await supabase.from('products').select('*');
 
-const c=document.getElementById('products');
-c.innerHTML='';
+  if(error){
+    console.error(error);
+    return;
+  }
 
-products.forEach(p=>{
-c.innerHTML+=`
-     <div class='card'>
-       <img src='${p.img}' loading="lazy">
-       <h3>${p.name}</h3>
-       <p>${formatPrice(p.price)}</p>
-       <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
-     </div>`;
-});
-}
-function removeItem(index){
-cart.splice(index,1);
-localStorage.setItem('cart',JSON.stringify(cart));
-updateCart();
+  products = data;
+
+  const c=document.getElementById('products');
+  c.innerHTML='';
+
+  products.forEach(p=>{
+    c.innerHTML+=`
+      <div class='card'>
+        <img src='${p.img}' loading="lazy">
+        <h3>${p.name}</h3>
+        <p>${formatPrice(p.price)}</p>
+        <button class="add-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</button>
+      </div>`;
+  });
 }
 
 load();
