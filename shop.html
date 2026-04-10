@@ -161,12 +161,19 @@ nav{
   <div class="total" id="total">Total: 0</div>
  <button class="checkout" onclick="openAddressPopup()">Checkout</button>
 </div>
-  c.innerHTML+=`
+  c.innerHTML += `
   <div>
     ${i.name} x${i.qty}
-    <button onclick="removeItem(${index})">❌</button>
-    ...
-  </div>`;
+
+    <div class="qty">
+      <button onclick='changeQty(${index},-1)'>-</button>
+      ${i.qty}
+      <button onclick='changeQty(${index},1)'>+</button>
+    </div>
+
+    <div>₹${i.price * i.qty}</div>
+  </div>
+`;
 
 <!-- PRODUCTS -->
 <section class="products" id="products"></section>
