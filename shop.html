@@ -327,9 +327,23 @@ function submitOrder(){
 updateCart();
 
 /* ===== LOAD PRODUCTS (OPTIMIZED) ===== */
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+
+const SUPABASE_URL = "YOUR_URL";
+const SUPABASE_KEY = "YOUR_KEY";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 async function load(){
-  const res=await fetch('data/products.json');
-  products=await res.json();
+  const { data, error } = await supabase.from('products').select('*');
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  products = data;
 
   const c=document.getElementById('products');
   c.innerHTML='';
@@ -344,13 +358,9 @@ async function load(){
       </div>`;
   });
 }
-  function removeItem(index){
-  cart.splice(index,1);
-  localStorage.setItem('cart',JSON.stringify(cart));
-  updateCart();
-}
 
 load();
+
 
 </script>
 
