@@ -666,3 +666,24 @@ nav h1{
   flex:none !important;
   text-align:left !important;
 }
+
+/* ===== MAKE MENU CLICKABLE ===== */
+nav ul{
+  z-index:9999 !important;
+  pointer-events:auto;
+}
+
+/* ===== FIX OVERLAY BLOCKING ===== */
+.overlay{
+  z-index:1000 !important;
+}
+
+/* ===== NAVBAR ABOVE EVERYTHING ===== */
+nav{
+  z-index:5000 !important;
+}
+
+/* ===== MENU TOGGLE ABOVE ===== */
+.menu-toggle{
+  z-index:6000 !important;
+}
