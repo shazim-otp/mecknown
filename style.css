@@ -555,3 +555,87 @@ footer{
 .address-box button:hover{
   transform:scale(1.03);
 }
+/* ===== MOBILE FIX PACK ===== */
+@media(max-width:768px){
+
+  /* ===== NAVBAR FIX ===== */
+  nav{
+    padding:14px 4% !important;
+  }
+
+  nav h1{
+    font-size:18px;
+    text-align:center;
+    flex:1;
+  }
+
+  .cart-icon{
+    font-size:16px;
+  }
+
+  /* ===== HERO FIX ===== */
+  .hero{
+    padding-top:20px;
+    text-align:center;
+  }
+
+  .hero-row{
+    flex-direction:row;
+    justify-content:center;
+    gap:10px;
+  }
+
+  .hero-img{
+    width:90px !important;
+    height:90px !important;
+  }
+
+  /* ===== CHECKOUT POPUP FIX ===== */
+  .address-popup{
+    padding:10px;
+  }
+
+  .address-box{
+    width:95% !important;
+    max-width:none !important;
+    padding:18px;
+    border-radius:10px;
+  }
+
+  .address-box input{
+    width:100%;
+    font-size:14px;
+  }
+
+  .address-box button{
+    width:100%;
+    font-size:14px;
+  }
+
+  /* ===== CART PANEL ===== */
+  .cart-panel{
+    width:85% !important;
+  }
+
+  /* ===== PRODUCTS GRID ===== */
+  .products{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    padding:20px 4%;
+  }
+
+  .card{
+    padding:15px;
+  }
+
+  .card img{
+    height:120px;
+  }
+
+  /* ===== BUTTON FIX ===== */
+  .add-btn{
+    font-size:13px;
+    padding:8px;
+  }
+
+}
