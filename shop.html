@@ -229,6 +229,7 @@ function toggleCart(){
   navLinks.classList.remove('active');
   overlay.classList.toggle('active', isOpen);
   document.body.classList.toggle("cart-open", isOpen);
+ 
 }
 
 /* ===== OVERLAY CLOSE ===== */
@@ -236,7 +237,7 @@ overlay.addEventListener('click',()=>{
   cartPanel.classList.remove('active');
   navLinks.classList.remove('active');
   overlay.classList.remove('active');
-  document.body.classList.remove("cart-open","menu-open");
+  document.body.classList.remove("cart-open");
 });
 
 /* ===== CART LOGIC ===== */
