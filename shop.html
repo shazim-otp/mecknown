@@ -331,10 +331,9 @@ updateCart();
 /* ===== LOAD PRODUCTS (OPTIMIZED) ===== */
 const SUPABASE_URL = "https://jlluaxbraqoyumgkfxyt.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsbHVheGJyYXFveXVtZ2tmeHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDA5OTgsImV4cCI6MjA5MTM3Njk5OH0.z2i1oL-VVNyBu3SSY5nr2lJ5Zh7GE3hIOzMHHSTAxUw";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 async function load(){
-  const { data, error } = await supabase.from('products').select('*');
+  const { data, error } = await supabaseClient.from('products').select('*');
 
   if(error){
     console.error(error);
