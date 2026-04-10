@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="Shop Arduino, sensors, and robotics components at affordable prices. Fast ordering via WhatsApp.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop</title>
 
@@ -9,7 +10,13 @@
 
 <style>
 
-/* ===== OVERLAY ===== */
+/* ===== NAVBAR FIX ===== */
+nav{
+  justify-content:space-between !important;
+  padding:18px 6% !important;
+}
+
+/* ===== OVERLAY FIX ===== */
 .overlay{
   position:fixed;
   inset:0;
@@ -25,11 +32,12 @@
   pointer-events:auto;
 }
 
-/* ===== CART FIX ===== */
+/* ===== CART PANEL FIX ===== */
 .cart-panel{
-  position:fixed;
+  position:fixed !important;
   top:0;
-  left:-100%;
+  left:0;
+  transform:translateX(-110%);
   width:300px;
   height:100%;
   background:#111;
@@ -39,31 +47,29 @@
   overflow-y:auto;
 }
 .cart-panel.active{
-  left:0;
+  transform:translateX(0);
 }
 
 /* ===== CHECKOUT POPUP FIX ===== */
 .address-popup{
-  position:fixed;
+  position:fixed !important;
   inset:0;
   display:none;
   justify-content:center;
   align-items:center;
   z-index:5000;
 }
-
 .address-popup.active{
-  display:flex;
+  display:flex !important;
 }
 
-/* CENTER BOX */
 .address-box{
+  margin:auto;
+  width:90%;
+  max-width:350px;
   background:#111;
   padding:25px;
   border-radius:12px;
-  width:90%;
-  max-width:350px;
-  text-align:center;
 }
 
 /* ===== SUCCESS FIX ===== */
@@ -93,8 +99,9 @@
 
 <!-- CART -->
 <div class="cart-panel" id="cartPanel">
+
   <div style="display:flex;justify-content:space-between;">
-    <h3>Cart</h3>
+    <h3>Your Cart</h3>
     <button onclick="toggleCart()">✕</button>
   </div>
 
@@ -102,6 +109,7 @@
   <div id="total">Total: 0</div>
 
   <button onclick="openAddressPopup()">Checkout</button>
+
 </div>
 
 <!-- PRODUCTS -->
@@ -111,10 +119,13 @@
 <div class="address-popup" id="addressPopup">
   <div class="address-box">
     <h3>Checkout</h3>
+
     <input id="nameInput" placeholder="Name"><br><br>
     <input id="phoneInput" placeholder="Phone"><br><br>
     <input id="addressInput" placeholder="Address"><br><br>
+
     <div id="errorMsg"></div>
+
     <button onclick="submitOrder()">Confirm</button>
     <button onclick="closeAddressPopup()">Cancel</button>
   </div>
@@ -122,7 +133,7 @@
 
 <!-- SUCCESS -->
 <div class="success" id="successBox">
-  <div style="background:#111;padding:20px;border-radius:10px;">
+  <div class="success-box">
     <h2>Order Placed ✅</h2>
   </div>
 </div>
@@ -130,23 +141,22 @@
 <script>
 
 let cart=[];
-
 const cartPanel=document.getElementById('cartPanel');
 const overlay=document.getElementById('overlay');
 
 /* CART */
 function toggleCart(){
-  const open = cartPanel.classList.toggle('active');
+  const open=cartPanel.classList.toggle('active');
   overlay.classList.toggle('active',open);
 }
 
-/* OVERLAY CLICK */
+/* OVERLAY CLOSE */
 overlay.onclick=()=>{
   cartPanel.classList.remove('active');
   overlay.classList.remove('active');
 }
 
-/* CART UPDATE */
+/* UPDATE CART */
 function updateCart(){
   const items=document.getElementById('cartItems');
   const total=document.getElementById('total');
