@@ -1,8 +1,8 @@
 
 {
   "live": {
-    "id": "AAIAvycM08E",
-    "time": "2026-04-09T20:00:00"
+    "id": "loqIe7FdQm8",
+    "time": "2026-04-13T20:00:00"
   },
   "classes": [
     {
@@ -24,6 +24,10 @@
     {
       "title": "Day 5 ",
       "video": "AAIAvycM08E"
-    }
+    },
+   {
+      "title": "Day 6 ",
+      "video": "loqIe7FdQm8"
+   }
   ]
 }
