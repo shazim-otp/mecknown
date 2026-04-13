@@ -6,17 +6,12 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <!-- SEO -->
 <meta name="description" content="Mecknown builds advanced robotics, AI systems, and smart applications for real-world impact.">
-<meta name="keywords" content="Mecknown, Mecknown AI, Mecknown robotics, Mecknown shop, Mecknown courses, robotics, AI, embedded systems, smart technology">
+<meta name="keywords" content="robotics, AI, embedded systems, Mecknown, smart technology">
 <meta name="author" content="Mecknown">
 <link rel="canonical" href="https://mecknown.in/">
-
-<!-- ✅ ADDED: ROBOTS -->
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Mecknown">
@@ -24,31 +19,6 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mecknown.in/">
 <meta property="og:image" content="https://mecknown.in/assets/logo.png">
-
-<!-- ✅ ADDED: STRUCTURED DATA -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Mecknown",
-  "url": "https://mecknown.in",
-  "logo": "https://mecknown.in/assets/logo.png"
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Mecknown",
-  "url": "https://mecknown.in/",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://mecknown.in/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
 
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.ico">
@@ -80,12 +50,62 @@
   background:linear-gradient(to right, transparent, #222, transparent);
 }
 
+/* ISOMETRIC ROBOT HEAD TEARDOWN ANIMATION */
+.teardown-viewer {
+  width: 100%;
+  max-width: 700px;
+  height: 800px;
+  margin: 60px auto;
+  position: relative;
+  perspective: 2500px;
+  cursor: grab;
+  -webkit-tap-highlight-color: transparent;
+}
+.td-layer {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 500px; height: 500px;
+  margin-top: -250px; margin-left: -250px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(-15px 25px 20px rgba(0,0,0,0.5));
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s;
+}
+
+/* Base Closed State */
+.layer-neck  { transform: rotateX(65deg) rotateZ(-45deg) translateZ(-40px); transition-delay: 0s; }
+.layer-jaw   { transform: rotateX(65deg) rotateZ(-45deg) translateZ(-10px); transition-delay: 0.15s; }
+.layer-brain { transform: rotateX(65deg) rotateZ(-45deg) translateZ(20px); transition-delay: 0.3s; }
+.layer-eyes  { transform: rotateX(65deg) rotateZ(-45deg) translateZ(50px); transition-delay: 0.45s; }
+.layer-crown { transform: rotateX(65deg) rotateZ(-45deg) translateZ(80px); transition-delay: 0.6s; }
+
+/* Bolts Closed */
+.layer-bolts { transform: rotateX(65deg) rotateZ(-45deg) translateZ(85px); transition: all 1s ease; transition-delay: 0.75s; opacity: 1; }
+
+/* Hover Open State (Sequential Orderly Teardown) */
+.teardown-viewer:hover .layer-bolts { transform: rotateX(65deg) rotateZ(-45deg) translateZ(450px); transition-delay: 0s; opacity: 0;}
+.teardown-viewer:hover .layer-crown { transform: rotateX(65deg) rotateZ(-45deg) translateZ(360px); transition-delay: 0.2s; opacity: 0.9; }
+.teardown-viewer:hover .layer-eyes  { transform: rotateX(65deg) rotateZ(-45deg) translateZ(240px); transition-delay: 0.4s; }
+.teardown-viewer:hover .layer-brain { transform: rotateX(65deg) rotateZ(-45deg) translateZ(120px); transition-delay: 0.6s; }
+.teardown-viewer:hover .layer-jaw   { transform: rotateX(65deg) rotateZ(-45deg) translateZ(20px); transition-delay: 0.8s; }
+.teardown-viewer:hover .layer-neck  { transform: rotateX(65deg) rotateZ(-45deg) translateZ(-80px); transition-delay: 1.0s; }
+
+/* Fastener Animation */
+.bolt-anim { transform-origin: 12px 13.5px; transition: transform 1.5s ease; }
+.teardown-viewer:hover .bolt-ul { transform: translate(-50px, -50px) rotate(-720deg); }
+.teardown-viewer:hover .bolt-ur { transform: translate(50px, -50px) rotate(720deg); }
+.teardown-viewer:hover .bolt-dl { transform: translate(-50px, 50px) rotate(-720deg); }
+.teardown-viewer:hover .bolt-dr { transform: translate(50px, 50px) rotate(720deg); }
+
+@keyframes rotate-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.spin-ring { transform-origin: 250px 220px; animation: rotate-ring 4s linear infinite; }
+.eye-glow { filter: drop-shadow(0 0 10px #0ea5e9); }
+
 </style>
 
 </head>
 
 <body>
-
+<div id="navbar"></div>
 <!-- PAGE TRANSITION -->
 <div class="page-transition" id="pageTransition"></div>
 
@@ -93,9 +113,6 @@
 <div id="loader">
   <img src="assets/logo.png" alt="Loading" class="loader-logo">
 </div>
-
-<!-- ✅ ADDED FIX (DOES NOT AFFECT UI) -->
-<div id="navbar" style="display:none;"></div>
 
 <!-- NAVBAR -->
 <nav>
@@ -120,11 +137,6 @@
 <section class="section hero fade-in">
   <h2 class="gradient-text">Engineering Intelligent Futures</h2>
 
-  <!-- ✅ ADDED HIDDEN BRAND SIGNAL -->
-  <p style="display:none;">
-    Mecknown is a robotics and AI platform building smart systems, electronics, and intelligent applications.
-  </p>
-
   <p>
     Advanced robotics, AI-powered systems, and smart solutions designed for real-world innovation.
   </p>
@@ -136,6 +148,125 @@
     <a href="services.html">
       <button class="secondary-btn">Explore Services</button>
     </a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- REALISTIC ROBOT DISASSEMBLY ANIMATION -->
+<section class="section">
+  <h2 class="fade-in gradient-text" style="text-align: center;">Advanced Robotics Teardown</h2>
+  <p class="fade-in" style="text-align: center; max-width: 600px; margin: 0 auto 40px auto; color: #9ca3af;">
+    Hover over the chassis to initiate the disassembly sequence and reveal the intelligent core.
+  </p>
+  
+  <div class="teardown-viewer fade-in">
+    
+    <!-- 1. BASE / NECK -->
+    <div class="td-layer layer-neck">
+      <svg viewBox="0 0 500 500">
+        <rect x="100" y="100" width="300" height="300" rx="40" fill="#151718" stroke="#333" stroke-width="4"/>
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#444" stroke-width="10" stroke-dasharray="10 5"/>
+        <circle cx="350" cy="150" r="30" fill="none" stroke="#444" stroke-width="10" stroke-dasharray="10 5"/>
+        <circle cx="250" cy="250" r="70" fill="#222" stroke="#4a5568" stroke-width="8"/>
+        <circle cx="250" cy="250" r="50" fill="#000"/>
+        <circle cx="250" cy="250" r="60" fill="none" stroke="#00e5ff" stroke-width="2" stroke-dasharray="15 15"/>
+      </svg>
+    </div>
+
+    <!-- 2. JAW / MANDIBLE -->
+    <div class="td-layer layer-jaw">
+      <svg viewBox="0 0 500 500">
+        <path d="M 180 160 L 320 160 L 320 220 L 180 220 Z" fill="#2d3748" stroke="#1a202c" stroke-width="4"/>
+        <path d="M 180 220 L 320 220 L 330 280 Q 250 340 170 280 Z" fill="#3f4a56" stroke="#1a202c" stroke-width="4"/>
+        <path d="M 200 180 L 300 180 L 300 240 Q 250 280 200 240 Z" fill="#000" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- 3. THE BRAIN CORE (PCB & PROCESSOR) -->
+    <div class="td-layer layer-brain">
+      <svg viewBox="0 0 500 500">
+        <defs>
+          <linearGradient id="metalCPU" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#eeeeee" />
+            <stop offset="50%" stop-color="#aaaaaa" />
+            <stop offset="100%" stop-color="#777777" />
+          </linearGradient>
+          <pattern id="hex" width="20" height="34" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 20 5 L 20 17 L 10 22 L 0 17 L 0 5 Z" fill="none" stroke="#1e293b" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <!-- Motherboard -->
+        <path d="M 190 170 L 310 170 L 310 240 Q 250 300 190 240 Z" fill="#0f172a" stroke="#38bdf8" stroke-width="4"/>
+        <path d="M 190 170 L 310 170 L 310 240 Q 250 300 190 240 Z" fill="url(#hex)"/>
+        <!-- Traces -->
+        <path d="M 250 200 L 210 240 M 250 200 L 290 240 M 250 200 L 250 280" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="210" cy="240" r="2" fill="#fff" />
+        <circle cx="290" cy="240" r="2" fill="#fff" />
+        <circle cx="250" cy="280" r="2" fill="#fff" />
+        <rect x="200" y="180" width="12" height="30" fill="#111" stroke="silver" stroke-width="1"/>
+        <rect x="288" y="180" width="12" height="30" fill="#111" stroke="silver" stroke-width="1"/>
+        <!-- CPU Base -->
+        <rect x="220" y="190" width="60" height="60" rx="5" fill="#1e293b" stroke="#475569" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.8))"/>
+        <!-- Processor Die -->
+        <rect x="230" y="200" width="40" height="40" rx="3" fill="url(#metalCPU)"/>
+        <!-- Glowing Cyan Core -->
+        <circle cx="250" cy="220" r="8" fill="#0ea5e9" class="eye-glow"/>
+        <text x="250" y="222" font-family="'Courier New', monospace" font-size="6" fill="#fff" text-anchor="middle" font-weight="bold">AI</text>
+        <circle cx="250" cy="220" r="25" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 3" class="spin-ring"/>
+        <text x="250" y="270" font-family="'Courier New', monospace" font-size="8" fill="#38bdf8" text-anchor="middle" font-weight="bold" transform="rotate(45, 250, 270)">MECK-CORE NEURAL</text>
+      </svg>
+    </div>
+
+    <!-- 4. VISOR & SENSORS -->
+    <div class="td-layer layer-eyes">
+      <svg viewBox="0 0 500 500">
+        <path d="M 180 230 Q 250 280 320 230 L 330 250 Q 250 310 170 250 Z" fill="#1a202c" stroke="#4a5568" stroke-width="2"/>
+        <path d="M 185 235 Q 250 285 315 235 L 320 245 Q 250 295 180 245 Z" fill="#000"/>
+        <!-- Robot Eyes -->
+        <circle cx="220" cy="255" r="8" fill="#0ea5e9" class="eye-glow"/>
+        <circle cx="280" cy="255" r="8" fill="#0ea5e9" class="eye-glow"/>
+        <circle cx="250" cy="265" r="3" fill="#ef4444" filter="drop-shadow(0 0 5px #ef4444)"/>
+      </svg>
+    </div>
+
+    <!-- 5. CROWN / SKULL ARMOR -->
+    <div class="td-layer layer-crown">
+      <svg viewBox="0 0 500 500">
+        <defs>
+          <linearGradient id="armorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="40%" stop-color="#cbd5e1"/>
+            <stop offset="100%" stop-color="#64748b"/>
+          </linearGradient>
+        </defs>
+        <path d="M 170 150 L 330 150 L 340 240 Q 250 300 160 240 Z" fill="url(#armorGrad)" stroke="#475569" stroke-width="4"/>
+        <path d="M 210 150 L 210 200 M 290 150 L 290 200 M 250 150 L 250 260" stroke="#475569" stroke-width="3"/>
+        <rect x="230" y="160" width="40" height="20" fill="#0f172a" rx="4"/>
+        <line x1="235" y1="165" x2="265" y2="165" stroke="#38bdf8" stroke-width="2"/>
+        <!-- Bolt Holes -->
+        <circle cx="190" cy="170" r="12" fill="#000"/>
+        <circle cx="310" cy="170" r="12" fill="#000"/>
+        <circle cx="190" cy="240" r="12" fill="#000"/>
+        <circle cx="310" cy="240" r="12" fill="#000"/>
+      </svg>
+    </div>
+
+    <!-- 6. BOLTS -->
+    <div class="td-layer layer-bolts">
+      <svg viewBox="0 0 500 500">
+        <g id="boltMaster">
+          <polygon points="12,0 24,7 24,20 12,27 0,20 0,7" fill="#88929b" stroke="#50555a" stroke-width="2"/>
+          <circle cx="12" cy="13.5" r="7" fill="#222"/>
+          <polygon points="12,8 16,10 16,16 12,18 8,16 8,10" fill="#000" />
+        </g>
+        <g class="bolt-anim bolt-ul" transform="translate(178, 156.5)"><use href="#boltMaster"/></g>
+        <g class="bolt-anim bolt-ur" transform="translate(298, 156.5)"><use href="#boltMaster"/></g>
+        <g class="bolt-anim bolt-dl" transform="translate(178, 226.5)"><use href="#boltMaster"/></g>
+        <g class="bolt-anim bolt-dr" transform="translate(298, 226.5)"><use href="#boltMaster"/></g>
+      </svg>
+    </div>
+
   </div>
 </section>
 
@@ -254,47 +385,26 @@ counters.forEach(counter => {
 const homeContainer = document.getElementById("homeProjects");
 
 if(homeContainer){
+  const projects = JSON.parse(localStorage.getItem("projects")) || [];
 
-  const SUPABASE_URL = "https://jlluaxbraqoyumgkfxyt.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsbHVheGJyYXFveXVtZ2tmeHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDA5OTgsImV4cCI6MjA5MTM3Njk5OH0.z2i1oL-VVNyBu3SSY5nr2lJ5Zh7GE3hIOzMHHSTAxUw";
-
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  async function loadProjects(){
-
-    const { data, error } = awaitsupabaseClient.from('projects').select('*');
-
-    if(error){
-      console.error(error);
-      homeContainer.innerHTML = "<p>Error loading projects</p>";
-      return;
-    }
-
-    if(!data || data.length === 0){
-      homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
-      return;
-    }
-
-    homeContainer.innerHTML = "";
-
-    data.forEach(proj => {
-      homeContainer.innerHTML += `
-        <div class="card fade-in">
-          <h3>${proj.name}</h3>
-          <p>${proj.desc}</p>
-
-          ${proj.img ? `<img src="${proj.img}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
-
-          <!-- keeping your old features safe -->
-          ${proj.video ? `<video controls style="width:100%;margin-top:10px;border-radius:10px;"><source src="${proj.video}"></video>` : ""}
-
-          ${proj.link ? `<p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>` : ""}
-        </div>
-      `;
-    });
+  if(projects.length === 0){
+    homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
   }
 
-  loadProjects();
+  projects.forEach(proj => {
+    homeContainer.innerHTML += `
+      <div class="card fade-in">
+        <h3>${proj.title}</h3>
+        <p>${proj.description}</p>
+
+        ${proj.image ? `<img src="${proj.image}" style="width:100%;margin-top:10px;border-radius:10px;">` : ""}
+
+        ${proj.video ? `<video controls style="width:100%;margin-top:10px;border-radius:10px;"><source src="${proj.video}"></video>` : ""}
+
+        ${proj.link ? `<p><a href="${proj.link}" target="_blank" style="color:#00ffff;">View Project</a></p>` : ""}
+      </div>
+    `;
+  });
 }
 
 /* ===== SCROLL ANIMATION ===== */
@@ -331,12 +441,14 @@ window.addEventListener("load", ()=>{
   transition.classList.remove("active");
 });
 
-/* LOAD NAVBAR (UNCHANGED) */
+
+/* LOAD NAVBAR */
 fetch("navbar.html")
 .then(res => res.text())
 .then(data => {
   document.getElementById("navbar").innerHTML = data;
 
+  /* MENU TOGGLE */
   const toggle = document.getElementById("menu-toggle");
   const navLinks = document.getElementById("nav-links");
 
@@ -347,6 +459,7 @@ fetch("navbar.html")
     });
   }
 
+  /* ACTIVE LINK AUTO */
   const current = location.pathname.split("/").pop().replace(".html","");
 
   document.querySelectorAll("#nav-links a").forEach(link=>{
@@ -356,6 +469,7 @@ fetch("navbar.html")
   });
 
 });
+
 
 </script>
 
