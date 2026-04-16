@@ -1,8 +1,8 @@
 
 {
   "live": {
-    "id": "C2NwTGiIzVY",
-    "time": "2026-04-15T20:00:00"
+    "id": "tw73Wlhqa38",
+    "time": "2026-04-16T20:00:00"
   },
   "classes": [
     {
@@ -36,6 +36,10 @@
  {
       "title": "Day 8",
       "video": "C2NwTGiIzVY"
+   },
+ {
+      "title": "Day 9",
+      "video": "tw73Wlhqa38"
    }
 
   ]
