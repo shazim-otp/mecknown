@@ -1,7 +1,7 @@
 {
   "live": {
-    "id": "Ymd-hLeU_D4",
-    "time": "2026-05-04T20:00:00"
+    "id": "_GjAG3pwBlA",
+    "time": "2026-05-05T20:00:00"
   },
   "classes": [
     {
@@ -55,6 +55,10 @@
     {
       "title": "IoT DAY -3",
       "video": "Ymd-hLeU_D4"
+    },
+    {
+      "title": "IoT Day -4",
+      "video": "_GjAG3pwBlA"
     }
   ]
 }
