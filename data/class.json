@@ -1,6 +1,7 @@
+
 {
   "live": {
-    "id": "OBkO2vg1Axk",
+    "id": "FkR2qZgV9_k",
     "time": "2026-05-06T20:00:00"
   },
   "classes": [
@@ -63,6 +64,10 @@
     {
       "title": "IoT Day -5",
       "video": "OBkO2vg1Axk"
+    },
+    {
+      "title": "IoT Day -6",
+      "video": "FkR2qZgV9_k"
     }
   ]
 }
