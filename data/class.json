@@ -1,8 +1,8 @@
 
 {
   "live": {
-    "id": "FkR2qZgV9_k",
-    "time": "2026-05-07T20:00:00"
+    "id": "JVBqNstWmjE",
+    "time": "2026-05-08T20:00:00"
   },
   "classes": [
     {
@@ -68,6 +68,10 @@
     {
       "title": "IoT Day -6",
       "video": "FkR2qZgV9_k"
+    },
+    {
+      "title": "IoT Day -7",
+      "video": "JVBqNstWmjE"
     }
   ]
 }
