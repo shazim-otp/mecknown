@@ -1,7 +1,8 @@
+LdqPL1eIajo
 {
   "live": {
-    "id": "EDwGyjTsWuY",
-    "time": "2026-05-14T20:00:00"
+    "id": "LdqPL1eIajo",
+    "time": "2026-05-15T20:00:00"
   },
   "classes": [
     {
@@ -79,7 +80,10 @@
    {
     "title": "AI Day -2",
     "video": "EDwGyjTsWuY"
+    },
+   {
+    "title": "AI Day -3",
+    "video": "LdqPL1eIajo"
     }
-     
   ]
 }
