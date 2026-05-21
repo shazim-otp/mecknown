@@ -1,8 +1,8 @@
 
 {
   "live": {
-    "id": "UPSdMiqAO1Y",
-    "time": "2026-05-21T20:00:00"
+    "id": "m0ssZXCrzcw",
+    "time": "2026-05-22T20:00:00"
   },
   "classes": [
     {
@@ -84,6 +84,22 @@
    {
     "title": "AI Day -3",
     "video": "LdqPL1eIajo"
+    },
+    {
+    "title": "AI Day -4",
+    "video": "sbtslKROQQY"
+    },
+    {
+    "title": "AI Day -5",
+    "video": "PnC1u6FD_RY"
+    },
+    {
+    "title": "AI Day -6",
+    "video": "UPSdMiqAO1Y"
+    },
+    {
+    "title": "AI Day -7",
+    "video": "m0ssZXCrzcw"
     }
   ]
 }
