@@ -358,6 +358,73 @@ fetch("navbar.html")
 });
 
 </script>
+<div id="dot-bg"></div>
+
+<script>
+const dotContainer = document.getElementById("dot-bg");
+
+const dots = [];
+const DOT_COUNT = 180;
+
+for(let i = 0; i < DOT_COUNT; i++){
+
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+
+    dot.dataset.x = x;
+    dot.dataset.y = y;
+
+    dot.style.left = `${x}px`;
+    dot.style.top = `${y}px`;
+
+    dotContainer.appendChild(dot);
+    dots.push(dot);
+}
+
+window.addEventListener("mousemove", (e)=>{
+
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    dots.forEach(dot=>{
+
+        const x = parseFloat(dot.dataset.x);
+        const y = parseFloat(dot.dataset.y);
+
+        const dx = mouseX - x;
+        const dy = mouseY - y;
+
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        const maxDistance = 140;
+
+        if(distance < maxDistance){
+
+            const force = (maxDistance - distance) / maxDistance;
+
+            const moveX = -(dx * force * 0.12);
+            const moveY = -(dy * force * 0.12);
+
+            dot.style.transform =
+                `translate(${moveX}px, ${moveY}px) scale(${1 + force})`;
+
+            dot.style.opacity = 0.9;
+
+        }else{
+
+            dot.style.transform = `translate(0px,0px) scale(1)`;
+            dot.style.opacity = 0.18;
+        }
+    });
+});
+
+window.addEventListener("resize", ()=>{
+    location.reload();
+});
+</script>
 
 </body>
 </html>
