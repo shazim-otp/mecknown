@@ -802,6 +802,25 @@ z-index:1000;
 body.cart-open nav{
 top:-100px;
 }
+/*=+====================================*/
+/* ===== DOT BACKGROUND ===== */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-1;
+
+background-image:
+radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+
+background-size:24px 24px;
+
+mask-image:radial-gradient(circle at center,
+rgba(0,0,0,1),
+rgba(0,0,0,0.35));
+
+pointer-events:none;
+}
 /* ===== INTERACTIVE DOT BACKGROUND ===== */
 
 #dot-bg{
