@@ -1,49 +1,225 @@
-<!-- CONTENT -->
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-  <div class="page-header">
-    <h1>Course Library</h1>
-    <p>Select a learning category</p>
-  </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="grid">
+  <title>Mecknown Courses | Robotics & AI Learning</title>
 
-    <!-- SUMMER WORKSHOP -->
-    <a href="summer.html"
-       style="text-decoration:none;color:inherit;">
+  <!-- ROOT CSS -->
+  <link rel="stylesheet" href="style.css">
 
-      <div class="card">
+  <style>
 
-        <h2>☀️ Summer Workshop</h2>
+    .container{
+      padding:100px 6% 60px;
+      max-width:1200px;
+      margin:auto;
+    }
 
-        <p>
-          Access all recorded summer workshop classes.
-        </p>
+    .page-header{
+      text-align:center;
+      margin-bottom:40px;
+    }
 
-      </div>
+    .page-header h1{
+      font-size:36px;
+      margin-bottom:10px;
+    }
 
-    </a>
+    .page-header p{
+      color:#9ca3af;
+      font-size:16px;
+    }
 
-    <!-- PREMIUM -->
-    <a href="premium.html"
-       style="text-decoration:none;color:inherit;">
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:25px;
+    }
 
-      <div class="card live-card">
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:30px 25px;
+      transition:0.3s ease;
+      cursor:pointer;
+      min-height:220px;
 
-        <div class="live-badge">
-          🔒 PREMIUM
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .card:hover{
+      transform:translateY(-8px);
+      border-color:#2a2a2a;
+      box-shadow:0 12px 30px rgba(0,0,0,0.4);
+    }
+
+    .card h2{
+      font-size:28px;
+      margin-bottom:15px;
+    }
+
+    .card p{
+      color:#9ca3af;
+      line-height:1.6;
+      font-size:15px;
+    }
+
+    /* PREMIUM CARD */
+
+    .live-card{
+      border:1px solid rgba(34,197,94,0.4);
+      background:
+      linear-gradient(
+      145deg,
+      rgba(34,197,94,0.08),
+      transparent
+      );
+    }
+
+    .live-badge{
+      display:inline-block;
+      width:max-content;
+      padding:6px 12px;
+      border-radius:30px;
+      font-size:12px;
+      font-weight:600;
+      margin-bottom:18px;
+
+      background:rgba(34,197,94,0.15);
+      color:#22c55e;
+      border:1px solid rgba(34,197,94,0.3);
+    }
+
+    .course-link{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    @media(max-width:768px){
+
+      .container{
+        padding:90px 5% 50px;
+      }
+
+      .page-header h1{
+        font-size:30px;
+      }
+
+      .card{
+        min-height:190px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+
+    <h1>Mecknown</h1>
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <ul id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ai.html">Meck AI</a></li>
+      <li><a href="course.html" class="active">Course</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="container">
+
+    <div class="page-header">
+      <h1>Course Library</h1>
+      <p>Select a learning category</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- SUMMER WORKSHOP -->
+      <a href="summer.html" class="course-link">
+
+        <div class="card">
+
+          <h2>☀️ Summer Workshop</h2>
+
+          <p>
+            Access all recorded summer workshop classes
+            including robotics, AI and embedded systems.
+          </p>
+
         </div>
 
-        <h2>Premium Courses</h2>
+      </a>
 
-        <p>
-          Advanced robotics and AI premium learning.
-        </p>
+      <!-- PREMIUM -->
+      <a href="premium.html" class="course-link">
 
-      </div>
+        <div class="card live-card">
 
-    </a>
+          <div class="live-badge">
+            🔒 PREMIUM
+          </div>
+
+          <h2>Premium Courses</h2>
+
+          <p>
+            Advanced robotics and AI premium learning
+            platform with projects, mentorship and
+            structured lessons.
+          </p>
+
+        </div>
+
+      </a>
+
+    </div>
 
   </div>
 
-</div>
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Mecknown. All Rights Reserved.
+  </footer>
+
+  <!-- MENU SCRIPT -->
+  <script>
+
+    const toggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    if(toggle){
+
+      toggle.addEventListener("click", function(){
+
+        navLinks.classList.toggle("active");
+        toggle.classList.toggle("active");
+
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
