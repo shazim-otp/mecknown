@@ -116,6 +116,110 @@
       }
 
     }
+    /* FLOATING BUTTON */
+
+.chat-toggle{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  cursor:pointer;
+  z-index:9999;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* CHATBOX */
+
+.chatbot-box{
+  position:fixed;
+  bottom:100px;
+  right:25px;
+  width:320px;
+  height:450px;
+  background:#0f0f0f;
+  border:1px solid #262626;
+  border-radius:18px;
+  overflow:hidden;
+  display:none;
+  flex-direction:column;
+  z-index:9999;
+  box-shadow:0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* HEADER */
+
+.chat-header{
+  padding:15px;
+  background:#181818;
+  border-bottom:1px solid #262626;
+  font-weight:600;
+}
+
+/* MESSAGES */
+
+.chat-messages{
+  flex:1;
+  padding:15px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* BOT */
+
+.bot-message{
+  background:#1f2937;
+  padding:10px 14px;
+  border-radius:12px;
+  width:max-content;
+  max-width:85%;
+  font-size:14px;
+}
+
+/* USER */
+
+.user-message{
+  background:#2563eb;
+  padding:10px 14px;
+  border-radius:12px;
+  width:max-content;
+  max-width:85%;
+  align-self:flex-end;
+  font-size:14px;
+}
+
+/* INPUT AREA */
+
+.chat-input-area{
+  display:flex;
+  border-top:1px solid #262626;
+}
+
+.chat-input-area input{
+  flex:1;
+  background:#111;
+  border:none;
+  outline:none;
+  padding:14px;
+  color:white;
+}
+
+.chat-input-area button{
+  width:90px;
+  border:none;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
 
   </style>
 
@@ -220,6 +324,128 @@
     }
 
   </script>
+  <script src="chat.js"></script>
+<!-- FLOATING CHATBOT -->
 
+<div class="chat-toggle" id="chatToggle">
+  💬
+</div>
+
+<div class="chatbot-box" id="chatbotBox">
+
+  <div class="chat-header">
+    Meck AI Assistant
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+
+    <div class="bot-message">
+      Hi 👋<br>
+      Ask anything about the workshop.
+    </div>
+
+  </div>
+
+  <div class="chat-input-area">
+
+    <input
+      type="text"
+      id="chatInput"
+      placeholder="Ask something..."
+    >
+
+    <button id="sendBtn">
+      Send
+    </button>
+
+  </div>
+
+</div>
+  <script>
+
+/* TOGGLE */
+
+const chatToggle =
+document.getElementById("chatToggle");
+
+const chatbotBox =
+document.getElementById("chatbotBox");
+
+chatToggle.onclick = () => {
+
+  if(chatbotBox.style.display === "flex"){
+
+    chatbotBox.style.display = "none";
+
+  }else{
+
+    chatbotBox.style.display = "flex";
+
+  }
+
+};
+
+/* CHAT */
+
+const sendBtn =
+document.getElementById("sendBtn");
+
+const chatInput =
+document.getElementById("chatInput");
+
+const chatMessages =
+document.getElementById("chatMessages");
+
+function sendMessage(){
+
+  const text = chatInput.value.trim();
+
+  if(!text) return;
+
+  /* USER MESSAGE */
+
+  const userDiv =
+  document.createElement("div");
+
+  userDiv.className = "user-message";
+
+  userDiv.innerText = text;
+
+  chatMessages.appendChild(userDiv);
+
+  /* BOT REPLY */
+
+  setTimeout(()=>{
+
+    const botDiv =
+    document.createElement("div");
+
+    botDiv.className = "bot-message";
+
+    botDiv.innerHTML =
+    "Workshop assistant is under development 🚀";
+
+    chatMessages.appendChild(botDiv);
+
+    chatMessages.scrollTop =
+    chatMessages.scrollHeight;
+
+  },500);
+
+  chatInput.value = "";
+
+}
+
+sendBtn.onclick = sendMessage;
+
+chatInput.addEventListener(
+"keypress",
+(e)=>{
+  if(e.key === "Enter"){
+    sendMessage();
+  }
+});
+
+</script>
 </body>
 </html>
