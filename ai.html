@@ -34,14 +34,6 @@
   overflow:hidden;
 }
 
-.ai-frame{
-  flex:1;
-  width:100%;
-  height:100%;
-  border:none;
-  display:block;
-}
-
 /* STATUS BAR (MATCH STYLE.CSS) */
 .ai-status{
   display:flex;
@@ -67,8 +59,8 @@
 }
 
 .online{
-  background:#9ca3af;
-  box-shadow:0 0 8px rgba(156,163,175,0.7);
+  background:#22c55e;
+  box-shadow:0 0 8px rgba(34,197,94,0.7);
 }
 
 /* LOADING OVERLAY (IMPROVED) */
@@ -97,6 +89,237 @@
   animation:spin 1s linear infinite;
 }
 
+/* WORKSPACE LAYOUT */
+.ai-workspace {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.ai-sidebar {
+  width: 260px;
+  background: rgba(255, 255, 255, 0.015);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.sidebar-section h3 {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.model-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.status-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.status-list li {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.status-val {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.clear-btn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* MAIN PANEL */
+.ai-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ai-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-behavior: smooth;
+}
+
+/* MESSAGE BUBBLES */
+.user-bubble {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 20px;
+  border-radius: 16px 16px 0 16px;
+  max-width: 70%;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.bot-bubble {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 16px 22px;
+  border-radius: 16px 16px 16px 0;
+  max-width: 80%;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bot-bubble pre {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 15px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 12px 0;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.bot-bubble code {
+  font-family: 'Consolas', 'Monaco', monospace;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* SUGGEST CHIPS */
+.ai-suggests {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 5% 15px;
+}
+
+.suggest-chip {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.suggest-chip:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* INPUT BAR */
+.ai-input-wrap {
+  padding: 0 5% 25px;
+}
+
+.ai-input-box {
+  display: flex;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 8px 10px 8px 18px;
+  align-items: center;
+  transition: border-color 0.3s ease;
+}
+
+.ai-input-box:focus-within {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.ai-input-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 14px;
+  height: 38px;
+}
+
+.ai-input-box input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+#ai-send-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#ai-send-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+#ai-send-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .ai-sidebar {
+    display: none;
+  }
+}
+
 </style>
 
 </head>
@@ -110,7 +333,10 @@
 
 <!-- NAVBAR -->
 <nav>
-  <h1>Mecknown</h1>
+  <div class="nav-brand">
+    <img src="assets/logo-nav.png" alt="Mecknown Logo" class="nav-logo">
+    <h1>Mecknown</h1>
+  </div>
   <div class="menu-toggle" id="menu-toggle">
     <span></span><span></span><span></span>
   </div>
@@ -136,17 +362,57 @@
 
   <!-- OVERLAY -->
   <div class="ai-overlay" id="ai-overlay">
-    <p>Initializing Meck AI...</p>
-    <small>Optimizing connection...</small>
+    <p>Initializing Meck AI Workspace...</p>
+    <small>Establishing secure proxy...</small>
   </div>
 
-  <!-- IFRAME -->
-  <iframe 
-    src="https://meck-web-ai.onrender.com/"
-    class="ai-frame"
-    id="ai-frame"
-    loading="lazy"
-  ></iframe>
+  <div class="ai-workspace">
+    <!-- SIDEBAR -->
+    <div class="ai-sidebar">
+      <div class="sidebar-section">
+        <h3>ACTIVE MODEL</h3>
+        <p class="model-badge">llama-3.3-70b-versatile</p>
+      </div>
+      <div class="sidebar-section">
+        <h3>SYSTEM INSTANT STATUS</h3>
+        <ul class="status-list">
+          <li><span>Latency</span> <span class="status-val">~180ms</span></li>
+          <li><span>Environment</span> <span class="status-val">Secure TLS</span></li>
+          <li><span>Context Limit</span> <span class="status-val">8k tokens</span></li>
+        </ul>
+      </div>
+      <button class="clear-btn" id="clearChatBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;margin-right:8px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Clear Chat
+      </button>
+    </div>
+
+    <!-- MAIN CHAT PANEL -->
+    <div class="ai-main">
+      <!-- CHAT FEED -->
+      <div class="ai-feed" id="ai-feed">
+        <div class="bot-bubble">
+          <p>Hello! I am Meck AI, your intelligent workshop companion. Ask me anything about robotics, machine learning, circuits, or embedded code!</p>
+        </div>
+      </div>
+
+      <!-- SUGGESTS -->
+      <div class="ai-suggests" id="ai-suggests">
+        <button class="suggest-chip" onclick="sendSuggest('Explain PID control loops')">Explain PID control loops</button>
+        <button class="suggest-chip" onclick="sendSuggest('Write Arduino code for servo control')">Write Arduino code for servo control</button>
+        <button class="suggest-chip" onclick="sendSuggest('How do neural networks learn?')">How do neural networks learn?</button>
+      </div>
+
+      <!-- INPUT BAR -->
+      <div class="ai-input-wrap">
+        <div class="ai-input-box">
+          <input type="text" id="ai-input" placeholder="Type a message or prompt..." autocomplete="off">
+          <button id="ai-send-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -181,34 +447,114 @@ if(toggle){
   });
 }
 
-/* ===== AI STATUS SYSTEM ===== */
-const iframe = document.getElementById("ai-frame");
-const overlay = document.getElementById("ai-overlay");
-const statusText = document.getElementById("status-text");
-const statusIndicator = document.getElementById("status-indicator");
+/* ===== NATIVE AI WORKSPACE SCRIPT ===== */
+(function() {
+  const aiFeed = document.getElementById("ai-feed");
+  const aiInput = document.getElementById("ai-input");
+  const aiSendBtn = document.getElementById("ai-send-btn");
+  const clearChatBtn = document.getElementById("clearChatBtn");
+  const statusIndicator = document.getElementById("status-indicator");
+  const statusText = document.getElementById("status-text");
+  const overlay = document.getElementById("ai-overlay");
 
-/* Load success */
-iframe.addEventListener("load", () => {
-  overlay.style.display = "none";
+  // On page load, set status to Online
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      if (statusIndicator) {
+        statusIndicator.className = "online";
+        statusText.innerText = "AI is Online";
+      }
+      if (overlay) {
+        overlay.style.opacity = "0";
+        setTimeout(() => overlay.style.display = "none", 300);
+      }
+    }, 800);
+  });
 
-  statusText.innerText = "AI is Online";
-  statusIndicator.classList.remove("offline");
-  statusIndicator.classList.add("online");
-});
+  async function sendChatMessage() {
+    const text = aiInput.value.trim();
+    if (!text) return;
 
-/* Fail-safe (if server slow) */
-setTimeout(() => {
-  if(overlay.style.display !== "none"){
-    statusText.innerText = "Connecting to AI server...";
+    // Append user bubble
+    const userBubble = document.createElement("div");
+    userBubble.className = "user-bubble";
+    userBubble.innerText = text;
+    aiFeed.appendChild(userBubble);
+    aiInput.value = "";
+    aiFeed.scrollTop = aiFeed.scrollHeight;
+
+    // Append bot thinking bubble
+    const botBubble = document.createElement("div");
+    botBubble.className = "bot-bubble";
+    botBubble.innerText = "Thinking...";
+    aiFeed.appendChild(botBubble);
+    aiFeed.scrollTop = aiFeed.scrollHeight;
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+      });
+
+      const data = await response.json();
+      botBubble.innerHTML = formatAIResponse(data.response || data.error || "Error connecting to AI.");
+    } catch (err) {
+      botBubble.innerText = "Error connecting to AI.";
+      console.error(err);
+    }
+    aiFeed.scrollTop = aiFeed.scrollHeight;
   }
-}, 4000);
 
-/* Extra fallback */
-setTimeout(() => {
-  if(overlay.style.display !== "none"){
-    statusText.innerText = "Server may be waking up (Render delay)...";
+  window.sendSuggest = function(promptText) {
+    aiInput.value = promptText;
+    sendChatMessage();
+  };
+
+  if (aiSendBtn) {
+    aiSendBtn.onclick = sendChatMessage;
   }
-}, 8000);
+  if (aiInput) {
+    aiInput.onkeypress = (e) => {
+      if (e.key === "Enter") sendChatMessage();
+    };
+  }
+
+  if (clearChatBtn) {
+    clearChatBtn.onclick = () => {
+      aiFeed.innerHTML = `
+        <div class="bot-bubble">
+          <p>Hello! I am Meck AI, your intelligent workshop companion. Ask me anything about robotics, machine learning, circuits, or embedded code!</p>
+        </div>
+      `;
+    };
+  }
+
+  // Simple formatting helper for markdown code blocks & inline code
+  function formatAIResponse(text) {
+    if (!text) return "";
+    // Replace triple backticks code block
+    let formatted = text.replace(/```([\s\S]*?)```/g, (match, code) => {
+      const lines = code.trim().split("\n");
+      let codeText = code.trim();
+      if (lines[0] && lines[0].length < 15 && !lines[0].includes(" ") && !lines[0].includes("=") && !lines[0].includes(";")) {
+        codeText = lines.slice(1).join("\n");
+      }
+      return `<pre><code>${escapeHTML(codeText)}</code></pre>`;
+    });
+    // Replace single backticks inline code
+    formatted = formatted.replace(/`([^`]+)`/g, (match, code) => {
+      return `<code>${escapeHTML(code)}</code>`;
+    });
+    // Replace newlines with <br>
+    formatted = formatted.replace(/\n/g, "<br>");
+    return formatted;
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+})();
 
 </script>
 

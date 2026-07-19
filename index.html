@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-<title>Mecknown | Robotics, AI & Smart Technology</title>
+  <title>Mecknown | Robotics, AI & Smart Technology</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<!-- SEO -->
-<meta name="description" content="Mecknown builds advanced robotics, AI systems, and smart applications for real-world impact.">
-<meta name="keywords" content="Mecknown, Mecknown AI, Mecknown robotics, Mecknown shop, Mecknown courses, robotics, AI, embedded systems, smart technology">
-<meta name="author" content="Mecknown">
-<link rel="canonical" href="https://mecknown.in/">
+  <!-- SEO -->
+  <meta name="description"
+    content="Mecknown builds advanced robotics, AI systems, and smart applications for real-world impact.">
+  <meta name="keywords"
+    content="Mecknown, Mecknown AI, Mecknown robotics, Mecknown shop, Mecknown courses, robotics, AI, embedded systems, smart technology">
+  <meta name="author" content="Mecknown">
+  <link rel="canonical" href="https://mecknown.in/">
 
-<!-- ✅ ADDED: ROBOTS -->
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
+  <!-- ✅ ADDED: ROBOTS -->
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
 
-<!-- Open Graph -->
-<meta property="og:title" content="Mecknown">
-<meta property="og:description" content="Engineering Intelligent Futures with Robotics & AI">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mecknown.in/">
-<meta property="og:image" content="https://mecknown.in/assets/logo.png">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mecknown">
+  <meta property="og:description" content="Engineering Intelligent Futures with Robotics & AI">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mecknown.in/">
+  <meta property="og:image" content="https://mecknown.in/assets/logo.png">
 
-<!-- ✅ ADDED: STRUCTURED DATA -->
-<script type="application/ld+json">
+  <!-- ✅ ADDED: STRUCTURED DATA -->
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -37,7 +40,7 @@
 }
 </script>
 
-<script type="application/ld+json">
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -51,233 +54,279 @@
 }
 </script>
 
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
 
-<style>
+  <style>
+    /* HERO ENHANCEMENT */
+    .hero h2 {
+      font-size: 48px;
+      line-height: 1.2;
+    }
 
-/* HERO ENHANCEMENT */
-.hero h2{
-  font-size:48px;
-  line-height:1.2;
-}
+    .hero p {
+      font-size: 16px;
+    }
 
-.hero p{
-  font-size:16px;
-}
+    /* GRADIENT TEXT */
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, #9ca3af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-/* GRADIENT TEXT */
-.gradient-text{
-  background:linear-gradient(90deg,#fff,#9ca3af);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* SECTION DIVIDER */
-.section-divider{
-  height:1px;
-  width:60%;
-  margin:60px auto;
-  background:linear-gradient(to right, transparent, #222, transparent);
-}
-
-</style>
+    /* SECTION DIVIDER */
+    .section-divider {
+      height: 1px;
+      width: 60%;
+      margin: 60px auto;
+      background: linear-gradient(to right, transparent, #222, transparent);
+    }
+  </style>
 
 </head>
 
 <body>
 
-<!-- PAGE TRANSITION -->
-<div class="page-transition" id="pageTransition"></div>
 
-<!-- LOADER -->
-<div id="loader">
-  <img src="assets/logo.png" alt="Loading" class="loader-logo">
-</div>
 
-<!-- ✅ ADDED FIX (DOES NOT AFFECT UI) -->
-<div id="navbar" style="display:none;"></div>
+  <!-- PAGE TRANSITION -->
+  <div class="page-transition" id="pageTransition"></div>
 
-<!-- NAVBAR -->
-<nav>
-  <h1>Mecknown</h1>
-
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span><span></span><span></span>
+  <!-- LOADER -->
+  <div id="loader">
+    <img src="assets/logo.png" alt="Loading" class="loader-logo">
   </div>
 
-  <ul id="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="ai.html">Meck AI</a></li>
-    <li><a href="course.html">Course</a></li>
-    <li><a href="shop.html">Shop</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+  <!-- ✅ ADDED FIX (DOES NOT AFFECT UI) -->
+  <div id="navbar" style="display:none;"></div>
 
-<!-- HERO -->
-<section class="section hero fade-in">
-  <h2 class="gradient-text">Engineering Intelligent Futures</h2>
-
-  <!-- ✅ ADDED HIDDEN BRAND SIGNAL -->
-  <p style="display:none;">
-    Mecknown is a robotics and AI platform building smart systems, electronics, and intelligent applications.
-  </p>
-
-  <p>
-    Advanced robotics, AI-powered systems, and smart solutions designed for real-world innovation.
-  </p>
-
-  <div class="hero-buttons">
-    <a href="shop.html">
-      <button class="primary-btn">Shop Products</button>
-    </a>
-    <a href="services.html">
-      <button class="secondary-btn">Explore Services</button>
-    </a>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- WHY US -->
-<section class="section">
-  <h2 class="fade-in">Why Choose Mecknown</h2>
-
-  <div class="card-container">
-    <div class="card fade-in">
-      <h3>Corporate Precision</h3>
-      <p>Structured engineering workflows built for scalable innovation.</p>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-brand">
+      <img src="assets/logo-nav.png" alt="Mecknown Logo" class="nav-logo">
+      <h1>Mecknown</h1>
     </div>
 
-    <div class="card fade-in">
-      <h3>Futuristic Technology</h3>
-      <p>Solutions engineered for tomorrow’s challenges.</p>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
     </div>
 
-    <div class="card fade-in">
-      <h3>Robotics Lab Mindset</h3>
-      <p>Experiment. Build. Improve. Deploy. Repeat.</p>
+    <ul id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="ai.html">Meck AI</a></li>
+      <li><a href="course.html">Course</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="section hero fade-in">
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Innovation in Robotics & AI
+      </div>
+
+      <h2 class="gradient-text">Engineering Intelligent Futures</h2>
+
+      <!-- ✅ ADDED HIDDEN BRAND SIGNAL -->
+      <p style="display:none;">
+        Mecknown is a robotics and AI platform building smart systems, electronics, and intelligent applications.
+      </p>
+
+      <p>
+        Advanced robotics, AI-powered systems, and smart solutions designed for real-world innovation.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="shop.html">
+          <button class="primary-btn">Shop Products</button>
+        </a>
+        <a href="services.html">
+          <button class="secondary-btn">Explore Services</button>
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="section-divider"></div>
+  <div class="section-divider"></div>
 
-<!-- STATS -->
-<section class="section">
-  <h2 class="fade-in">Our Impact</h2>
+  <!-- WHY US -->
+  <section class="section">
+    <h2 class="fade-in">Why Choose Mecknown</h2>
 
-  <div class="card-container">
-    <div class="card fade-in">
-      <h3><span class="counter" data-target="100">0</span>+</h3>
-      <p>Projects Developed</p>
+    <div class="card-container">
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-crosshair">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="22" y1="12" x2="18" y2="12" />
+            <line x1="6" y1="12" x2="2" y2="12" />
+            <line x1="12" y1="6" x2="12" y2="2" />
+            <line x1="12" y1="22" x2="12" y2="18" />
+          </svg>
+        </div>
+        <h3>Corporate Precision</h3>
+        <p>Structured engineering workflows built for scalable innovation.</p>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-cpu">
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+            <rect x="9" y="9" width="6" height="6" />
+            <line x1="9" y1="1" x2="9" y2="4" />
+            <line x1="15" y1="1" x2="15" y2="4" />
+            <line x1="9" y1="20" x2="9" y2="23" />
+            <line x1="15" y1="20" x2="15" y2="23" />
+            <line x1="20" y1="9" x2="23" y2="9" />
+            <line x1="20" y1="15" x2="23" y2="15" />
+            <line x1="1" y1="9" x2="4" y2="9" />
+            <line x1="1" y1="15" x2="4" y2="15" />
+          </svg>
+        </div>
+        <h3>Futuristic Technology</h3>
+        <p>Solutions engineered for tomorrow’s challenges.</p>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-activity">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+        </div>
+        <h3>Robotics Lab Mindset</h3>
+        <p>Experiment. Build. Improve. Deploy. Repeat.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="card fade-in">
-      <h3><span class="counter" data-target="5">0</span>+</h3>
-      <p>Core Skills</p>
+  <div class="section-divider"></div>
+
+  <!-- STATS -->
+  <section class="section">
+    <h2 class="fade-in">Our Impact</h2>
+
+    <div class="card-container">
+      <div class="card fade-in">
+        <h3><span class="counter" data-target="100">0</span>+</h3>
+        <p>Projects Developed</p>
+      </div>
+
+      <div class="card fade-in">
+        <h3><span class="counter" data-target="5">0</span>+</h3>
+        <p>Core Skills</p>
+      </div>
+
+      <div class="card fade-in">
+        <h3><span class="counter" data-target="100">0</span>%</h3>
+        <p>Commitment</p>
+      </div>
     </div>
+  </section>
 
-    <div class="card fade-in">
-      <h3><span class="counter" data-target="100">0</span>%</h3>
-      <p>Commitment</p>
-    </div>
-  </div>
-</section>
+  <div class="section-divider"></div>
 
-<div class="section-divider"></div>
+  <!-- PROJECTS -->
+  <section class="section">
+    <h2 class="fade-in">GUIDES</h2>
+    <div class="card-container" id="homeProjects"></div>
+  </section>
 
-<!-- PROJECTS -->
-<section class="section">
-  <h2 class="fade-in">GUIDES</h2>
-  <div class="card-container" id="homeProjects"></div>
-</section>
+  <footer>
+    © 2026 Mecknown. All Rights Reserved.
+  </footer>
 
-<footer>
-© 2026 Mecknown. All Rights Reserved.
-</footer>
+  <script>
 
-<script>
+    /* ===== LOADER ===== */
+    window.addEventListener("load", function () {
+      const loader = document.getElementById("loader");
 
-/* ===== LOADER ===== */
-window.addEventListener("load", function () {
-  const loader = document.getElementById("loader");
+      if (loader) {
+        document.body.style.overflow = "hidden";
 
-  if (loader) {
-    document.body.style.overflow = "hidden";
+        setTimeout(() => loader.style.opacity = "0", 100);
 
-    setTimeout(() => loader.style.opacity = "0", 100);
+        setTimeout(() => {
+          loader.style.display = "none";
+          document.body.style.overflow = "auto";
+        }, 500);
+      }
+    });
 
-    setTimeout(() => {
-      loader.style.display = "none";
-      document.body.style.overflow = "auto";
-    }, 500);
-  }
-});
+    /* ===== MENU ===== */
+    const toggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
 
-/* ===== MENU ===== */
-const toggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-if(toggle){
-  toggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-    toggle.classList.toggle("active");
-  });
-}
-
-/* ===== COUNTERS ===== */
-const counters = document.querySelectorAll(".counter");
-
-counters.forEach(counter => {
-  counter.innerText = '0';
-
-  const updateCounter = () => {
-    const target = +counter.getAttribute("data-target");
-    const current = +counter.innerText;
-    const increment = target / 100;
-
-    if(current < target){
-      counter.innerText = Math.ceil(current + increment);
-      setTimeout(updateCounter, 20);
-    } else {
-      counter.innerText = target;
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        navLinks.classList.toggle("active");
+        toggle.classList.toggle("active");
+      });
     }
-  };
 
-  updateCounter();
-});
+    /* ===== COUNTERS ===== */
+    const counters = document.querySelectorAll(".counter");
 
-/* ===== SCROLL ANIMATION ===== */
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-},{threshold:0.15});
+    counters.forEach(counter => {
+      counter.innerText = '0';
 
-document.querySelectorAll('.fade-in')
-.forEach(el=>observer.observe(el));
+      const updateCounter = () => {
+        const target = +counter.getAttribute("data-target");
+        const current = +counter.innerText;
+        const increment = target / 100;
 
-/* ===== PROJECT LOAD (JSON) ===== */
-const homeContainer = document.getElementById("homeProjects");
-let projectsData = [];
+        if (current < target) {
+          counter.innerText = Math.ceil(current + increment);
+          setTimeout(updateCounter, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
 
-if(homeContainer){
-  function renderProjects(data) {
-    if(!data || data.length === 0){
-      homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
-      return;
-    }
+      updateCounter();
+    });
 
-    homeContainer.innerHTML = "";
+    /* ===== SCROLL ANIMATION ===== */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.15 });
 
-    data.forEach((proj, index) => {
-      homeContainer.innerHTML += `
+    document.querySelectorAll('.fade-in')
+      .forEach(el => observer.observe(el));
+
+    /* ===== PROJECT LOAD (JSON) ===== */
+    const homeContainer = document.getElementById("homeProjects");
+    let projectsData = [];
+
+    if (homeContainer) {
+      function renderProjects(data) {
+        if (!data || data.length === 0) {
+          homeContainer.innerHTML = "<p>No projects uploaded yet.</p>";
+          return;
+        }
+
+        homeContainer.innerHTML = "";
+
+        data.forEach((proj, index) => {
+          homeContainer.innerHTML += `
         <div class="card fade-in" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">
           <div>
             <h3>${proj.name}</h3>
@@ -291,177 +340,177 @@ if(homeContainer){
           </div>
         </div>
       `;
-    });
+        });
 
-    // Observe the newly added fade-in cards
-    document.querySelectorAll('#homeProjects .fade-in').forEach(el => observer.observe(el));
-  }
-
-  async function loadProjects(){
-    try {
-      const response = await fetch("data/projects.json");
-      if(!response.ok) {
-        throw new Error("Failed to fetch projects.json");
+        // Observe the newly added fade-in cards
+        document.querySelectorAll('#homeProjects .fade-in').forEach(el => observer.observe(el));
       }
-      const data = await response.json();
-      projectsData = data;
-      renderProjects(data);
-    } catch (err) {
-      console.warn("Local fetch failed (possibly CORS). Falling back to inline data...", err);
-      
-      const fallbackData = [
-        {
-          "name": "Ollama Command Cheat Sheet",
-          "desc": "A complete, copy-pasteable reference guide for running LLMs locally on macOS, Ubuntu, and Windows with Ollama.",
-          "markdown": "Below is a **copy-pasteable Ollama command cheat sheet** for **macOS, Ubuntu, and Windows**.\n\n---\n\n# macOS\n\n```bash\n# Install (Homebrew)\nbrew install ollama\n\n# Check installation\nollama --version\n\n# Start Ollama\nollama serve\n\n# Download a model\nollama pull llama3.2\n\n# Run a model\nollama run llama3.2\n\n# List installed models\nollama list\n\n# Show running models\nollama ps\n\n# Stop a model\nollama stop llama3.2\n\n# Remove a model\nollama rm llama3.2\n\n# Show model information\nollama show llama3.2\n\n# Update Ollama\nbrew upgrade ollama\n```\n\n---\n\n# Ubuntu\n\n```bash\n# Install\ncurl -fsSL https://ollama.com/install.sh | sh\n\n# Check installation\nollama --version\n\n# Start Ollama\nollama serve\n\n# Enable as a service\nsudo systemctl enable ollama\nsudo systemctl start ollama\n\n# Check service status\nsystemctl status ollama\n\n# Download a model\nollama pull llama3.2\n\n# Run a model\nollama run llama3.2\n\n# List installed models\nollama list\n\n# Running models\nollama ps\n\n# Stop a model\nollama stop llama3.2\n\n# Remove a model\nollama rm llama3.2\n\n# Show model details\nollama show llama3.2\n\n# Update\ncurl -fsSL https://ollama.com/install.sh | sh\n```\n\n---\n\n# Windows (PowerShell)\n\n```powershell\n# Check installation\nollama --version\n\n# Start Ollama\nollama serve\n\n# Download a model\nollama pull llama3.2\n\n# Run a model\nollama run llama3.2\n\n# List installed models\nollama list\n\n# Running models\nollama ps\n\n# Stop model\nollama stop llama3.2\n\n# Remove model\nollama rm llama3.2\n\n# Show model information\nollama show llama3.2\n```\n\nDownload Ollama:\n\n```\nhttps://ollama.com/download/windows\n```\n\n---\n\n# Download Popular Models\n\n```bash\n# Llama 3.2 (1B)\nollama pull llama3.2:1b\n\n# Llama 3.2 (3B)\nollama pull llama3.2\n\n# Mistral\nollama pull mistral\n\n# Gemma 3\nollama pull gemma3\n\n# Qwen 3\nollama pull qwen3\n\n# DeepSeek R1\nollama pull deepseek-r1\n\n# Phi-4\nollama pull phi4\n\n# CodeLlama\nollama pull codellama\n\n# StarCoder2\nollama pull starcoder2\n```\n\n---\n\n# API Commands\n\n```bash\n# Start API server\nollama serve\n```\n\nRuns at:\n\n```\nhttp://localhost:11434\n```\n\nList models:\n\n```bash\ncurl http://localhost:11434/api/tags\n```\n\nGenerate text:\n\n```bash\ncurl http://localhost:11434/api/generate \\\n-d '{\n  \"model\":\"llama3.2\",\n  \"prompt\":\"Explain AI\",\n  \"stream\":false\n}'\n```\n\nChat:\n\n```bash\ncurl http://localhost:11434/api/chat \\\n-d '{\n  \"model\":\"llama3.2\",\n  \"messages\":[\n    {\n      \"role\":\"user\",\n      \"content\":\"Hello\"\n    }\n  ]\n}'\n```\n\n---\n\n# Python\n\nInstall:\n\n```bash\npip install ollama\n```\n\nExample:\n\n```python\nfrom ollama import chat\n\nresponse = chat(\n    model=\"llama3.2\",\n    messages=[\n        {\n            \"role\": \"user\",\n            \"content\": \"Explain robotics\"\n        }\n    ]\n)\n\nprint(response[\"message\"][\"content\"])\n```\n\n---\n\n# Custom Model\n\nCreate a file named `Modelfile`:\n\n```text\nFROM llama3.2\n\nSYSTEM You are an expert robotics assistant.\n```\n\nCreate the model:\n\n```bash\nollama create robotics -f Modelfile\n```\n\nRun it:\n\n```bash\nollama run robotics\n```\n\n---\n\n# Useful Commands\n\n```bash\n# List installed models\nollama list\n\n# Running models\nollama ps\n\n# Remove model\nollama rm <model>\n\n# Copy model\nollama cp <source> <destination>\n\n# Show model information\nollama show <model>\n\n# Run model\nollama run <model>\n\n# Download model\nollama pull <model>\n\n# Start server\nollama serve\n\n# Check version\nollama --version\n\n# Help\nollama --help\n```\n\n---\n\n# Environment Variables\n\n**Linux/macOS**\n\n```bash\nexport OLLAMA_MODELS=/path/to/models\nexport OLLAMA_HOST=0.0.0.0:11434\nollama serve\n```\n\n**Windows (PowerShell)**\n\n```powershell\n$env:OLLAMA_MODELS=\"D:\\Ollama\\Models\"\n$env:OLLAMA_HOST=\"0.0.0.0:11434\"\nollama serve\n```\n\n---\n\n# Official Links\n\n```\nhttps://ollama.com\n\nhttps://ollama.com/download\n\nhttps://ollama.com/library\n\nhttps://github.com/ollama/ollama\n```",
-          "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
-          "link": "https://ollama.com"
-        },
-        {
-          "name": "AI Voice Assistant",
-          "desc": "An intelligent voice-controlled assistant running on embedded hardware, leveraging local natural language processing (NLP).",
-          "markdown": "# AI Voice Assistant\n\nAn intelligent voice-controlled assistant designed for offline-first smart homes. Key features include:\n\n- **Offline Wake Word Detection**: Listens for 'Hey Meck' using pocketsphinx.\n- **Natural Language Processing**: Uses lightweight local LLMs for command parsing.\n- **Text-to-Speech**: Generates natural sounding voice feedback locally.\n- **Smart Home Integration**: Controls lights, checks room temperatures, and queries calendars.\n\n### Hardware & Tech Stack\n* **Processor**: Raspberry Pi 4 (4GB RAM)\n* **Audio Input**: USB Microphone array\n* **Software**: Python (PyAudio, PocketSphinx, Ollama API with Llama 3.2 1B)",
-          "img": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=600&q=80",
-          "link": ""
-        },
-        {
-          "name": "Smart Kitchen Safety System",
-          "desc": "An IoT safety system that detects gas leaks, smoke, and temperature anomalies to prevent kitchen hazards.",
-          "markdown": "# Smart Kitchen Safety System\n\nEnsure residential kitchen safety using real-time sensor networks and automated safety shutoff valves.\n\n### Core Features\n1. **Gas Leak Detection**: MQ-4 sensor monitors methane/natural gas levels continuously.\n2. **Smoke Detector**: MQ-2 sensor detects smoke concentration anomalies.\n3. **Automatic Shutoff**: Triggered relay automatically cuts off the gas line via a solenoid valve.\n4. **Buzzer & SMS Alerts**: Sounds a physical alarm and sends instant SMS alerts via a GSM module.\n\n### Wiring Diagram Concept\n```\n[ESP8266 Wi-Fi] <---> [MQ-4 Methane Sensor]\n                <---> [MQ-2 Smoke Sensor]\n                <---> [Relay Module] ---> [Gas Solenoid Valve]\n                <---> [Piezo Buzzer]\n```",
-          "img": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
-          "link": ""
+
+      async function loadProjects() {
+        try {
+          const response = await fetch("data/projects.json");
+          if (!response.ok) {
+            throw new Error("Failed to fetch projects.json");
+          }
+          const data = await response.json();
+          projectsData = data;
+          renderProjects(data);
+        } catch (err) {
+          console.warn("Local fetch failed (possibly CORS). Falling back to inline data...", err);
+
+          const fallbackData = [
+            {
+              "name": "Ollama Command Cheat Sheet",
+              "desc": "A complete, copy-pasteable reference guide for running LLMs locally on macOS, Ubuntu, and Windows with Ollama.",
+              "markdown": "Below is a **copy-pasteable Ollama command cheat sheet** for **macOS, Ubuntu, and Windows**.\n\n---\n\n# macOS\n\n```bash\n# Install (Homebrew)\nbrew install ollama\n\n# Check installation\nollama --version\n\n# Start Ollama\nollama serve\n\n# Download a model\nollama pull llama3.2\n\n# Run a model\nollama run llama3.2\n\n# List installed models\nollama list\n\n# Show running models\nollama ps\n\n# Stop a model\nollama stop llama3.2\n\n# Remove a model\nollama rm llama3.2\n\n# Show model information\nollama show llama3.2\n\n# Update Ollama\nbrew upgrade ollama\n```\n\n---\n\n# Ubuntu\n\n```bash\n# Install\ncurl -fsSL https://ollama.com/install.sh | sh\n\n# Check installation\nollama --version\n\n# Start Ollama\nollama serve\n\n# Enable as a service\nsudo systemctl enable ollama\nsudo systemctl start ollama\n\n# Check service status\nsystemctl status ollama\n\n# Download a model\nollama pull llama3.2\n\n# Run a model\nollama run llama3.2\n\n# List installed models\nollama list\n\n# Running models\nollama ps\n\n# Stop a model\nollama stop llama3.2\n\n# Remove a model\nollama rm llama3.2\n\n# Show model details\nollama show llama3.2\n\n# Update\ncurl -fsSL https://ollama.com/install.sh | sh\n```\n\n---\n\n# Windows (PowerShell)\n\n```powershell\n# Check installation\nollama --version\n\n# Start Ollama\nollama serve\n\n# Download a model\nollama pull llama3.2\n\n# Run a model\nollama run llama3.2\n\n# List installed models\nollama list\n\n# Running models\nollama ps\n\n# Stop model\nollama stop llama3.2\n\n# Remove model\nollama rm llama3.2\n\n# Show model information\nollama show llama3.2\n```\n\nDownload Ollama:\n\n```\nhttps://ollama.com/download/windows\n```\n\n---\n\n# Download Popular Models\n\n```bash\n# Llama 3.2 (1B)\nollama pull llama3.2:1b\n\n# Llama 3.2 (3B)\nollama pull llama3.2\n\n# Mistral\nollama pull mistral\n\n# Gemma 3\nollama pull gemma3\n\n# Qwen 3\nollama pull qwen3\n\n# DeepSeek R1\nollama pull deepseek-r1\n\n# Phi-4\nollama pull phi4\n\n# CodeLlama\nollama pull codellama\n\n# StarCoder2\nollama pull starcoder2\n```\n\n---\n\n# API Commands\n\n```bash\n# Start API server\nollama serve\n```\n\nRuns at:\n\n```\nhttp://localhost:11434\n```\n\nList models:\n\n```bash\ncurl http://localhost:11434/api/tags\n```\n\nGenerate text:\n\n```bash\ncurl http://localhost:11434/api/generate \\\n-d '{\n  \"model\":\"llama3.2\",\n  \"prompt\":\"Explain AI\",\n  \"stream\":false\n}'\n```\n\nChat:\n\n```bash\ncurl http://localhost:11434/api/chat \\\n-d '{\n  \"model\":\"llama3.2\",\n  \"messages\":[\n    {\n      \"role\":\"user\",\n      \"content\":\"Hello\"\n    }\n  ]\n}'\n```\n\n---\n\n# Python\n\nInstall:\n\n```bash\npip install ollama\n```\n\nExample:\n\n```python\nfrom ollama import chat\n\nresponse = chat(\n    model=\"llama3.2\",\n    messages=[\n        {\n            \"role\": \"user\",\n            \"content\": \"Explain robotics\"\n        }\n    ]\n)\n\nprint(response[\"message\"][\"content\"])\n```\n\n---\n\n# Custom Model\n\nCreate a file named `Modelfile`:\n\n```text\nFROM llama3.2\n\nSYSTEM You are an expert robotics assistant.\n```\n\nCreate the model:\n\n```bash\nollama create robotics -f Modelfile\n```\n\nRun it:\n\n```bash\nollama run robotics\n```\n\n---\n\n# Useful Commands\n\n```bash\n# List installed models\nollama list\n\n# Running models\nollama ps\n\n# Remove model\nollama rm <model>\n\n# Copy model\nollama cp <source> <destination>\n\n# Show model information\nollama show <model>\n\n# Run model\nollama run <model>\n\n# Download model\nollama pull <model>\n\n# Start server\nollama serve\n\n# Check version\nollama --version\n\n# Help\nollama --help\n```\n\n---\n\n# Environment Variables\n\n**Linux/macOS**\n\n```bash\nexport OLLAMA_MODELS=/path/to/models\nexport OLLAMA_HOST=0.0.0.0:11434\nollama serve\n```\n\n**Windows (PowerShell)**\n\n```powershell\n$env:OLLAMA_MODELS=\"D:\\Ollama\\Models\"\n$env:OLLAMA_HOST=\"0.0.0.0:11434\"\nollama serve\n```\n\n---\n\n# Official Links\n\n```\nhttps://ollama.com\n\nhttps://ollama.com/download\n\nhttps://ollama.com/library\n\nhttps://github.com/ollama/ollama\n```",
+              "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+              "link": "https://ollama.com"
+            },
+            {
+              "name": "AI Voice Assistant",
+              "desc": "An intelligent voice-controlled assistant running on embedded hardware, leveraging local natural language processing (NLP).",
+              "markdown": "# AI Voice Assistant\n\nAn intelligent voice-controlled assistant designed for offline-first smart homes. Key features include:\n\n- **Offline Wake Word Detection**: Listens for 'Hey Meck' using pocketsphinx.\n- **Natural Language Processing**: Uses lightweight local LLMs for command parsing.\n- **Text-to-Speech**: Generates natural sounding voice feedback locally.\n- **Smart Home Integration**: Controls lights, checks room temperatures, and queries calendars.\n\n### Hardware & Tech Stack\n* **Processor**: Raspberry Pi 4 (4GB RAM)\n* **Audio Input**: USB Microphone array\n* **Software**: Python (PyAudio, PocketSphinx, Ollama API with Llama 3.2 1B)",
+              "img": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=600&q=80",
+              "link": ""
+            },
+            {
+              "name": "Smart Kitchen Safety System",
+              "desc": "An IoT safety system that detects gas leaks, smoke, and temperature anomalies to prevent kitchen hazards.",
+              "markdown": "# Smart Kitchen Safety System\n\nEnsure residential kitchen safety using real-time sensor networks and automated safety shutoff valves.\n\n### Core Features\n1. **Gas Leak Detection**: MQ-4 sensor monitors methane/natural gas levels continuously.\n2. **Smoke Detector**: MQ-2 sensor detects smoke concentration anomalies.\n3. **Automatic Shutoff**: Triggered relay automatically cuts off the gas line via a solenoid valve.\n4. **Buzzer & SMS Alerts**: Sounds a physical alarm and sends instant SMS alerts via a GSM module.\n\n### Wiring Diagram Concept\n```\n[ESP8266 Wi-Fi] <---> [MQ-4 Methane Sensor]\n                <---> [MQ-2 Smoke Sensor]\n                <---> [Relay Module] ---> [Gas Solenoid Valve]\n                <---> [Piezo Buzzer]\n```",
+              "img": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
+              "link": ""
+            }
+          ];
+
+          projectsData = fallbackData;
+          renderProjects(fallbackData);
         }
-      ];
+      }
 
-      projectsData = fallbackData;
-      renderProjects(fallbackData);
+      homeContainer.addEventListener('click', function (e) {
+        if (e.target.classList.contains('view-details-btn')) {
+          const index = e.target.getAttribute('data-index');
+          openProjectModal(projectsData[index]);
+        }
+      });
+
+      loadProjects();
     }
-  }
 
-  homeContainer.addEventListener('click', function(e) {
-    if(e.target.classList.contains('view-details-btn')) {
-      const index = e.target.getAttribute('data-index');
-      openProjectModal(projectsData[index]);
+    function openProjectModal(project) {
+      const modal = document.getElementById("projectModal");
+      const modalBody = document.getElementById("modalBody");
+      if (modal && modalBody) {
+        modalBody.innerHTML = marked.parse(project.markdown || '');
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
     }
-  });
 
-  loadProjects();
-}
+    function closeProjectModal() {
+      const modal = document.getElementById("projectModal");
+      if (modal) {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+    }
 
-function openProjectModal(project) {
-  const modal = document.getElementById("projectModal");
-  const modalBody = document.getElementById("modalBody");
-  if(modal && modalBody) {
-    modalBody.innerHTML = marked.parse(project.markdown || '');
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
-}
-
-function closeProjectModal() {
-  const modal = document.getElementById("projectModal");
-  if(modal) {
-    modal.classList.remove("active");
-    document.body.style.overflow = "auto";
-  }
-}
-
-window.addEventListener("click", function(e) {
-  const modal = document.getElementById("projectModal");
-  if (modal && (e.target.id === "closeModal" || e.target === modal)) {
-    closeProjectModal();
-  }
-});
-
-window.addEventListener("keydown", function(e) {
-  if(e.key === "Escape") {
-    closeProjectModal();
-  }
-});
-
-
-
-/* ===== PAGE TRANSITION ===== */
-const transition = document.getElementById("pageTransition");
-
-document.querySelectorAll("a").forEach(link=>{
-  if(link.href && !link.target){
-    link.addEventListener("click", function(e){
-      if(link.hostname === location.hostname){
-        e.preventDefault();
-        transition.classList.add("active");
-
-        setTimeout(()=>{
-          window.location = link.href;
-        }, 300);
+    window.addEventListener("click", function (e) {
+      const modal = document.getElementById("projectModal");
+      if (modal && (e.target.id === "closeModal" || e.target === modal)) {
+        closeProjectModal();
       }
     });
-  }
-});
 
-window.addEventListener("load", ()=>{
-  transition.classList.remove("active");
-});
-
-/* LOAD NAVBAR (UNCHANGED) */
-fetch("navbar.html")
-.then(res => res.text())
-.then(data => {
-  document.getElementById("navbar").innerHTML = data;
-
-  const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
-
-  if(toggle){
-    toggle.addEventListener("click", function(){
-      navLinks.classList.toggle("active");
-      toggle.classList.toggle("active");
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeProjectModal();
+      }
     });
-  }
 
-  const current = location.pathname.split("/").pop().replace(".html","");
 
-  document.querySelectorAll("#nav-links a").forEach(link=>{
-    if(link.dataset.page === current){
-      link.classList.add("active");
+
+    /* ===== PAGE TRANSITION ===== */
+    const transition = document.getElementById("pageTransition");
+
+    document.querySelectorAll("a").forEach(link => {
+      if (link.href && !link.target) {
+        link.addEventListener("click", function (e) {
+          if (link.hostname === location.hostname) {
+            e.preventDefault();
+            transition.classList.add("active");
+
+            setTimeout(() => {
+              window.location = link.href;
+            }, 300);
+          }
+        });
+      }
+    });
+
+    window.addEventListener("load", () => {
+      transition.classList.remove("active");
+    });
+
+    /* LOAD NAVBAR (UNCHANGED) */
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+
+        const toggle = document.getElementById("menu-toggle");
+        const navLinks = document.getElementById("nav-links");
+
+        if (toggle) {
+          toggle.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+            toggle.classList.toggle("active");
+          });
+        }
+
+        const current = location.pathname.split("/").pop().replace(".html", "");
+
+        document.querySelectorAll("#nav-links a").forEach(link => {
+          if (link.dataset.page === current) {
+            link.classList.add("active");
+          }
+        });
+
+      });
+
+  </script>
+  <div id="dot-bg"></div>
+
+  <script>
+    const dotContainer = document.getElementById("dot-bg");
+
+    const dots = [];
+    const DOT_COUNT = 180;
+
+    for (let i = 0; i < DOT_COUNT; i++) {
+
+      const dot = document.createElement("div");
+      dot.classList.add("dot");
+
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+
+      dot.dataset.x = x;
+      dot.dataset.y = y;
+
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+
+      dotContainer.appendChild(dot);
+      dots.push(dot);
     }
-  });
 
-});
+    window.addEventListener("mousemove", (e) => {
 
-</script>
-<div id="dot-bg"></div>
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
 
-<script>
-const dotContainer = document.getElementById("dot-bg");
-
-const dots = [];
-const DOT_COUNT = 180;
-
-for(let i = 0; i < DOT_COUNT; i++){
-
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-
-    dot.dataset.x = x;
-    dot.dataset.y = y;
-
-    dot.style.left = `${x}px`;
-    dot.style.top = `${y}px`;
-
-    dotContainer.appendChild(dot);
-    dots.push(dot);
-}
-
-window.addEventListener("mousemove", (e)=>{
-
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-
-    dots.forEach(dot=>{
+      dots.forEach(dot => {
 
         const x = parseFloat(dot.dataset.x);
         const y = parseFloat(dot.dataset.y);
@@ -473,38 +522,176 @@ window.addEventListener("mousemove", (e)=>{
 
         const maxDistance = 140;
 
-        if(distance < maxDistance){
+        if (distance < maxDistance) {
 
-            const force = (maxDistance - distance) / maxDistance;
+          const force = (maxDistance - distance) / maxDistance;
 
-            const moveX = -(dx * force * 0.12);
-            const moveY = -(dy * force * 0.12);
+          const moveX = -(dx * force * 0.12);
+          const moveY = -(dy * force * 0.12);
 
-            dot.style.transform =
-                `translate(${moveX}px, ${moveY}px) scale(${1 + force})`;
+          dot.style.transform =
+            `translate(${moveX}px, ${moveY}px) scale(${1 + force})`;
 
-            dot.style.opacity = 0.9;
+          dot.style.opacity = 0.9;
 
-        }else{
+        } else {
 
-            dot.style.transform = `translate(0px,0px) scale(1)`;
-            dot.style.opacity = 0.18;
+          dot.style.transform = `translate(0px,0px) scale(1)`;
+          dot.style.opacity = 0.18;
         }
+      });
     });
-});
 
-window.addEventListener("resize", ()=>{
-    location.reload();
-});
-</script>
+    window.addEventListener("resize", () => {
+      location.reload();
+    });
+  </script>
 
-<!-- DETAILS MODAL -->
-<div id="projectModal" class="project-modal">
-  <div class="project-modal-content">
-    <span class="project-modal-close" id="closeModal">&times;</span>
-    <div id="modalBody" class="modal-body"></div>
+  <!-- HERO CANVAS PARTICLE SCRIPT -->
+  <script>
+    (function () {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let width = canvas.width = canvas.offsetWidth;
+      let height = canvas.height = canvas.offsetHeight;
+
+      const particles = [];
+      const mouse = { x: null, y: null, radius: 120 };
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (canvas.offsetWidth && canvas.offsetHeight) {
+          width = canvas.width = canvas.offsetWidth;
+          height = canvas.height = canvas.offsetHeight;
+        }
+      });
+
+      // Handle mouse movement relative to canvas
+      const heroSection = canvas.parentElement;
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      heroSection.addEventListener('mouseleave', () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      // Particle Class
+      class Particle {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.45;
+          this.vy = (Math.random() - 0.5) * 0.45;
+          this.radius = Math.random() * 2 + 1;
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          // Boundaries
+          if (this.x < 0 || this.x > width) this.vx *= -1;
+          if (this.y < 0 || this.y > height) this.vy *= -1;
+
+          // Mouse attraction/repulsion
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < mouse.radius) {
+              const force = (mouse.radius - dist) / mouse.radius;
+              this.x -= (dx / dist) * force * 0.8;
+              this.y -= (dy / dist) * force * 0.8;
+            }
+          }
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+          ctx.fill();
+        }
+      }
+
+      // Initialize Particles
+      const particleCount = Math.min(60, Math.floor((width * height) / 9000));
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      // Animation Loop
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+
+        // Draw connections (lines)
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 100) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(255, 255, 255, ${0.12 * (1 - dist / 100)})`;
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
+  </script>
+
+  <!-- DETAILS MODAL -->
+  <div id="projectModal" class="project-modal">
+    <div class="project-modal-content">
+      <span class="project-modal-close" id="closeModal">&times;</span>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
   </div>
-</div>
+
+  <!-- FLOATING AI ORB WIDGET -->
+  <a href="ai.html" class="floating-ai-orb-widget" id="ai-orb-widget" title="Chat with Meck AI">
+    <div class="orb-pulsing-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+    </div>
+    <div class="orb-core">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu">
+        <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+        <rect x="9" y="9" width="6" height="6" />
+        <line x1="9" y1="1" x2="9" y2="4" />
+        <line x1="15" y1="1" x2="15" y2="4" />
+        <line x1="9" y1="20" x2="9" y2="23" />
+        <line x1="15" y1="20" x2="15" y2="23" />
+        <line x1="20" y1="9" x2="23" y2="9" />
+        <line x1="20" y1="15" x2="23" y2="15" />
+        <line x1="1" y1="9" x2="4" y2="9" />
+        <line x1="1" y1="15" x2="4" y2="15" />
+      </svg>
+    </div>
+    <span class="orb-tooltip">Meck AI ⚡</span>
+  </a>
 
 </body>
+
 </html>

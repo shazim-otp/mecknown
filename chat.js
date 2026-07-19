@@ -1,4 +1,4 @@
-const API_KEY = "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";
+// API key is handled securely on the backend
 
 const sendBtn =
 document.getElementById("sendBtn");
@@ -45,46 +45,21 @@ async function sendMessage(){
   chatMessages.appendChild(loadingDiv);
 
   try{
-
     const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
+      "/api/chat",
       {
-
         method:"POST",
-
         headers:{
-          "Content-Type":"application/json",
-          "Authorization":`Bearer ${API_KEY}`
+          "Content-Type":"application/json"
         },
-
         body:JSON.stringify({
-
-          model:"llama-3.3-70b-versatile",
-
-          messages:[
-
-            {
-              role:"system",
-              content:
-              "You are Meck AI, a robotics and AI workshop assistant."
-            },
-
-            {
-              role:"user",
-              content:text
-            }
-
-          ]
-
+          message: text
         })
-
       }
     );
 
     const data = await response.json();
-
-    loadingDiv.innerText =
-    data.choices[0].message.content;
+    loadingDiv.innerText = data.response || data.error || "Error connecting to AI.";
 
   }catch(err){
 

@@ -111,8 +111,30 @@ button{
 <body>
   
 
-<!-- GLOBAL NAVBAR -->
-<div id="navbar"></div>
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">
+    <img src="assets/logo-nav.png" alt="Mecknown Logo" class="nav-logo">
+    <h1>Mecknown</h1>
+  </div>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
+  </div>
+
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="ai.html">Meck AI</a></li>
+    <li><a href="course.html">Course</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- GLOBAL NAVBAR FALLBACK -->
+<div id="navbar" style="display:none;"></div>
 
 <!-- LOADER -->
 <div id="loader">
@@ -154,28 +176,18 @@ button{
 
 <script>
 
-/* ===== LOAD NAVBAR ===== */
-fetch("navbar.html")
-.then(res => res.text())
-.then(data => {
-  document.getElementById("navbar").innerHTML = data;
-
+/* ===== MENU TOGGLE FOR HARDCODED NAVBAR ===== */
+(function() {
   const toggle = document.getElementById("menu-toggle");
   const navLinks = document.getElementById("nav-links");
 
   if(toggle){
     toggle.addEventListener("click", ()=>{
       navLinks.classList.toggle("active");
+      toggle.classList.toggle("active");
     });
   }
-
-  const current = location.pathname.split("/").pop().replace(".html","");
-  document.querySelectorAll("#nav-links a").forEach(link=>{
-    if(link.dataset.page === current){
-      link.classList.add("active");
-    }
-  });
-});
+})();
 
 /* ===== LOADER ===== */
 window.onload = ()=>{
@@ -274,33 +286,86 @@ const observer=new IntersectionObserver(entries=>{
 
 document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
 
-/* LOAD NAVBAR */
-fetch("navbar.html")
-.then(res => res.text())
-.then(data => {
-  document.getElementById("navbar").innerHTML = data;
-
-  /* MENU TOGGLE */
-  const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.getElementById("nav-links");
-
-  if(toggle){
-    toggle.addEventListener("click", function(){
-      navLinks.classList.toggle("active");
-      toggle.classList.toggle("active");
-    });
-  }
-
-  /* ACTIVE LINK AUTO */
-  const current = location.pathname.split("/").pop().replace(".html","");
-
-  document.querySelectorAll("#nav-links a").forEach(link=>{
-    if(link.dataset.page === current){
-      link.classList.add("active");
-    }
+/* ===== CONTACT PAGE MAGNETIC FORCE GRID CANVAS ===== */
+(function() {
+  const canvas = document.createElement('canvas');
+  canvas.className = 'page-bg-canvas';
+  canvas.id = 'contact-canvas';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  const mouse = { x: null, y: null, radius: 180 };
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    initGrid();
   });
-
-});
+  
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+  
+  const dots = [];
+  const spacing = 45;
+  
+  function initGrid() {
+    dots.length = 0;
+    for (let x = spacing / 2; x < width; x += spacing) {
+      for (let y = spacing / 2; y < height; y += spacing) {
+        dots.push({
+          baseX: x,
+          baseY: y,
+          x: x,
+          y: y
+        });
+      }
+    }
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+    
+    dots.forEach(d => {
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - d.baseX;
+        const dy = mouse.y - d.baseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          d.x = d.baseX + (dx / dist) * force * 15;
+          d.y = d.baseY + (dy / dist) * force * 15;
+        } else {
+          d.x = d.baseX;
+          d.y = d.baseY;
+        }
+      } else {
+        d.x = d.baseX;
+        d.y = d.baseY;
+      }
+      
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 1.25, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    
+    requestAnimationFrame(draw);
+  }
+  
+  initGrid();
+  draw();
+})();
 
 
 </script>

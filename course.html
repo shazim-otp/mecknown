@@ -12,6 +12,13 @@
 
   <style>
 
+    body {
+      background: 
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0) 50%),
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.015) 0%, rgba(0, 0, 0, 0) 50%),
+        #000000;
+    }
+
     .container{
       padding:100px 6% 60px;
       max-width:1200px;
@@ -39,61 +46,131 @@
       gap:25px;
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:30px 25px;
-      transition:0.3s ease;
-      cursor:pointer;
-      min-height:220px;
-
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+    .card {
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 35px 30px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover{
-      transform:translateY(-8px);
-      border-color:#2a2a2a;
-      box-shadow:0 12px 30px rgba(0,0,0,0.4);
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
-    .card h2{
-      font-size:28px;
-      margin-bottom:15px;
+    .card-icon {
+      margin-bottom: 20px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
     }
 
-    .card p{
-      color:#9ca3af;
-      line-height:1.6;
-      font-size:15px;
+    .card:hover .card-icon {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .card p {
+      color: #8a8a8a;
+      line-height: 1.6;
+      font-size: 14px;
+      margin-bottom: 25px;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .card-footer {
+      color: #ffffff;
+    }
+
+    .arrow-icon {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .arrow-icon {
+      transform: translateX(4px);
     }
 
     /* PREMIUM CARD */
-
-    .live-card{
-      border:1px solid rgba(34,197,94,0.4);
-      background:
-      linear-gradient(
-      145deg,
-      rgba(34,197,94,0.08),
-      transparent
-      );
+    .live-card {
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.02) 0%, rgba(0, 0, 0, 0) 100%);
     }
 
-    .live-badge{
-      display:inline-block;
-      width:max-content;
-      padding:6px 12px;
-      border-radius:30px;
-      font-size:12px;
-      font-weight:600;
-      margin-bottom:18px;
+    .live-card:hover {
+      border-color: rgba(212, 175, 55, 0.40);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.04) 0%, rgba(212, 175, 55, 0.01) 100%);
+    }
 
-      background:rgba(34,197,94,0.15);
-      color:#22c55e;
-      border:1px solid rgba(34,197,94,0.3);
+    .live-card .card-icon {
+      background: rgba(212, 175, 55, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      color: rgba(212, 175, 55, 0.7);
+    }
+
+    .live-card:hover .card-icon {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: #d4af37;
+    }
+
+    .live-badge {
+      display: inline-block;
+      width: max-content;
+      padding: 4px 10px;
+      border-radius: 30px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: rgba(212, 175, 55, 0.1);
+      color: #d4af37;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .live-card .card-header-row .card-icon {
+      margin-bottom: 0;
     }
 
     .course-link{
@@ -123,10 +200,15 @@
 
 <body>
 
+<!-- PAGE BACKGROUND CANVAS -->
+<canvas class="page-bg-canvas" id="course-canvas"></canvas>
+
   <!-- NAVBAR -->
   <nav>
-
-    <h1>Mecknown</h1>
+    <div class="nav-brand">
+      <img src="assets/logo-nav.png" alt="Mecknown Logo" class="nav-logo">
+      <h1>Mecknown</h1>
+    </div>
 
     <div class="menu-toggle" id="menu-toggle">
       <span></span>
@@ -158,39 +240,65 @@
 
       <!-- SUMMER WORKSHOP -->
       <a href="summer.html" class="course-link">
-
         <div class="card">
-
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+              <rect x="9" y="9" width="6" height="6"></rect>
+              <line x1="9" y1="1" x2="9" y2="4"></line>
+              <line x1="15" y1="1" x2="15" y2="4"></line>
+              <line x1="9" y1="20" x2="9" y2="23"></line>
+              <line x1="15" y1="20" x2="15" y2="23"></line>
+              <line x1="20" y1="9" x2="23" y2="9"></line>
+              <line x1="20" y1="15" x2="23" y2="15"></line>
+              <line x1="1" y1="9" x2="4" y2="9"></line>
+              <line x1="1" y1="15" x2="4" y2="15"></line>
+            </svg>
+          </div>
           <h2>Meck Summer Workshop</h2>
-
           <p>
             Access all recorded summer workshop classes
             including robotics, AI and embedded systems For Free.
           </p>
-
+          <div class="card-footer">
+            <span>Access Free</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
         </div>
-
       </a>
 
       <!-- PREMIUM -->
       <a href="premium.html" class="course-link">
-
         <div class="card live-card">
-
-          <div class="live-badge">
-            🔒 PREMIUM
+          <div class="card-header-row">
+            <div class="live-badge">
+              🔒 PREMIUM
+            </div>
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <circle cx="12" cy="11" r="2"></circle>
+                <path d="M12 13v3"></path>
+              </svg>
+            </div>
           </div>
-
           <h2>Premium Courses</h2>
-
           <p>
             Advanced robotics and AI premium learning
             platform with projects, mentorship and
             structured lessons.
           </p>
-
+          <div class="card-footer">
+            <span>Learn More</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
         </div>
-
       </a>
 
     </div>
@@ -218,6 +326,125 @@
       });
 
     }
+
+    /* ===== COURSE PAGE NEURAL KNOWLEDGE NETWORK ===== */
+    (function() {
+      const canvas = document.getElementById('course-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+      
+      const particles = [];
+      const particleCount = 45;
+      const maxDistance = 120;
+      const mouse = { x: null, y: null, radius: 150 };
+      
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+      
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+      
+      window.addEventListener('mouseleave', () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+      
+      class Particle {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.5;
+          this.vy = (Math.random() - 0.5) * 0.5;
+          this.r = Math.random() * 2 + 1;
+        }
+        
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          
+          if (this.x < 0 || this.x > width) this.vx *= -1;
+          if (this.y < 0 || this.y > height) this.vy *= -1;
+          
+          // Mouse interaction (soft attraction)
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < mouse.radius) {
+              const force = (mouse.radius - dist) / mouse.radius;
+              this.x += (dx / dist) * force * 0.3;
+              this.y += (dy / dist) * force * 0.3;
+            }
+          }
+        }
+        
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+          ctx.fill();
+        }
+      }
+      
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+      
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        
+        // Update & Draw particles
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+        }
+        
+        // Draw connections
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.hypot(dx, dy);
+            
+            if (dist < maxDistance) {
+              const alpha = (1 - dist / maxDistance) * 0.04;
+              ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+          
+          // Connect to mouse
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = particles[i].x - mouse.x;
+            const dy = particles[i].y - mouse.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < mouse.radius) {
+              const alpha = (1 - dist / mouse.radius) * 0.08;
+              ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.stroke();
+            }
+          }
+        }
+        
+        requestAnimationFrame(draw);
+      }
+      
+      draw();
+    })();
 
   </script>
 
