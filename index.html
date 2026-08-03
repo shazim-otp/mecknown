@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- SEO -->
   <meta name="description"
@@ -59,6 +60,37 @@
 
   <style>
     /* HERO ENHANCEMENT */
+    .hero {
+      position: relative;
+      text-align: left;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: auto;
+      cursor: grab;
+    }
+
+    #hero-canvas:active {
+      cursor: grabbing;
+    }
+
+    .hero-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
     .hero h2 {
       font-size: 48px;
       line-height: 1.2;
@@ -66,6 +98,58 @@
 
     .hero p {
       font-size: 16px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .hero-buttons {
+      justify-content: flex-start;
+    }
+
+    /* 3D Earth Animation */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 420px;
+      position: relative;
+    }
+
+    .earth-container {
+      position: relative;
+      width: 360px;
+      height: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .earth-container:active {
+      cursor: grabbing;
+    }
+
+    .earth-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+      outline: none;
+      filter: drop-shadow(0 0 35px rgba(0, 240, 255, 0.25));
+    }
+
+    @media (max-width: 900px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 60px;
+      }
+      .hero-buttons {
+        justify-content: center;
+      }
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     /* GRADIENT TEXT */
@@ -127,30 +211,31 @@
   <section class="section hero fade-in">
     <canvas id="hero-canvas"></canvas>
 
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Innovation in Robotics & AI
+    <div class="hero-layout">
+      <div class="hero-content">
+        <h2 class="gradient-text">Engineering Intelligent Futures</h2>
+
+        <!-- ✅ ADDED HIDDEN BRAND SIGNAL -->
+        <p style="display:none;">
+          Mecknown is a robotics and AI platform building smart systems, electronics, and intelligent applications.
+        </p>
+
+        <p>
+          Advanced robotics, AI-powered systems, and smart solutions designed for real-world innovation.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="shop.html">
+            <button class="primary-btn">Shop Products</button>
+          </a>
+          <a href="services.html">
+            <button class="secondary-btn">Explore Services</button>
+          </a>
+        </div>
       </div>
-
-      <h2 class="gradient-text">Engineering Intelligent Futures</h2>
-
-      <!-- ✅ ADDED HIDDEN BRAND SIGNAL -->
-      <p style="display:none;">
-        Mecknown is a robotics and AI platform building smart systems, electronics, and intelligent applications.
-      </p>
-
-      <p>
-        Advanced robotics, AI-powered systems, and smart solutions designed for real-world innovation.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="shop.html">
-          <button class="primary-btn">Shop Products</button>
-        </a>
-        <a href="services.html">
-          <button class="secondary-btn">Explore Services</button>
-        </a>
+      
+      <div class="hero-visual fade-in">
+        <div class="earth-container" id="earth-container"></div>
       </div>
     </div>
   </section>
@@ -545,118 +630,291 @@
     window.addEventListener("resize", () => {
       location.reload();
     });
-  </script>
-
-  <!-- HERO CANVAS PARTICLE SCRIPT -->
+  <!-- CLEAN COSMIC BACKGROUND STARFIELD SCRIPT -->
   <script>
     (function () {
       const canvas = document.getElementById('hero-canvas');
       if (!canvas) return;
-      const ctx = canvas.getContext('2d');
 
-      let width = canvas.width = canvas.offsetWidth;
-      let height = canvas.height = canvas.offsetHeight;
+      const scene = new THREE.Scene();
+      const parent = canvas.parentElement;
+      let width = canvas.width = parent.offsetWidth;
+      let height = canvas.height = parent.offsetHeight;
 
-      const particles = [];
-      const mouse = { x: null, y: null, radius: 120 };
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
+      camera.position.z = 300;
 
-      // Handle window resize
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Subtle Starfield Background
+      const starCount = 1200;
+      const starGeo = new THREE.BufferGeometry();
+      const starPositions = new Float32Array(starCount * 3);
+      const starColors = new Float32Array(starCount * 3);
+
+      for (let i = 0; i < starCount; i++) {
+        starPositions[i * 3] = (Math.random() - 0.5) * 1400;
+        starPositions[i * 3 + 1] = (Math.random() - 0.5) * 1400;
+        starPositions[i * 3 + 2] = (Math.random() - 0.5) * 1400;
+
+        const tint = Math.random();
+        if (tint > 0.7) {
+          starColors[i * 3] = 0.3; starColors[i * 3 + 1] = 0.85; starColors[i * 3 + 2] = 1.0;
+        } else {
+          starColors[i * 3] = 0.9; starColors[i * 3 + 1] = 0.95; starColors[i * 3 + 2] = 1.0;
+        }
+      }
+      starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+
+      const starMat = new THREE.PointsMaterial({
+        size: 1.4,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.65
+      });
+      const starField = new THREE.Points(starGeo, starMat);
+      scene.add(starField);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        starField.rotation.y += 0.0002;
+        renderer.render(scene, camera);
+      }
+      animate();
+
       window.addEventListener('resize', () => {
-        if (canvas.offsetWidth && canvas.offsetHeight) {
-          width = canvas.width = canvas.offsetWidth;
-          height = canvas.height = canvas.offsetHeight;
+        const w = parent.offsetWidth;
+        const h = parent.offsetHeight;
+        if (w > 0 && h > 0) {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
         }
       });
+    })();
+  </script>
 
-      // Handle mouse movement relative to canvas
-      const heroSection = canvas.parentElement;
-      heroSection.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
-      });
+  <!-- 3D REALISTIC ROTATING EARTH VISUALIZATION (THREE.JS) -->
+  <script>
+    (function () {
+      const container = document.getElementById('earth-container');
+      if (!container) return;
 
-      heroSection.addEventListener('mouseleave', () => {
-        mouse.x = null;
-        mouse.y = null;
-      });
+      // 1. Scene, Camera, Renderer Setup
+      const scene = new THREE.Scene();
+      const width = container.clientWidth || 360;
+      const height = container.clientHeight || 360;
 
-      // Particle Class
-      class Particle {
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 0.45;
-          this.vy = (Math.random() - 0.5) * 0.45;
-          this.radius = Math.random() * 2 + 1;
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.z = 4.2;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      if (THREE.ACESFilmicToneMapping) {
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+      }
+      container.appendChild(renderer.domElement);
+
+      // Earth Group with Axial Tilt (23.44 deg)
+      const earthGroup = new THREE.Group();
+      earthGroup.rotation.z = (23.44 * Math.PI) / 180;
+      scene.add(earthGroup);
+
+      // 2. Procedural Canvas Texture Fallback (renders instantly)
+      function createFallbackEarthTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024;
+        canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+
+        const grad = ctx.createLinearGradient(0, 0, 0, 512);
+        grad.addColorStop(0, '#041329');
+        grad.addColorStop(0.5, '#0a2b52');
+        grad.addColorStop(1, '#041329');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 1024, 512);
+
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.12)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < 1024; x += 64) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 512); ctx.stroke();
+        }
+        for (let y = 0; y < 512; y += 32) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1024, y); ctx.stroke();
         }
 
-        update() {
-          this.x += this.vx;
-          this.y += this.vy;
-
-          // Boundaries
-          if (this.x < 0 || this.x > width) this.vx *= -1;
-          if (this.y < 0 || this.y > height) this.vy *= -1;
-
-          // Mouse attraction/repulsion
-          if (mouse.x !== null && mouse.y !== null) {
-            const dx = mouse.x - this.x;
-            const dy = mouse.y - this.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < mouse.radius) {
-              const force = (mouse.radius - dist) / mouse.radius;
-              this.x -= (dx / dist) * force * 0.8;
-              this.y -= (dy / dist) * force * 0.8;
-            }
-          }
-        }
-
-        draw() {
+        ctx.fillStyle = '#0e4a6e';
+        for (let i = 0; i < 180; i++) {
+          const cx = Math.random() * 1024;
+          const cy = Math.random() * 512;
+          const r = 15 + Math.random() * 50;
           ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
           ctx.fill();
         }
+
+        return new THREE.CanvasTexture(canvas);
       }
 
-      // Initialize Particles
-      const particleCount = Math.min(60, Math.floor((width * height) / 9000));
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
+      // 3. Main Earth Mesh
+      const sphereGeo = new THREE.SphereGeometry(1.4, 64, 64);
+      const textureLoader = new THREE.TextureLoader();
 
-      // Animation Loop
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
+      const earthMaterial = new THREE.MeshStandardMaterial({
+        map: createFallbackEarthTexture(),
+        roughness: 0.65,
+        metalness: 0.1,
+      });
 
-        particles.forEach(p => {
-          p.update();
-          p.draw();
-        });
+      const earthMesh = new THREE.Mesh(sphereGeo, earthMaterial);
+      earthGroup.add(earthMesh);
 
-        // Draw connections (lines)
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+      // Load Photorealistic Earth Map Textures
+      const earthDayUrl = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+      const earthBumpUrl = 'https://unpkg.com/three-globe/example/img/earth-topology.png';
 
-            if (dist < 100) {
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(255, 255, 255, ${0.12 * (1 - dist / 100)})`;
-              ctx.lineWidth = 0.75;
-              ctx.stroke();
-            }
+      textureLoader.load(earthDayUrl, (tex) => {
+        earthMaterial.map = tex;
+        earthMaterial.needsUpdate = true;
+      });
+
+      textureLoader.load(earthBumpUrl, (bumpTex) => {
+        earthMaterial.bumpMap = bumpTex;
+        earthMaterial.bumpScale = 0.035;
+        earthMaterial.needsUpdate = true;
+      });
+
+      // 4. Clouds Sphere Layer
+      const cloudGeo = new THREE.SphereGeometry(1.42, 64, 64);
+      const cloudMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.35,
+        blending: THREE.AdditiveBlending,
+      });
+
+      const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
+      earthGroup.add(cloudMesh);
+
+      const earthCloudsUrl = 'https://unpkg.com/three-globe/example/img/earth-clouds.png';
+      textureLoader.load(earthCloudsUrl, (cloudTex) => {
+        cloudMat.map = cloudTex;
+        cloudMat.opacity = 0.45;
+        cloudMat.needsUpdate = true;
+      });
+
+      // 5. Atmosphere Outer Rim Glow Shader
+      const atmosphereGeo = new THREE.SphereGeometry(1.48, 64, 64);
+      const atmosphereMat = new THREE.ShaderMaterial({
+        vertexShader: `
+          varying vec3 vNormal;
+          void main() {
+            vNormal = normalize(normalMatrix * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
           }
+        `,
+        fragmentShader: `
+          varying vec3 vNormal;
+          void main() {
+            float intensity = pow(0.65 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.2);
+            gl_FragColor = vec4(0.0, 0.85, 1.0, 1.0) * intensity;
+          }
+        `,
+        blending: THREE.AdditiveBlending,
+        side: THREE.BackSide,
+        transparent: true
+      });
+
+      const atmosphereMesh = new THREE.Mesh(atmosphereGeo, atmosphereMat);
+      earthGroup.add(atmosphereMesh);
+
+      // 6. Realistic Lighting
+      const sunLight = new THREE.DirectionalLight(0xffffff, 1.4);
+      sunLight.position.set(5, 3, 4);
+      scene.add(sunLight);
+
+      const ambientLight = new THREE.AmbientLight(0x112244, 0.7);
+      scene.add(ambientLight);
+
+      const rimLight = new THREE.DirectionalLight(0x00f0ff, 0.5);
+      rimLight.position.set(-5, -3, -2);
+      scene.add(rimLight);
+
+      // 7. Interactive Drag & Spin Controls
+      let isDragging = false;
+      let previousMousePosition = { x: 0, y: 0 };
+      let rotationVelocity = { x: 0, y: 0.003 };
+
+      const onPointerDown = (e) => {
+        isDragging = true;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        previousMousePosition = { x: clientX, y: clientY };
+      };
+
+      const onPointerMove = (e) => {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const deltaX = clientX - previousMousePosition.x;
+        const deltaY = clientY - previousMousePosition.y;
+
+        rotationVelocity.y = deltaX * 0.005;
+        rotationVelocity.x = deltaY * 0.005;
+
+        earthMesh.rotation.y += rotationVelocity.y;
+        cloudMesh.rotation.y += rotationVelocity.y * 1.1;
+        earthMesh.rotation.x += rotationVelocity.x;
+
+        previousMousePosition = { x: clientX, y: clientY };
+      };
+
+      const onPointerUp = () => {
+        isDragging = false;
+      };
+
+      container.addEventListener('mousedown', onPointerDown);
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+
+      container.addEventListener('touchstart', onPointerDown, { passive: true });
+      window.addEventListener('touchmove', onPointerMove, { passive: true });
+      window.addEventListener('touchend', onPointerUp);
+
+      // 8. Continuous Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        if (!isDragging) {
+          rotationVelocity.y += (0.0025 - rotationVelocity.y) * 0.05;
+          rotationVelocity.x += (0 - rotationVelocity.x) * 0.05;
+
+          earthMesh.rotation.y += rotationVelocity.y;
+          cloudMesh.rotation.y += rotationVelocity.y * 1.18;
+          earthMesh.rotation.x += rotationVelocity.x;
         }
 
-        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
       }
 
       animate();
+
+      // 10. Resize Handling
+      window.addEventListener('resize', () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w > 0 && h > 0) {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        }
+      });
     })();
   </script>
 
